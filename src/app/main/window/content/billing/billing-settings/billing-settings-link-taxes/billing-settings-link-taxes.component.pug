@@ -2,7 +2,7 @@
   .row
     .col-7.offset-5.form-group 
       select([(ngModel)]="selectedPeriodId", (change)="changeTaxPeriodId()")
-        option(*ngFor="let item of taxPeriodsList", [value]="item.tp_id", translate) {{getTaxPeriodName(item)}}
+        option(*ngFor="let item of taxPeriodsList", [value]="item.tp_id", translate) {{item | getTaxPeriodDescription : copyStr}}
   .row 
     .col-4.form-group 
       label.taxLabel(translate) ebc.invoiceSettings.entity.text

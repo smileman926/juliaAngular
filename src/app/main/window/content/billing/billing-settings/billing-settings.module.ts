@@ -21,10 +21,12 @@ import { BillingSettingsInvoiceAddressComponent } from './billing-settings-invoi
 import { BillingSettingsInvoiceItemComponent } from './billing-settings-invoice-item/billing-settings-invoice-item.component';
 import { BillingSettingsLayoutComponent } from './billing-settings-layout/billing-settings-layout.component';
 import { BillingSettingsLinkTaxesComponent } from './billing-settings-link-taxes/billing-settings-link-taxes.component';
+import { GetTaxPeriodDescriptionPipe } from './billing-settings-link-taxes/get-tax-period-description.pipe';
 import { BillingSettingsTaxesComponent } from './billing-settings-taxes/billing-settings-taxes.component';
 import { TaxChangeHintModalComponent } from './tax-change-hint-modal/tax-change-hint-modal.component';
 import { TaxPeriodsModalComponent } from './tax-periods-modal/tax-periods-modal.component';
 import { TextTranslateComponent } from './text-translate/text-translate.component';
+
 @NgModule({
   declarations: [
     SettingsComponent,
@@ -38,7 +40,9 @@ import { TextTranslateComponent } from './text-translate/text-translate.componen
     TextTranslateComponent,
     AddBillingTaxComponent,
     TaxPeriodsModalComponent,
-    TaxChangeHintModalComponent],
+    TaxChangeHintModalComponent,
+    GetTaxPeriodDescriptionPipe
+  ],
   imports: [
     CommonModule,
     SharedModule,

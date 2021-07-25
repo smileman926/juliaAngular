@@ -5,10 +5,12 @@ import dayjs from 'dayjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable } from 'rxjs';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { ApiBillingWorkbenchService } from '@/app/helpers/api/api-billing-workbench.service';
+import { TaxListModel } from '@/app/main/models';
 import { UpdateCateringListInLinkTaxesEvent } from '@/app/main/window/content/billing/billing-settings/billing-settings-link-taxes/events';
 import { EventBusService } from '@/app/main/window/shared/event-bus';
-import { TaxListModel } from '@/app/main/models';
 import { Loading } from '@/app/shared/loader.decorator';
 import { LoaderService } from '@/app/shared/loader.service';
 import { ModalService } from '@/ui-kit/services/modal.service';
@@ -52,6 +54,7 @@ export class BillingSettingsLinkTaxesComponent implements OnInit, OnDestroy {
   isTaxTableDisabled: boolean;
   showDisabledTooltip: boolean;
   isTaxChanged: boolean;
+  copyStr: string;
   private prevRoomPriceId: string;
   private prevCateringId: string;
   private prevVisitorTaxId: string;
@@ -69,6 +72,7 @@ export class BillingSettingsLinkTaxesComponent implements OnInit, OnDestroy {
   constructor(
     private apiBilling: ApiBillingWorkbenchService,
     private modalService: ModalService,
+    private translateService: TranslateService,
     private eventBus: EventBusService,
     public loaderService: LoaderService) {
     this.isLoading = this.loaderService.isLoading(LoaderType.LOAD);
@@ -82,6 +86,8 @@ export class BillingSettingsLinkTaxesComponent implements OnInit, OnDestroy {
 
   @Loading(LoaderType.LOAD)
   public async init(): Promise<void> {
+
+    this.copyStr = await this.translateService.get('BackEnd_WikiLanguage.RCPT_isCopyLabel').toPromise();
 
     for (let i = 0; i < 101; i++) {
       this.percentageList.push(i);
@@ -104,7 +110,8 @@ export class BillingSettingsLinkTaxesComponent implements OnInit, OnDestroy {
       this.taxCatering = cateringListUpdated.filter( item => item.st_id !== '5' && item.st_active === 'on' );
     });
     this.taxationV2 = val4;
-    this.selectedPeriodId = this.taxPeriodsList.filter( item => item.isCurrentPeriod )[0].tp_id;
+    const currentPeriod = this.taxPeriodsList.find( item => item.isCurrentPeriod );
+    this.selectedPeriodId = currentPeriod ? currentPeriod.tp_id : '1';
     this.initSplitRateId();
     this.initValues();
   }
@@ -363,11 +370,6 @@ export class BillingSettingsLinkTaxesComponent implements OnInit, OnDestroy {
   public changeTaxPeriodId(): void {
     this.initSplitRateId();
     this.initValues();
-  }
-
-  public getTaxPeriodName(item: TaxPeriodModel): string {
-    // tslint:disable-next-line:max-line-length
-    return item.tp_description + ' | ' + (item.tp_from === null ? '' : item.tp_from) + ' - ' + (item.tp_until === null ? '' : item.tp_until);
   }
 
   public async goToSettings(): Promise<void> {
