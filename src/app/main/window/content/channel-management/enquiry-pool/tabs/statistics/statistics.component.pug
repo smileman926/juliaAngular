@@ -1,0 +1,97 @@
+form.my-4.mx-4(*ngIf="form", [formGroup]="form")
+  .row 
+    .col-md-3 
+      p.mb-2(translate) BackEnd_WikiLanguage.CCAI_TableHeaderSource
+      .form-group 
+        select(formControlName="sourceOption", (change)="search()") 
+          option(value="deskline", translate) Deskline
+          option(value="easybooking", translate) easyBooking
+    .col-md-4 
+      p.mb-2(translate) BackEnd_WikiLanguage.generic_Period
+      .row 
+        .col-md-6.form-group
+          label(translate) ebc.forms.from.text
+          app-datepicker-input([date]="form.get('fromDate')?.value", (dateChange)="form.get('fromDate')?.setValue($event);") 
+        .col-md-6.form-group 
+          label(translate) ebc.forms.until.text
+          app-datepicker-input([date]="form.get('untilDate')?.value", (dateChange)="form.get('untilDate')?.setValue($event);")
+  .row 
+    .col-md-5.mt-4
+      .box 
+        p.mb-4.headline {{'ebc.general.amount.text' | translate}} {{ sourceTypeStr === 'deskline' ? 'Deskline' : 'easyBooking'}} {{'ebc.epStats.enquiries.text' | translate}}
+        .row.pt-4 
+          .col-md-6.centerWrapper
+            label.amountBlue {{countOfEnquiries}}
+          .col-md-6.mt-4
+            canvas(
+              baseChart,
+              height="300",
+              [datasets]="barChartData",
+              [labels]="barChartLabels",
+              [options]="barChartOptions",
+              [plugins]="barChartPlugins",
+              [legend]="barChartLegend",
+              [chartType]="barChartType",
+              [colors]="chartColors"
+            )
+    .col-md-7 
+      .row.mt-4  
+        .col-md-6 
+          app-enquiry-pool-stats-amount-box(
+            titleName="ebc.epStats.answeredEnquiries.text",
+            [countOfAnsweredEnquiries]="countOfAnsweredEnquiries",
+            imgSource="assets/images/move-arrows.svg",
+            imgAlt="move-arrows",
+            [pillAmount]="getPillAmount(countOfAnsweredEnquiries,countOfEnquiries)",
+            [isPill]="true"
+          )
+        .col-md-6
+          app-enquiry-pool-stats-amount-box(
+            titleName="ebc.epStats.amountTotal.text",
+            [countOfAnsweredEnquiries]="bookingAmountTotal",
+            imgSource="assets/images/euro.svg",
+            imgAlt="euro",
+            [isGrey]="true",
+            [symbolStr]="defaultCurrencySymbol"
+          )      
+      .row.mt-4 
+        .col-md-6 
+          app-enquiry-pool-stats-amount-box(
+            titleName="ebc.epStats.bookingsGenerated.text",
+            [countOfAnsweredEnquiries]="countOfAnsweredEnquiriesThatBecameBookings",
+            imgSource="assets/images/move-arrows.svg",
+            imgAlt="move-arrows",
+            [pillAmount]="getPillAmount(countOfAnsweredEnquiriesThatBecameBookings, countOfAnsweredEnquiries)",
+            [isPill]="true"
+          )
+        .col-md-6
+          app-enquiry-pool-stats-amount-box(
+            titleName="ebc.epStats.sales.text",
+            [sourceStr]="sourceTypeStr",
+            [countOfAnsweredEnquiries]="getPillAmount(bookingAmountOfSelectedSource, bookingAmountTotal)",
+            imgSource="assets/images/euro.svg",
+            imgAlt="euro",
+            [isPercentage]="true",
+            [symbolStr]="defaultCurrencySymbol"
+          )
+      .row.mt-4 
+        .col-md-6 
+          app-enquiry-pool-stats-amount-box(
+            titleName="ebc.epStats.cancellations.text",
+            [countOfAnsweredEnquiries]="countOfAnsweredEnquiriesThatBecameCancelledBookings",
+            imgSource="assets/images/move-arrows.svg",
+            imgAlt="move-arrows",
+            [pillAmount]="getPillAmount(countOfAnsweredEnquiriesThatBecameCancelledBookings, countOfAnsweredEnquiriesThatBecameBookings)",
+            [isPill]="true"
+          )
+        .col-md-6
+          app-enquiry-pool-stats-amount-box(
+            titleName="ebc.epStats.sales.text",
+            [sourceStr]="sourceTypeStr",
+            [countOfAnsweredEnquiries]="bookingAmountOfSelectedSource",
+            imgSource="assets/images/euro.svg",
+            imgAlt="euro",
+            [symbolStr]="defaultCurrencySymbol"
+          )
+  
+  p.bottomContent(translate).mt-1 ebc.epStats.disclaimer.text

@@ -1,0 +1,76 @@
+.sidebar
+  app-list-view.list-view(
+    [items]="list",
+    [selected]="selectedItemId",
+    (select)="selectItem($event.id)"
+  )
+    ng-template(let-item)
+      span(translate) {{item.name}}
+.content
+  ng-container(*ngIf="selectedItemId === 'leader' && group.leader")
+    app-edit-guest(
+      [guest]="group.leader",
+      (guestChange)="leaderDataChange.emit($event)",
+      [canEdit]="!regFormService.registrationForm?.arrived",
+      [arrived]="arrived",
+      [isGroupGuest]="true",
+      [mainGuestId]="group.leader.id",
+      [editGuestInformation]="onEditGuestInformation",
+    )
+    div
+      button.btn.btn-secondary.mr-3(
+        (click)="onEditGuestInformation.emit()",
+        [disabled]="!(!regFormService.registrationForm?.arrived)",
+        translate
+      ) BackEnd_WikiLanguage.MW_EditData
+      button.btn.btn-secondary(
+        (click)="changeLeader(group.leader)",
+        [disabled]="regFormService.registrationForm?.arrived",
+        translate
+      ) BackEnd_WikiLanguage.MW_OtherTourLeader
+
+  ng-container(*ngIf="selectedItemId === 'guest'")
+    table.group-guests
+      thead
+        th
+        th(translate) BackEnd_WikiLanguage.MW_GuestType
+        th(translate) BackEnd_WikiLanguage.MW_SourceCountry
+        th
+          label(translate) BackEnd_WikiLanguage.MW_Count
+          i.mdi.mdi-information([ngbTooltip]="(isAVSProvider ? 'BackEnd_WikiLanguage.MW_TooltipPersonCountExcl' : 'BackEnd_WikiLanguage.MW_TooltipPersonCount') | translate")
+      tbody
+        tr(*ngFor="let guest of guests; let i = index")
+          td.delete-button-cell
+            button.delete-button.btn.btn-sm.btn-secondary(
+              (click)="clear(i)",
+              [disabled]="guests.length < 2"
+              )
+              i.mdi.mdi-delete
+          td.tax-field
+            .form-group(*ngIf="taxTypes.length > 0")
+              select.form-control([(ngModel)]="guest.taxTypeId")
+                option(*ngFor="let option of taxTypes", [value]="option.id", translate) {{option.value}}
+          td.country-field
+            .form-group
+              select.form-control([(ngModel)]="guest.rfcId", (ngModelChange)="setGroupGuestCountryId(guest)")
+                option(*ngFor="let option of countries", [value]="option.value", translate) {{option.name}}
+          td.count-field
+            .form-group
+              app-number-input-controls
+                input(
+                  [(ngModel)]="guest.count",
+                  type="text",
+                  appNumberInput,
+                  [decimals]="0",
+                  [min]="0",
+                  [max]="numberOfPersons",
+                )
+        tr
+          td.add-guest-row(colspan="4")
+            button.btn.btn-sm.btn-secondary(
+              (click)="addGuestRow()",
+            )
+              i.mdi.mdi-plus
+
+.button-controls
+  button.btn.btn-primary((click)="onSave()", [disabled]="regFormService.registrationForm?.departed", translate) BackEnd_WikiLanguage.generic_Save

@@ -1,0 +1,39 @@
+hr
+  border: none
+  margin-top: .7rem
+
+.row
+  .checkboxes
+    display: flex
+    align-items: center
+
+    .form-check
+      display: flex
+      align-items: center
+      margin-right: 1rem
+
+      input[type=checkbox], input[type=radio]
+        margin-top: 0
+
+  > [class^="col-"], [class*=" col-"]
+    display: flex
+    align-items: center
+
+  .form-group
+    width: 100%
+    display: grid
+    grid-gap: 0.5em
+
+    &.c1c1
+      grid-template-columns: 1fr 1fr
+
+    &.c1c2
+      grid-template-columns: 1fr 2fr
+
+    &.c1c3
+      grid-template-columns: 1fr 3fr
+      
+  label
+    flex: none
+    padding-right: 0
+    margin-bottom: 0

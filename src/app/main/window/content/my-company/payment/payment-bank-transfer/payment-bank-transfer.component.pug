@@ -1,0 +1,58 @@
+.container
+  form.my-4(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-8
+        p(translate) ebc.payment.translateEmailText.text
+        .textVal
+          quill-view.hasBorder((click)="changeTranslate(true)", [content]="defaultFirstTranslate", format="text")
+          i.mdi.mdi-earth.ml-2((click)="changeTranslate(true)")
+        p(translate) ebc.payment.translateEmail2Text.text
+        .textVal
+          quill-view.hasBorder((click)="changeTranslate(false)", [content]="defaultSecondTranslate", format="text")
+          i.mdi.mdi-earth.ml-2((click)="changeTranslate(false)")
+        p.title(translate) ebc.payment.editFormBTTitle.text
+        .row
+          .col-md-6
+            label(for="account-holder", translate) ebc.payment.editFormBTAccountOwner.text
+            .form-group.mb-2
+              input(
+                id="account-holder",
+                type="text",
+                formControlName="c_accountHolder",
+                [placeholder]="'ebc.payment.editFormBTAccountOwner.text' | translate"
+              )
+            label(for="iban", translate) ebc.payment.editFormBTiban.text
+            .form-group.mb-2
+              input(
+                id="iban",
+                type="text",
+                formControlName="c_iban",
+                [placeholder]="'ebc.payment.editFormBTiban.text' | translate"
+              )
+          .col-md-6
+            label(for="bank-name", translate) ebc.payment.editFormBTBankName.text
+            .form-group.mb-2
+              input(
+                id="bank-name",
+                type="text",
+                formControlName="c_bankName",
+                [placeholder]="'ebc.payment.editFormBTBankName.text' | translate"
+              )
+            label(for="swift", translate) ebc.payment.editFormBTSwift.text
+            .form-group.mb-2
+              input(
+                id="swift",
+                type="text",
+                formControlName="c_swift",
+                [placeholder]="'ebc.payment.editFormBTSwift.text' | translate"
+              )
+        button.btn.btn-secondary.mt-3.mr-2((click)="save()", [disabled]="form.invalid", translate) ebc.buttons.save.text
+
+      .col-md-4
+        p.title(translate) ebc.payment.activeCountryTitle.text
+        .activedCountryList
+          p.my-2(*ngIf="paymentCountryList.length === 0", translate) ebc.payment.noActivedCountry.text 
+          p.my-2(*ngFor="let item of paymentCountryList") {{getCountryName(item.pmc_country_id)}}
+
+        button.btn.btn-secondary.my-4((click)="setCountries()", translate) ebc.payment.activeCountrySetCountry.text
+

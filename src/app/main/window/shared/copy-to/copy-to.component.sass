@@ -1,0 +1,39 @@
+@import "_variables"
+
+.source
+  label
+    font-weight: bold
+    margin-right: 1em
+
+.sections
+  display: flex
+  margin-top: 1em -0.5rem 2rem
+  justify-content: stretch
+  flex-wrap: wrap
+
+  .section
+    padding-left: 0.5rem
+    padding-right: 0.5rem
+    width: 33.3333%
+
+    .title
+      font-weight: bold
+
+    .item
+      display: flex
+      white-space: nowrap
+
+      &.main
+        margin-top: 1em
+        margin-bottom: 1em
+
+      label
+        font-weight: normal
+        text-overflow: ellipsis
+        overflow: hidden
+
+        &.readonly
+          color: $gray-500
+
+    .item:not(:last-child)
+      margin-right: 1em

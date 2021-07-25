@@ -1,0 +1,18 @@
+app-tax-general-settings(*ngIf="items", [items]="items", (saveEvent)="setGeneralSetting($event)") 
+content
+  app-loading.loading-bar(*ngIf="isLoading | async")
+  .sidebar
+    app-list-view.list-view(
+      [items]="items ? items.visitorsTax : []",
+      [selected]="selectedItemId",
+      [itemIdField]="itemIdField",
+      (select)="selectUser($event.vt_id)"
+    )
+      ng-template(let-item) {{getUserLabel(item)}}
+
+  .content
+    app-tax-detail(*ngIf="isItemExist", [list]="detailData", [settingChange]="generalSaveData", (saveEvent)="onSaveRequest()")
+    
+  .button-controls
+    button.btn.btn-secondary((click)="addNewTaxInfo()", translate) BackEnd_WikiLanguage.generic_New
+    button.btn.btn-secondary.ml-3((click)="deleteSelectedTaxInfo()", [disabled]="selectedItemId ? false : true", translate) BackEnd_WikiLanguage.generic_Delete

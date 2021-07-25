@@ -1,0 +1,10 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+.wrapper((click)="printReceipt('small')")
+  i.mdi.mdi-file-document
+  span Bon
+.wrapper((click)="printReceipt('A5')")
+  i.mdi.mdi-file-document
+  span A5
+.wrapper((click)="printReceipt('A4')")
+  i.mdi.mdi-file-document
+  span A4

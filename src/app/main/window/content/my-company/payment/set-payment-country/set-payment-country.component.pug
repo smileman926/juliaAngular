@@ -1,0 +1,15 @@
+.container
+  app-loading.loading-bar(*ngIf="isLoading | async")
+  .row
+    .col-md-12
+      button.btn.btn-secondary.mb-4.ml-4((click)="activateAll()", translate) ebc.payment.activeCountrySettingPMCActiveAll.text
+      button.btn.btn-secondary.mb-4.ml-4((click)="activateNone()", translate) ebc.payment.activeCountrySettingPMCActiveNone.text
+    .col-md-12
+      .row.wrapper
+        .col-md-3(*ngFor="let item of countryFullInfoList")
+          .eachItem(
+            [class.active]="item | isCountryActivated : paymentCountryList",
+            (click)="setPaymentCountry(item)",
+            [ngbTooltip]="item.cl_name",
+            placement="bottom"
+          ) {{getCountryName(item.cl_name)}}

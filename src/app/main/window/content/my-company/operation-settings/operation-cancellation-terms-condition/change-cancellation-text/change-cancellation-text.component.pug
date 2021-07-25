@@ -1,0 +1,19 @@
+app-tabs(
+  *ngIf="tabSettings.buttons.length",
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+.container
+  app-loading.loading-bar(*ngIf="isLoading | async") 
+  form(*ngIf="form", [formGroup]="form") 
+    .row.my-2
+      .col-md-11     
+        textarea(*ngIf=" activeTabId === 'localeDescEnUk' ", formControlName="localeDescEnUk", rows="5")
+        textarea(*ngIf=" activeTabId === 'localeDescDeAt' ", formControlName="localeDescDeAt", rows="5")
+        textarea(*ngIf=" activeTabId === 'localeDescNlNl' ", formControlName="localeDescNlNl", rows="5")
+        textarea(*ngIf=" activeTabId === 'localeDescItIt' ", formControlName="localeDescItIt", rows="5")
+        textarea(*ngIf=" activeTabId === 'localeDescFrFr' ", formControlName="localeDescFrFr", rows="5")
+        textarea(*ngIf=" activeTabId === 'localeDescHuHu' ", formControlName="localeDescHuHu", rows="5")
+        textarea(*ngIf=" activeTabId === 'localeDescRuRu' ", formControlName="localeDescRuRu", rows="5")
+        
+

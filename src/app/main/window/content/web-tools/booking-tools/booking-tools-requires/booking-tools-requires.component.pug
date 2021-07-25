@@ -1,0 +1,165 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row          
+      .col-md-6.form-group
+        label.left.mr-1(translate) ebc.bookingTools.MFG_label.text
+        select(formControlName="categoryList", (change)="selectMandatory()") 
+          option(*ngFor="let item of fiedlsCategory", [value]="item.key", translate) {{item.val}} 
+    .container.mt-1([ngSwitch]="currentCategory") 
+      .row
+        .col-md-4
+          .row 
+            .col-md-1 
+              label(
+                *ngIf="currentCategory === 'Online Check-In Main Guest' || currentCategory === 'Online Check-In Additional Persons'", 
+                [ngbTooltip] = "'ebc.bookingTools.MF_tooltip_A.text' | translate",
+                placement="bottom"
+                translate) A
+            .col-md-1 
+              label(
+                [ngbTooltip] = "'ebc.bookingTools.MF_tooltip_P.text' | translate",
+                placement="bottom",
+                translate) P
+        .col-md-4
+          .row 
+            .col-md-1 
+              label(
+                *ngIf="currentCategory === 'Online Check-In Main Guest' || currentCategory === 'Online Check-In Additional Persons'",
+                [ngbTooltip] = "'ebc.bookingTools.MF_tooltip_A.text' | translate",
+                placement="bottom",
+                 translate) A
+            .col-md-1 
+              label(
+                [ngbTooltip] = "'ebc.bookingTools.MF_tooltip_P.text' | translate",
+                placement="bottom",,
+                translate) P
+        .col-md-4(*ngIf="currentCategory === 'Online Check-In Main Guest' || currentCategory === 'Online Check-In Additional Persons'")
+          .row 
+            .col-md-1 
+              label(
+                [ngbTooltip] = "'ebc.bookingTools.MF_tooltip_A.text' | translate",
+                placement="bottom",
+                translate) A
+            .col-md-1 
+              label(
+                [ngbTooltip] = "'ebc.bookingTools.MF_tooltip_P.text' | translate",
+                placement="bottom",
+                translate) P 
+
+      .fieldsWrapper.row(*ngSwitchCase="'Online Check-In Main Guest'")
+        .col-md-4
+          div(*ngFor="let item of changeableFields[0].fields; let i = index")
+            .row(*ngIf="i < 12")
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_mandatory === 'on'", [checked]="item.mf_display === 'on'", (change)="changeStatus('Online Check-In Main Guest', item)")
+              .col-md-1 
+                input(type="checkbox", *ngIf="item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_addressLine1Plus' && item.mf_fieldName !== 'c_cityPlus' && item.mf_fieldName !== 'c_region' && item.mf_fieldName !== 'c_birthCity' && item.mf_fieldName !== 'c_postBox' && item.mf_fieldName !== 'c_company' && item.mf_fieldName !== 'c_taxNo' && item.mf_fieldName !== 'c_companyRegNo' && item.mf_fieldName !== 'b_comment' && item.mf_fieldName !== 'c_occupation' && item.mf_fieldName !== 'c_occupationBranch' && item.mf_fieldName !== 'c_faxNo' && item.mf_fieldName !== 'c_webUrl' && item.mf_fieldName !== 'cbrf_arrivalMethod_id' && item.mf_fieldName !== 'c_carRegNo' && item.mf_fieldName !== 'cbrf_visitReason_id'", [disabled]="item.mf_fieldName === 'c_lastName'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Online Check-In Main Guest', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+        .col-md-4
+          div(*ngFor="let item of changeableFields[0].fields; let i = index")
+            .row(*ngIf="i < 21 && i > 11")
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_mandatory === 'on'", [checked]="item.mf_display === 'on'", (change)="changeStatus('Online Check-In Main Guest', item)")
+              .col-md-1 
+                input(type="checkbox", *ngIf="item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_addressLine1Plus' && item.mf_fieldName !== 'c_cityPlus' && item.mf_fieldName !== 'c_region' && item.mf_fieldName !== 'c_birthCity' && item.mf_fieldName !== 'c_postBox' && item.mf_fieldName !== 'c_company' && item.mf_fieldName !== 'c_taxNo' && item.mf_fieldName !== 'c_companyRegNo' && item.mf_fieldName !== 'b_comment' && item.mf_fieldName !== 'c_occupation' && item.mf_fieldName !== 'c_occupationBranch' && item.mf_fieldName !== 'c_faxNo' && item.mf_fieldName !== 'c_webUrl' && item.mf_fieldName !== 'cbrf_arrivalMethod_id' && item.mf_fieldName !== 'c_carRegNo' && item.mf_fieldName !== 'cbrf_visitReason_id'", [disabled]="item.mf_fieldName === 'c_lastName'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Online Check-In Main Guest', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+        .col-md-4
+          div(*ngFor="let item of changeableFields[0].fields; let i = index")
+            .row(*ngIf="i > 20")
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_mandatory === 'on'", [checked]="item.mf_display === 'on'", (change)="changeStatus('Online Check-In Main Guest', item)")
+              .col-md-1 
+                input(type="checkbox", *ngIf="item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_addressLine1Plus' && item.mf_fieldName !== 'c_cityPlus' && item.mf_fieldName !== 'c_region' && item.mf_fieldName !== 'c_birthCity' && item.mf_fieldName !== 'c_postBox' && item.mf_fieldName !== 'c_company' && item.mf_fieldName !== 'c_taxNo' && item.mf_fieldName !== 'c_companyRegNo' && item.mf_fieldName !== 'b_comment' && item.mf_fieldName !== 'c_occupation' && item.mf_fieldName !== 'c_occupationBranch' && item.mf_fieldName !== 'c_faxNo' && item.mf_fieldName !== 'c_webUrl' && item.mf_fieldName !== 'cbrf_arrivalMethod_id' && item.mf_fieldName !== 'c_carRegNo' && item.mf_fieldName !== 'cbrf_visitReason_id'", [disabled]="item.mf_fieldName === 'c_lastName'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Online Check-In Main Guest', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+
+      .fieldsWrapper.row(*ngSwitchCase="'Online Check-In Additional Persons'")
+        .col-md-4
+          div(*ngFor="let item of changeableFields[1].fields; let i = index")
+            .row(*ngIf="i < 12")
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_mandatory === 'on'", [checked]="item.mf_display === 'on'", (change)="changeStatus('Online Check-In Additional Persons', item)")
+              .col-md-1 
+                input(type="checkbox", *ngIf="item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_addressLine1Plus' && item.mf_fieldName !== 'c_cityPlus' && item.mf_fieldName !== 'c_region' && item.mf_fieldName !== 'c_birthCity' && item.mf_fieldName !== 'c_postBox' && item.mf_fieldName !== 'c_company' && item.mf_fieldName !== 'c_taxNo' && item.mf_fieldName !== 'c_companyRegNo' && item.mf_fieldName !== 'b_comment' && item.mf_fieldName !== 'c_occupation' && item.mf_fieldName !== 'c_occupationBranch' && item.mf_fieldName !== 'c_faxNo' && item.mf_fieldName !== 'c_webUrl' && item.mf_fieldName !== 'cbrf_arrivalMethod_id' && item.mf_fieldName !== 'c_carRegNo' && item.mf_fieldName !== 'cbrf_visitReason_id'", [disabled]="item.mf_fieldName === 'c_lastName'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Online Check-In Additional Persons', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+        .col-md-4
+          div(*ngFor="let item of changeableFields[1].fields; let i = index")
+            .row(*ngIf="i < 20 && i > 11")
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_mandatory === 'on'", [checked]="item.mf_display === 'on'", (change)="changeStatus('Online Check-In Additional Persons', item)")
+              .col-md-1 
+                input(type="checkbox", *ngIf="item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_addressLine1Plus' && item.mf_fieldName !== 'c_cityPlus' && item.mf_fieldName !== 'c_region' && item.mf_fieldName !== 'c_birthCity' && item.mf_fieldName !== 'c_postBox' && item.mf_fieldName !== 'c_company' && item.mf_fieldName !== 'c_taxNo' && item.mf_fieldName !== 'c_companyRegNo' && item.mf_fieldName !== 'b_comment' && item.mf_fieldName !== 'c_occupation' && item.mf_fieldName !== 'c_occupationBranch' && item.mf_fieldName !== 'c_faxNo' && item.mf_fieldName !== 'c_webUrl' && item.mf_fieldName !== 'cbrf_arrivalMethod_id' && item.mf_fieldName !== 'c_carRegNo' && item.mf_fieldName !== 'cbrf_visitReason_id'", [disabled]="item.mf_fieldName === 'c_lastName'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Online Check-In Additional Persons', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+        .col-md-4
+          div(*ngFor="let item of changeableFields[1].fields; let i = index")
+            .row(*ngIf="i > 19")
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_mandatory === 'on'", [checked]="item.mf_display === 'on'", (change)="changeStatus('Online Check-In Additional Persons', item)")
+              .col-md-1 
+                input(type="checkbox", *ngIf="item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_addressLine1Plus' && item.mf_fieldName !== 'c_cityPlus' && item.mf_fieldName !== 'c_region' && item.mf_fieldName !== 'c_birthCity' && item.mf_fieldName !== 'c_postBox' && item.mf_fieldName !== 'c_company' && item.mf_fieldName !== 'c_taxNo' && item.mf_fieldName !== 'c_companyRegNo' && item.mf_fieldName !== 'b_comment' && item.mf_fieldName !== 'c_occupation' && item.mf_fieldName !== 'c_occupationBranch' && item.mf_fieldName !== 'c_faxNo' && item.mf_fieldName !== 'c_webUrl' && item.mf_fieldName !== 'cbrf_arrivalMethod_id' && item.mf_fieldName !== 'c_carRegNo' && item.mf_fieldName !== 'cbrf_visitReason_id'", [disabled]="item.mf_fieldName === 'c_lastName'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Online Check-In Additional Persons', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+
+      .fieldsWrapper.row(*ngSwitchCase="'Enquiry From'")        
+        .col-md-4
+          div(*ngFor="let item of changeableFields[2].fields; let i = index")
+            .row(*ngIf="i < 5")
+              .col-md-1                
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_fieldName === 'c_lastName' || item.mf_fieldName === 'c_eMailAddress'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Enquiry From', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}  
+        .col-md-4
+          div(*ngFor="let item of changeableFields[2].fields; let i = index")
+            .row(*ngIf="i > 4")
+              .col-md-1                
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_fieldName === 'c_lastName' || item.mf_fieldName === 'c_eMailAddress'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Enquiry From', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}} 
+
+      .fieldsWrapper.row(*ngSwitchCase="'Booking Form'")
+        .col-md-4
+          div(*ngFor="let item of changeableFields[3].fields; let i = index")
+            .row(*ngIf="i < 5 || i === 9")
+              .col-md-1                
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_fieldName === 'c_lastName' || item.mf_fieldName === 'c_eMailAddress'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Booking Form', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+            
+        .col-md-4
+          div(*ngFor="let item of changeableFields[3].fields; let i = index")
+            .row(*ngIf="i > 4 && i !== 9")
+              .col-md-1                
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_fieldName === 'c_lastName' || item.mf_fieldName === 'c_eMailAddress'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Booking Form', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+
+      .fieldsWrapper.row(*ngSwitchCase="'Booking Form With Insurance'")
+        .col-md-4
+          div(*ngFor="let item of changeableFields[4].fields; let i = index")
+            .row(*ngIf="i < 5 || i === 9")
+              .col-md-1                
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_fieldName !== 'c_salutation_id' && item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_phoneNo' && item.mf_fieldName !== 'b_actionCode'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Booking Form With Insurance', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+        .col-md-4
+          div(*ngFor="let item of changeableFields[4].fields; let i = index")
+            .row(*ngIf="i > 4 && i !== 9")
+              .col-md-1                
+              .col-md-1 
+                input(type="checkbox", [disabled]="item.mf_fieldName !== 'c_salutation_id' && item.mf_fieldName !== 'c_title' && item.mf_fieldName !== 'c_phoneNo' && item.mf_fieldName !== 'b_actionCode'", [checked]="item.mf_mandatory === 'on'", (change)="changeMandatoryStatus('Booking Form With Insurance', item)")
+              .col-md-8
+                label {{getTranslation(item.mf_fieldName) | translate}}
+
+    .row.my-4 
+      .col-12
+        button.btn.btn-secondary.mr-2((click)="save()", translate) ebc.buttons.save.text
+

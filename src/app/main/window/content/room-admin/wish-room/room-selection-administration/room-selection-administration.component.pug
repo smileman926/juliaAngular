@@ -1,0 +1,10 @@
+app-tabs(
+  *ngIf="tabSettings.buttons.length",
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+app-loading.loading-bar(*ngIf="isLoading | async")
+.content(*ngIf="wishRoomData")  
+  app-room-selection-administration-settings(*ngIf="activeTabId === 'settings'", [wishRoomData]="wishRoomData")
+  app-room-selection-administration-price(*ngIf="activeTabId === 'price_manage'", [wishRoomData]="wishRoomData")
+  app-room-selection-administration-config(*ngIf="activeTabId === 'config'", [wishRoomData]="wishRoomData")

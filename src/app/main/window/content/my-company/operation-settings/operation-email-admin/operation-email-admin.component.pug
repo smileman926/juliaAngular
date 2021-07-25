@@ -1,0 +1,107 @@
+.container  
+  form(*ngIf="form", [formGroup]="form").mt-2
+    .row
+      .col-md-6
+        .wrapper         
+          span.mr-2(translate) ebc.hotelManagement.emailAdmin_emailConfigHeadLine.text    
+          i.mdi.mdi-help-circle-outline(
+            (click)="openReference()",
+            [ngbTooltip]="'BackEnd_WikiLanguage.AcademyLinkToolTip' | translate",
+            placement="right"
+          )
+        .form-group
+          label(translate) ebc.hotelManagement.emailAdmin_fromName.text
+          input(formControlName="c_smtpFromName")
+        .form-group
+          label(translate) ebc.hotelManagement.emailAdmin_fromEMail.text
+          input(type="email", formControlName="c_smtpFromEMail")
+        .form-group
+          label(translate) ebc.hotelManagement.emailAdmin_ReplyToName.text
+          input(formControlName="c_smtpReplyToName")
+        .form-group
+          label(translate) ebc.hotelManagement.emailAdmin_ReplyToEMail.text
+          input(type="email", formControlName="c_smtpReplyToEMail")
+      .col-md-6.mt-3
+        .form-check.mx-4
+          input(type="checkbox", formControlName="c_useCustomSMTP", (ngModelChange)="setIsUseCustEmailSet($event)")
+          label(translate) ebc.hotelManagement.emailAdmin_useCustomSMTP.text
+        form(*ngIf="sendForm", [formGroup]="sendForm") 
+          .form-group
+            label(translate) ebc.hotelManagement.emailAdmin_smtpServer.text
+            input([readonly]="!isUseCustEmailSet", formControlName="c_smtpServer")
+          .form-group
+            label(translate) ebc.hotelManagement.emailAdmin_smtpUserName.text
+            input(type="text", [readonly]="!isUseCustEmailSet", formControlName="c_smtpUserName")
+          .form-group
+            label(translate) ebc.hotelManagement.emailAdmin_smtpPassword.text
+            input([readonly]="!isUseCustEmailSet", type="password",formControlName="c_smtpPassword")
+          .form-group
+            label(translate) ebc.hotelManagement.emailAdmin_smtpPort.text
+            input([readonly]="!isUseCustEmailSet", formControlName="c_smtpPort")
+          .row.mt-3.mx-4.justify-content-between
+            .col-md-6 
+              .row 
+                .col-md-6 
+                  .form-check
+                    input(type="radio", id="ssl" value="ssl" formControlName="c_smtpSsl", (click)="setSSL(true)")
+                    label(translate) ebc.hotelManagement.emailAdmin_smtpSsl.text
+                .col-md-6 
+                  .form-check
+                    input(type="radio", id="tls" value="tls" formControlName="c_smtpSsl", (click)="setSSL(false)")
+                    label(translate) ebc.hotelManagement.emailAdmin_smtpTls.text
+            .col-md-6.text-right
+              .bottom-buttons
+                button.btn.btn-secondary((click)="sendTestEmail()", [disabled]="!isUseCustEmailSet || sendForm.invalid", translate) ebc.hotelManagement.emailAdmin_sendTestMail.text
+    hr.my-4
+    .row 
+      .col-md-8 
+        .title 
+          span(translate) ebc.hotelManagement.emailAdmin_autoSendEMailsHeadLine.text
+        .row.my-1
+          .col-md-6            
+            .row(*ngFor="let item of workFlowIDs; let i=index")
+              .col-md-12
+                .form-check.my-1
+                  input(type="checkbox", [formControl]="form.get('workFlowChecks').controls[i]")
+                  label(translate, [ngSwitch]="item")
+                    span(*ngSwitchCase="2", translate) ebc.hotelManagement.emailAdmin_sendOptionReminder.text
+                    span(*ngSwitchCase="7", translate) ebc.hotelManagement.emailAdmin_safeJourney.text       
+                    span(*ngSwitchCase="8", translate) ebc.hotelManagement.emailAdmin_ThankYouForStaying.text
+                    span(*ngSwitchCase="12", translate) ebc.hotelManagement.emailAdmin_safeJourneyOnBlocks.text 
+                    span(*ngSwitchCase="13", translate) ebc.hotelManagement.emailAdmin_ThankYouForStayingOnBlocks.text
+                    span(*ngSwitchCase="15", translate) ebc.hotelManagement.emailAdmin_paymentsSafeJourney.text
+                    span(*ngSwitchDefault) ...
+          .col-md-6
+            .row.my-2(*ngFor="let groupItem of daysInputLabels; let i = index")
+              .col-md-12
+                .form-group
+                  app-number-input-controls
+                    input.short(
+                      type="text",
+                      appNumberInput,
+                      appSelectOnFocus,
+                      [autoFixErrors]="true", 
+                      [decimals]="0",
+                      [min]="0", 
+                      [formControl]="form.get('daysInput').controls[i]",
+                      autocomplete="off",
+                    )
+                  label.left(translate) {{groupItem}}
+      .col-md-4
+        .title 
+          span(translate) ebc.hotelManagement.emailAdmin_sendEventsHeadline.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_sendEventsAtOffer")
+          label(translate) ebc.hotelManagement.emailAdmin_sendEventsAtOffer.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_sendEventsAtBooking")
+          label(translate) ebc.hotelManagement.emailAdmin_sendEventsAtBooking.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_sendEventsAtReservation")
+          label(translate) ebc.hotelManagement.emailAdmin_sendEventsAtReservation.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_sendEventsAtGoodJourney")
+          label(translate) ebc.hotelManagement.emailAdmin_sendEventsAtGoodJourney.text
+    .row.my-4.mx-4 
+      .col-12.text-right 
+        button.btn.btn-secondary((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text

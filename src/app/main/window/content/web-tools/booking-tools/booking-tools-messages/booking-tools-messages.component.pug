@@ -1,0 +1,29 @@
+.container(*ngIf="textTypes.length > 0").mt-4
+  .row
+    .col-md-4.my-2 
+      app-list-view(
+        [items]="textTypes",
+        [selected]="selectedType?.id",
+        (select)="selectItem($event)"
+      )
+        ng-template(let-item) {{item.type | translate}}
+    .col-md-8.my-2.textVal      
+      label((click)="changeTranslate(selectedType?.pureType)") {{selectedType?.value}}
+      i.mdi.mdi-earth.ml-2((click)="changeTranslate(selectedType?.pureType)")
+  .row
+    .col-md-4.my-3
+    .col-md-8.my-3
+      h1.font-weight-bold(translate) ebc.bookingTools.Message_usableVariables.text
+      .row.my-2 
+        .col-md-4.px-4 
+          p {{'{hotelName}'}}
+          p {{'{hotelAddress}'}}
+          p {{'{hotelPostCodeCity}'}}
+        .col-md-4.px-4 
+          p {{'{hotelPhoneNo}'}}
+          p {{'{hotelEMailAddress}'}}
+          p {{'{hotelWebSite}'}}
+        .col-md-4.px-4
+          p {{'{customerEMailAddress}'}}
+          p {{'{JULIA}'}}
+          p {{'{minStay}'}}

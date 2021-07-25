@@ -1,0 +1,43 @@
+h5 {{ 'BackEnd_WikiLanguage.CATER_Header' | translate }}
+form([formGroup]="form")
+  app-table([items]="caterings", formArrayName="caterings")
+    ng-template(#column, label="BackEnd_WikiLanguage.CATER_Header", let-catering) {{ catering | cateringName }}
+    ng-template(#column, [label]="('BackEnd_WikiLanguage.generic_Active' | translate)+'/Std'", let-catering, let-index="rowIndex")
+      div([formGroupName]="index")
+        input(type="checkbox", formControlName="active", [attr.disabled]="catering.stdDisplayPrice ? '' : undefined")
+        input(type="radio", name="displayPrice", [attr.disabled]="catering.active ? undefined : ''", [value]="catering.typeId", [formControl]="displayPriceControl")
+    ng-template(#column, label="BackEnd_WikiLanguage.generic_AdultPrice", let-catering, let-index="rowIndex")
+      ng-container(*ngIf="(form | getCateringFormControl : index) as formControl")
+        input.editable-cell(
+          AutoSizeInput,
+          [setParentWidth]="true",
+          [includePadding]="false",
+          type="text",
+          appNumberInput,
+          appSelectOnFocus,
+          appFocusOnEnter,
+          [foeMap]="focusOnEnterMaps | getFocusOnEnterMap : undefined",
+          [foeIndex]="index",
+          [formControl]="formControl"
+        )
+        span(*ngIf="(ageGroups?.length > 0) | percentageCalculated : cateringOutOfRoomPrice : otherCateringRelative : displayPriceId : catering.typeId") %
+    ng-template(
+      #column,
+      *ngFor="let ageGroup of ageGroups; let ageIndex = index",
+      [label]="ageGroup.discount | ageGroupFormat : ageGroup.from : ageGroup.to",
+      let-catering,
+      let-index="rowIndex"
+    )
+      ng-container(*ngIf="(displayPriceId !== catering.typeId || !(cateringOutOfRoomPrice && otherCateringRelative)) && (form | getCateringFormControl : index : ageIndex) as formControl")
+        input.editable-cell(
+          AutoSizeInput,
+          [setParentWidth]="true",
+          [includePadding]="false",
+          type="text",
+          appNumberInput,
+          appSelectOnFocus,
+          appFocusOnEnter,
+          [foeMap]="focusOnEnterMaps | getFocusOnEnterMap : ageGroup.id",
+          [foeIndex]="index",
+          [formControl]="formControl"
+        )

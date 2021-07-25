@@ -1,0 +1,46 @@
+.container.my-4(*ngIf="portalAATData") 
+  .row.my-2 
+    .col-md-6.form-group 
+      label(translate) ebc.portalAAT.description.text
+      select.w100([(ngModel)]="currentLocale", (ngModelChange)="changeLocale()", [disabled]="isDisableAll")
+        option(value="1", translate) BackEnd_WikiLanguage.localeDescEnUk
+        option(value="2", translate) BackEnd_WikiLanguage.localeDescDeAt        
+    .col-md-6.text-right
+      label.px-4(*ngIf="currentStatus", [style.background-color]="currentStatus.color") {{currentStatus.label}}
+        span.ml-2 
+          i([class]="currentStatus.icon") 
+  .row 
+    .col-md-6.form-group
+      textarea([(ngModel)]="shortDescription", (ngModelChange)="changeShortDescription()", [disabled]="isDisableAll")
+  .row.mt-3
+    .col-md-12
+      label.title(translate) ebc.portalAAT.categories.text
+    .col-md-3.form-group.my-1(*ngFor="let item of portalAATData.categories")
+      input(type="checkbox", [(ngModel)]="item.active", (ngModelChange)="changeItemActivity('categories', item, $event)", [disabled]="isDisableAll")
+      label(translate) {{ item.c_code | getCheckBoxLabel:'c' }}
+  .row.mt-3 
+    .col-md-12
+      label.title(translate) ebc.portalAAT.equipment_services.text
+    .col-md-3.form-group.my-1(*ngFor="let item of portalAATData.facilities")
+      input(type="checkbox", [(ngModel)]="item.active", (ngModelChange)="changeItemActivity('facilities', item, $event)", [disabled]="isDisableAll")
+      label(translate) {{ item.f_code | getCheckBoxLabel:'f' }}
+  .row.mt-3
+    .col-md-12
+      label.title(translate) ebc.portalAAT.destination.text
+    .col-md-3.form-group.my-1(*ngFor="let item of portalAATData.locations")
+      input(type="checkbox", [(ngModel)]="item.active", (ngModelChange)="changeItemActivity('locations', item, $event)", [disabled]="isDisableAll")
+      label(translate) {{ item.l_code | getCheckBoxLabel:'l' }}
+    .col-md-12
+      .showMissingToolTip(*ngIf="showMissingToolTip && isMouseEnter", [innerHTML]="showMissingToolTipStr")
+      .buttons
+        i.mr-4.mdi.mdi-information(
+          [ngbTooltip] = "'ebc.portalAAT.info.text' | translate",
+          placement = "left"
+        )
+        button.btn.btn-primary.mr-2((click)="submit()", [disabled]="isDisableSubmit || isDisableAll", translate) ebc.buttons.submit.text
+        button.btn.btn-secondary(
+          (mouseenter) = "mouseEnter(true)",
+          (mouseleave) = "mouseEnter(false)",
+          (click)="save()",
+          [disabled]="isDisableSave || isDisableAll",
+          translate) ebc.buttons.save.text

@@ -1,0 +1,64 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+.row(*ngIf="!(isPricingLoading | async) && !!pricesMainTabService.pricing && !!pricesMainTabService.cateringTypes")
+  .col.col-8
+    app-catering-prices(
+      *ngIf="hasCaterings",
+      [(caterings)]="pricesMainTabService.pricing.caterings",
+      [ageGroups]="pricesMainTabService.showAgeGroupsForCaterings ? pricesMainTabService.pricing.ageGroups : []",
+      [cateringTypes]="pricesMainTabService.cateringTypes",
+      [cateringOutOfRoomPrice]="pricesMainTabService.cateringOutOfRoomPrice",
+      [formsSaved]="saved",
+      [otherCateringRelative]="pricesMainTabService.otherCateringRelative",
+      (formDirtyChange)="pricesMainTabService.setFormDirtyState('caterings', $event)",
+    )
+    app-catering-scheme-selector(
+      [(cateringId)]="pricesMainTabService.displayCateringId",
+      [caterings]="pricesMainTabService.pricing.caterings | filterActive",
+      [formsSaved]="saved",
+      [(pricingSchemeId)]="pricesMainTabService.pricing.pricingSchemeId",
+      [pricingSchemes]="pricesMainTabService.pricingLangSchemes",
+      [showCateringDropdown]="pricesMainTabService.hasCateringsScheme",
+      (formDirtyChange)="pricesMainTabService.setFormDirtyState('pricingScheme', $event)",
+    )
+    app-person-prices(
+      [ageGroups]="pricesMainTabService.pricing.ageGroups",
+      [cateringId]="pricesMainTabService.displayCateringId",
+      [formsSaved]="saved",
+      [fullPayers]="pricesMainTabService.pricing.settings.childDiscountStartPosition",
+      [pricingScheme]="pricesMainTabService.pricing.pricingSchemeId | getPricingSchemeType : pricesMainTabService.pricingSchemes",
+      [prices]="pricesMainTabService.pricing.prices | filterPrices : pricesMainTabService.pricing.settings.minPersons : pricesMainTabService.pricing.settings.maxPersons",
+      (pricesChange)="pricesMainTabService.updatePrices($event)",
+      [stdPricePosition]="pricesMainTabService.pricing.settings.stdPricePosition",
+      (formDirtyChange)="pricesMainTabService.setFormDirtyState('pricing', $event)",
+    )
+  .col.col-4
+    ng-container(*ngTemplateOutlet="additionalInfoTemplate; context: {pricing: pricesMainTabService.pricing}")
+    app-age-groups(
+      *ngIf="pricesMainTabService.showAgeGroups",
+      [(ageGroups)]="pricesMainTabService.pricing.ageGroups",
+      (ageGroupsChange)="pricesMainTabService.ageGroupEdited()",
+      [canReset]="canResetGroups",
+      [formsSaved]="saved",
+      (addGroup)="pricesMainTabService.addAgeGroup()",
+      (deleteGroup)="pricesMainTabService.deleteAgeGroup($event)",
+      (formDirtyChange)="pricesMainTabService.setFormDirtyState('ageGroups', $event)",
+      (resetGroups)="pricesMainTabService.resetGroups().catch()"
+    )
+    app-settings(
+      [(pricingSettings)]="pricesMainTabService.pricing.settings",
+      [showCleanupCharge]="source.type === 'category' && pricesMainTabService.cleanUpChargeActive",
+      [formsSaved]="saved",
+      [pricingScheme]="pricesMainTabService.pricing.pricingSchemeId | getPricingSchemeType : pricesMainTabService.pricingSchemes",
+      (formDirtyChange)="pricesMainTabService.setFormDirtyState('settings', $event)",
+    )
+
+.button-controls
+  .main
+    button.btn.btn-secondary((click)="pricesMainTabService.savePricing(!canSaveForAll).catch()", translate)
+      | BackEnd_WikiLanguage.generic_Save
+    button.btn.btn-secondary(*ngIf="canSaveForAll", (click)="pricesMainTabService.savePricing(true).catch()", translate)
+      | BackEnd_WikiLanguage.generic_SaveForAll
+    button.reset.btn.btn-secondary(*ngIf="source.type === 'apartment'", (click)="pricesMainTabService.resetApartment().catch()", translate)
+      | BackEnd_WikiLanguage.generic_Reset
+  .secondary
+    ng-container(*ngTemplateOutlet="extraActionsTemplate; context: {period: period, hasChanges: pricesMainTabService.hasChanges}")

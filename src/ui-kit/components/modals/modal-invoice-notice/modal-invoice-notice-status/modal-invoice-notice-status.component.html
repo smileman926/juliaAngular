@@ -1,0 +1,25 @@
+<div class="invoice-notice">
+  <div
+    class="header"
+    [class.danger]="invoiceStatus === InvoiceStatus.LAWSUIT"
+  >{{ this.attentionText}}</div>
+  <div class="d-flex flex-row mt-3 mb-4">
+    <div class="mx-3">
+      <i
+        class="mdi mdi-alert-circle"
+        [class.danger]="invoiceStatus === InvoiceStatus.LAWSUIT"
+      ></i>
+    </div>
+    <div class="border-left px-3">
+      <h2>{{ this.salutationText }}</h2>
+      <p class="notice-text" [innerHtml]="this.noticeText"></p>
+    </div>
+  </div>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    *ngIf="!hideCloseButton"
+    [disabled]="disableClose"
+    (click)="cancel.emit()"
+  >{{ 'modal.invoiceNoticeClose.text' | translate}} <span *ngIf="this.closeAfterXSeconds > 0">({{closeAfterXSeconds}})</span></button>
+</div>

@@ -1,0 +1,95 @@
+form(*ngIf="form", [formGroup]="form")
+  .row
+    .col-md-6
+      .title
+        span(translate) ebc.hotelManagement.general_companyInfoHeadLine.text
+      .form-group
+        label(translate) ebc.hotelManagement.general_companyName.text
+        input(formControlName="c_name")
+      .form-group
+        label(translate) ebc.hotelManagement.general_address.text
+        input(formControlName="c_addressLine1")
+      .form-group
+        label(translate) ebc.hotelManagement.general_plz.text
+        input(formControlName="c_postCode")
+      .form-group
+        label(translate) ebc.hotelManagement.general_city.text
+        input(formControlName="c_city")
+      .form-group
+        label(translate) ebc.hotelManagement.general_subCountry.text
+        input(formControlName="c_district")
+      .form-group
+        label(translate) ebc.hotelManagement.general_country.text
+        input(formControlName="c_country")
+      .form-group
+        label(translate) ebc.hotelManagement.general_uidNr.text
+        input(formControlName="c_taxNo")
+      .form-group
+        label(translate) ebc.hotelManagement.general_usedLocale.text
+        select(formControlName="c_beLocale_id")
+          option(*ngFor="let lang of locales; let i = index", [value]="lang.value", translate) BackEnd_WikiLanguage.{{lang.name}}
+    .col-md-6 
+      .title
+        span(translate) ebc.hotelManagement.general_contactInfoHeadLine.text
+      .form-group
+        label(translate) ebc.hotelManagement.general_contactName.text
+        input(formControlName="c_contactName")
+      .form-group
+        label(translate) ebc.hotelManagement.general_tel.text
+        input(formControlName="c_tel")
+      .form-group
+        label(translate) ebc.hotelManagement.general_tel2.text
+        input(formControlName="c_tel2")
+      .form-group
+        label(translate) ebc.hotelManagement.general_fax.text
+        input(formControlName="c_fax")
+      .form-group
+        label(translate) ebc.hotelManagement.general_email.text
+        input(type="email", formControlName="c_eMail")
+      .form-group
+        label(translate) ebc.hotelManagement.general_website.text
+        input(formControlName="c_webSite")
+      .form-group
+        label(translate) ebc.hotelManagement.general_JuliaSubSite.text
+        input(formControlName="c_iframedWebsiteURL")
+  .row 
+    .col-md-6 
+      .title
+        span(translate) ebc.hotelManagement.general_socialMediaHeadLine.text
+      .form-group
+        label(translate) ebc.hotelManagement.general_fbShare.text
+        input(formControlName="c_fbShareURL")
+      .form-group
+        label(translate) ebc.hotelManagement.general_fbProfil.text
+        input(formControlName="c_facebookUrl")
+      .form-group
+        label(translate) ebc.hotelManagement.general_twitter.text
+        input(formControlName="c_twitterUrl")   
+      .form-group
+        label(translate) ebc.hotelManagement.general_youtube.text
+        input(formControlName="c_youtubeUrl")
+      .form-group
+        label(translate) ebc.hotelManagement.general_googlePlus.text
+        input(formControlName="c_googlePlusUrl")
+    .col-md-6 
+      .title
+        span(translate) ebc.hotelManagement.general_hotelPicturesHeadLine.text
+      .row 
+        .col-md-6
+            .preview 
+              img([src]="pic1")
+            .buttons 
+              button((click)="addImage(1)", translate) ebc.buttons.add.text
+              button((click)="deleteImage(1)", translate) ebc.buttons.delete.text
+        .col-md-6
+            .preview 
+              img([src]="pic2")
+            .buttons 
+              button((click)="addImage(2)", translate) ebc.buttons.add.text
+              button((click)="deleteImage(2)", translate) ebc.buttons.delete.text
+        .col-md-12.my-2
+          span(data-i18n="hotelManagement.general_optimalFormat.text", translate) (Optimales Format 600 x 400 oder größer)
+  .row.mt-3 
+    .col-md-12.text-right
+      .bottom-buttons
+        button.btn.btn-secondary((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text

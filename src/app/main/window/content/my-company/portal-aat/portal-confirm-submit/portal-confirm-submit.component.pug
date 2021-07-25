@@ -1,0 +1,6 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+.container 
+  .row 
+    .col-12.wrapper
+      input.mr-1(type="checkbox", [ngClass]="{'isInvalid': !isActive && isInvalid}", [(ngModel)]="isActive", (ngModelChange)="changeActivity($event)")
+      label([ngClass]="{'isInvalid': !isActive && isInvalid}", translate) ebc.portalAAT.modal.text 

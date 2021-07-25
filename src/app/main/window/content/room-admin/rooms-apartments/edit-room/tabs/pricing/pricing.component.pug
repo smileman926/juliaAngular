@@ -1,0 +1,38 @@
+app-pricing-settings(
+  *ngIf="item",
+  #settings,
+  [source]="{ id: item.id, type: 'apartment' }",
+  [canResetGroups]="false",
+  [hasCaterings]="false",
+  [extraActionsTemplate]="extraActions",
+  [additionalInfoTemplate]="additionalInfo",
+  (saved)="edited.emit()",
+)
+  ng-template(#extraActions, let-period="period", let-hasChanges="hasChanges")
+    .button-wrap(
+      [ngbTooltip]="hasChanges ? ('BackEnd_WikiLanguage.EMA_ChangesHaveToBeSavedMessage' | translate) : undefined",
+      placement="top-right"
+    )
+      button.btn.btn-secondary(
+        (click)="copyTo(period).catch()",
+        [disabled]="hasChanges",
+        translate
+      )
+        | BackEnd_WikiLanguage.generic_copyTo
+    .button-wrap(
+      [ngbTooltip]="hasChanges ? ('BackEnd_WikiLanguage.EMA_ChangesHaveToBeSavedMessage' | translate) : undefined",
+      placement="top-right"
+    )
+      button.btn.btn-secondary(
+        (click)="openTestingPriceConsole(period)",
+        [disabled]="hasChanges",
+        translate
+      )
+        | BackEnd_WikiLanguage.EMA_SendTestEmailNow
+  ng-template(#additionalInfo, let-pricing='pricing')
+    .info(*ngIf="pricing.seasonPeriodId === 0; else groupLevel", translate)
+      | BackEnd_WikiLanguage.EP_RoomLevelPricing
+    ng-template(#groupLevel)
+      .info
+        .label(translate) BackEnd_WikiLanguage.EP_EntityGroupLevelPricing
+        span {{pricing.categoryName}}

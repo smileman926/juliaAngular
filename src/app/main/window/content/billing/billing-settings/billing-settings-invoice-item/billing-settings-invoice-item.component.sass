@@ -1,0 +1,29 @@
+.container
+  height: 100%
+
+  form
+    display: flex
+    padding-top: 1em
+    flex-direction: column
+    justify-content: space-between
+    height: 100%
+    padding-top: 1em
+
+    .wrapper
+      display: flex
+      justify-content: space-between
+
+      .mdi
+        cursor: pointer
+        font-size: 18px
+        transition: .5s
+        color: #555
+        &.help   
+          color: #1891eb
+        &.poRight
+          position: absolute
+          right: 10px
+
+    .form-check   
+      input        
+        margin-right: .5em

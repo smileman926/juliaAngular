@@ -1,0 +1,29 @@
+<ng-container *ngIf="(view$ | async) === 'upselling'">
+  <div class="order">
+    <button
+      class="btn btn-primary width-100"
+      [disabled]="!formState"
+      (click)="buttonPress.emit({ type: 'submit' })"
+    >{{ labels?.orderButton | translate }}</button>
+  </div>
+  <div class="modal-footer">
+    <div *ngFor="let button of buttons" class="shortcut-link">
+      <span *ngIf="(button.info | translate) as info">{{ info }}</span>
+      <button
+        type="button"
+        class="btn btn-link"
+        [class.btn-primary]="button.primary"
+        [class.btn-secondary]="!button.primary"
+        (click)="buttonPress.emit(button.action)"
+      >{{ button.label | translate }}</button>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="(view$ | async) === 'thankYou'">
+  <div class="thankYou">
+    <button
+      class="btn btn-primary"
+      (click)="buttonPress.emit({ type: 'close' } )"
+    >{{ 'BackEnd_WikiLanguage.generic_Close' | translate }}</button>
+  </div>
+</ng-container>

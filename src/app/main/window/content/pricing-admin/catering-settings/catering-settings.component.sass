@@ -1,0 +1,62 @@
+@import '_variables'
+
+\:host
+  display: flex
+  flex-direction: column
+  height: 100%
+
+  form
+    height: 100%
+    display: flex
+    flex-direction: column
+    padding: 1rem
+    label
+      margin: 0
+      white-space: nowrap
+
+    .row
+      margin: 0
+      [class*=col-]
+        padding: 0
+
+    .config
+      padding-bottom: 1rem
+      margin-bottom: 1rem
+      border-bottom: solid 1px $gray-300
+      .config-options
+        display: flex
+        flex-wrap: nowrap
+        align-items: center
+
+    .details
+      display: flex
+      align-content: stretch
+      height: 100%
+      .sidebar
+        display: flex
+        flex-direction: column
+        width: 29%
+        height: inherit
+        app-list-view
+          flex: 1
+
+      content
+        display: flex
+        flex-direction: column
+        flex: 1
+        padding: 0 0 0 2rem
+        overflow-y: auto
+        position: relative
+        .content-container
+          flex: 1 1 auto
+          .scrollable
+            overflow-y: auto
+            height: 100%
+          .catering-name
+            display: flex
+            align-items: center
+            .form-group
+              margin-bottom: 0
+              margin-right: 1rem
+              label
+                margin-right: 1rem

@@ -1,0 +1,61 @@
+.container
+  .row.my-4.px-2(*ngIf="!isShowPrice")
+    .col-md-3.px-3.py-3.imgWrapper
+      img([src]="remoteUrl + 'wo/Services/com/advertisementScreens/meldewesen_icon.png'", alt="meldewesen")
+      hr.my-3
+      a.btn.btn-primary(href="https://www.easybooking.eu/contact/contact", target="_blank", rel="noopener noreferrer", translate) BackEnd_WikiLanguage.adScreens_button_orderNow
+    .col-md-9.px-4.py-3
+      h1.mb-4(translate) BackEnd_WikiLanguage.adScreens_wwna_headline
+      p.mb-4
+        b(translate) BackEnd_WikiLanguage.adScreens_wwna_subHeadline
+      p.mb-4(translate) BackEnd_WikiLanguage.adScreens_wwna_text
+      p.mb-4(translate) BackEnd_WikiLanguage.adScreens_textGetInformToday
+      a.btn.btn-primary(href="https://www.easybooking.eu/produkte/julia-hotelsoftware", target="_blank", rel="noopener noreferrer", translate) BackEnd_WikiLanguage.CCA_MoreInformation
+  form(*ngIf="isShowPrice && form", [formGroup]="form")
+    .row.my-3
+      .col-md-7
+        .row
+          .col-md-6
+            p(translate) ebc.bookingTools.Message_priceOMeterTextBig.text
+            label.right.big.ml-4.mr-2((click)="changeTranslate(textTypes[0].pureType)") {{textTypes[0].value}}
+            i.mdi.mdi-earth((click)="changeTranslate(textTypes[0].pureType)")
+            p.maxChars max 18 chars
+            p(translate) ebc.bookingTools.Message_priceOMeterTextSmall.text
+            label.right.ml-4.mr-2((click)="changeTranslate(textTypes[1].pureType)") {{textTypes[1].value}}
+            i.mdi.mdi-earth((click)="changeTranslate(textTypes[1].pureType)")
+            p.maxChars max 30 chars
+          .col-md-6.mt-4
+            .row.px-2
+              .col-md-12.my-3
+                .picker
+                  .pick-color([(colorPicker)]="corIdentityList.ci_priceOMeterButtonMainColor", [cpPosition]="'bottom-right'", [style.background]="corIdentityList.ci_priceOMeterButtonMainColor")
+                  label.ml-2.shadowlb([style.color]="corIdentityList.ci_priceOMeterButtonMainColor", translate) ebc.bookingTools.priceOMeter_ButtonMainColor.text
+              .col-md-12.my-3.px-3.py-3([style.background]="corIdentityList.ci_priceOMeterButtonMainColor")
+                .picker
+                  .pick-color([(colorPicker)]="corIdentityList.ci_priceOMeterButtonFontColor", [cpPosition]="'bottom-right'", [style.background]="corIdentityList.ci_priceOMeterButtonFontColor")
+                  label.ml-2.shadowlb([style.color]="corIdentityList.ci_priceOMeterButtonFontColor", translate) ebc.bookingTools.priceOMeter_ButtonFontColor.text
+
+              .col-md-12.my-3
+                .picker
+                  .pick-color([(colorPicker)]="corIdentityList.ci_priceOMeterPriceFontColor", [cpPosition]="'bottom-right'", [style.background]="corIdentityList.ci_priceOMeterPriceFontColor")
+                  label.ml-2.shadowlb([style.color]="corIdentityList.ci_priceOMeterPriceFontColor", translate) ebc.bookingTools.priceOMeter_PriceFontColor.text
+
+        .row.my-4
+          .col-md-8
+            label(translate) ebc.bookingTools.priceOMeter_customFeratelNameText.text
+          .col-md-4.text-right
+            .form-group
+              input.left(type="text", formControlName="ci_priceOMeterCustomFeratelName", maxLength="18")
+            label.my-0 max 18 chars
+        .row
+          .col-md-12.wrapper
+            i.mr-2.mdi.mdi-help-circle-outline.help
+            label(translate) ebc.bookingTools.priceOMeter_priceCalculationRuleWarning.text
+
+      .col-md-4.offset-md-1
+        i.mdi.mdi-help-circle-outline.help.poRight((click)="openReference()")
+        iframe([src]="urlSafe", frameborder="0", width="100%", height="380px")
+
+    .row.my-4
+      .col-12
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid", translate) ebc.buttons.save.text

@@ -1,0 +1,61 @@
+.container
+  app-loading.loading-bar(*ngIf="isLoading | async") 
+  .row 
+    .col-8 
+      .row
+        .col-4
+          label(translate) ebc.forms.from.text  
+        .col-4 
+          label(translate) ebc.forms.until.text 
+        .col-4
+          label(translate) ebc.supportForm.description.text
+  .row(*ngFor="let item of taxPeriodsList; index as i; last as isLast")
+    .col-8
+      .row
+        .col-4.form-group
+          app-datepicker-input(
+            [date]="item.tp_from",
+            (dateChange)="changeFromDate($event,item)",
+            [inputId]="'from-date'",
+            [disabled]="(!compareWithToday(item) && !item.isCurrentPeriod) || (!(compareWithToday(item) || !item.tp_created))",
+            [minDate]="minStartDate"
+          )
+        .col-4.form-group
+          app-datepicker-input(
+            [date]="item.tp_until",
+            (dateChange)="changeUntilDate($event,item)",
+            [inputId]="'from-date'",
+            [disabled]="(compareWithToday(item) && item.isCurrentPeriod && item.tp_autoSaved === '1') || (!compareWithToday(item) && !item.isCurrentPeriod) || isLast",
+            [minDate]="minStartDate"
+          )
+        .col-4.form-group 
+          input(
+            type="text",
+            [readonly]="!(item.isCurrentPeriod && item.tp_autoSaved === '0') && !compareWithToday(item)",
+            [value]="item.tp_description",
+            (change)="changeDescription($event,item)"
+          )
+
+    .col-4
+      i.mdi.mdi-close.close(
+        *ngIf="compareWithToday(item) || !item.tp_created",
+        (click)="deletePeriod(item, !item.tp_created)",
+        [ngbTooltip]="'ebc.invoiceSettings.deletePeriod.text' | translate",
+        placement="bottom"
+      )
+      label(*ngIf="item.isCurrentPeriod && item.tp_autoSaved === '0' && item.tp_created", translate) ebc.invoiceSettings.currentPeriod.text
+      div(*ngIf="item.tp_autoSaved === '1'")
+        label.mr-2(translate) ebc.invoiceSettings.autoSaved.text
+        ng-template(#popoverContent)
+          div(
+            [innerHTML]="autoSavedTooltip[item.tp_id] | translate"
+          )
+        i.mdi.mdi-information(
+          [ngbPopover]="popoverContent",
+          triggers="mouseenter:mouseleave",
+          placement="left"
+        )
+  .row.mt-2 
+    .col-12 
+      button.btn.btn-secondary.mr-2((click)="addPeriod()") +
+

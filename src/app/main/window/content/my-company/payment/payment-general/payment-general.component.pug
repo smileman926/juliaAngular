@@ -1,0 +1,70 @@
+.container
+  form.my-4(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-6
+        p.title(translate) ebc.reports.paymentMethods.text
+        .row(*ngFor="let item of enabledPaymentMethods; let paymentMethodIndex=index")
+          .col-md-12.form-group.my-2
+            label.left {{ paymentMethodLabels[item] | translate }}
+            ui-switch(
+              color="#5cb85c",
+              switchColor="#ffffff",
+              size="small",
+              [formControl]="form.get('payMethods').controls[paymentMethodIndex]",
+              (change)="onChange($event, paymentMethodIndex)")
+      .col-md-6
+        p.title(translate) ebc.payment.prepaymentTitle.text
+        .form-group.my-2
+          input(type="checkbox", formControlName="c_prePaymentActive")
+          label(translate) ebc.payment.prepaymentActive.text
+        .form-group.my-2
+          app-number-input-controls
+            input(
+              type="text",
+              appNumberInput,
+              formControlName="c_prePaymentDaysAfterBooking",
+              [decimals]="0",
+              [min]=0
+            )
+          label(translate) ebc.payment.prepaymentDaysAfterBooking.text
+        .form-group.my-2
+          app-number-input-controls
+            input(
+              type="text",
+              appNumberInput,
+              formControlName="c_prePaymentPerc",
+              [decimals]="0",
+              [min]=0
+            )
+          label(translate) %
+        .row
+          .col-md-5.form-group.my-2(*ngIf="currencyTypes.length > 1")
+            label(translate) ebc.payment.activeCountryCurrency.text
+            select(formControlName="c_currency_id")
+              option(*ngFor="let item of currencyTypes", [value]="item.c_id") {{item.c_name}} -
+                span([innerHtml]="item.c_symbol")
+        .form-group.my-2
+          input(type="checkbox", formControlName="c_prePaymentHideBankTransfer")
+          label(translate) ebc.payment.prePaymentHideBankTransfer.text
+        .form-group.my-2
+          input(type="checkbox", formControlName="c_prePaymentUntilDaysBeforeBookingActive")
+          label(translate) ebc.payment.prePaymentUntilDaysBeforeBooking_beforeTextField.text
+          app-number-input-controls
+            input(
+              type="text",
+              appNumberInput,
+              formControlName="c_prePaymentUntilDaysBeforeBooking",
+              [decimals]="0",
+              [min]=0
+            )
+          label(translate) ebc.payment.prePaymentUntilDaysBeforeBooking_afterTextField.text
+        .form-group.my-2
+          input(type="checkbox", formControlName="c_sendEmailGuest")
+          label(translate) ebc.payment.prepaymentGuestReminder.text
+        .form-group.my-2
+          input(type="checkbox", formControlName="c_sendEmailAdmin")
+          label(translate) ebc.payment.prepaymentAdminReminder.text
+        .row
+          .col-12.mt-3
+            button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid", translate) ebc.buttons.save.text
+

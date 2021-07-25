@@ -1,0 +1,89 @@
+form
+  display: flex
+  flex-wrap: wrap
+  padding-top: 1em
+
+  .form-group label
+    width: 75px
+    text-align: right
+    margin-right: .5em
+    white-space: nowrap
+
+    .active
+      visibility: hidden
+
+  .form-check label
+    width: 83px
+    text-align: right
+    margin-right: .5em
+
+  .showWizard
+    width: 150px!important
+
+  .form-group-item
+    display: flex
+    align-items: center
+
+    > *
+      flex: auto
+
+    select
+      flex-basis: 0
+      margin-right: 0
+      margin-top: 0
+
+  .form-group
+    display: flex
+
+    &.datepicker-wrapper app-datepicker-input
+      width: 100%
+
+    .buttons
+      display: flex
+
+      button
+        margin-left: 6px
+        width: 25px
+
+    .agetype
+      padding-left: 0px
+      padding-right: 0px
+
+      .agetype-interval label
+        width: 100%
+
+    .untilgroup
+      padding-right: 0px
+
+    .dateselect
+      padding-right: 0
+
+  .form-row
+    width: 100%
+    margin-left: 14px
+
+  .form-list
+    display: flex
+    align-items: center
+    margin-top: 5px
+
+  .row
+    width: 100%
+    margin-left: 0px
+
+    .amount
+      display: flex
+      padding-right: 0px
+      padding-left: 11px
+
+      input
+        text-align: end
+
+      .percentadd
+        padding-right: 21px
+
+      .percent
+        position: absolute
+        right: 0px
+        top: 5px
+        width: 10px

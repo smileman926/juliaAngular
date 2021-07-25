@@ -1,0 +1,18 @@
+app-tabs(
+  *ngIf="tabSettings.buttons.length",
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+.content 
+  app-loading.loading-bar(*ngIf="isLoading | async")
+  app-booking-tools-gapfilter(*ngIf="activeTabId === 'Gap Filler'")
+  app-booking-tools-layout(*ngIf="activeTabId === 'Layout'")
+  app-booking-tools-locales(*ngIf="activeTabId === 'Locales'")
+  app-booking-tools-messages(*ngIf="activeTabId === 'Messages'")
+  app-booking-tools-partner(*ngIf="activeTabId === 'Partner'")
+  app-booking-tools-pricemeter(*ngIf="activeTabId === 'Price-O-Meter'")
+  app-booking-tools-requires(*ngIf="activeTabId === 'Required Fields'")
+  app-booking-tools-sara(*ngIf="activeTabId === 'SARA App'")
+  app-booking-tools-settings(*ngIf="activeTabId === 'Settings'")
+  app-booking-tools-texts(*ngIf="activeTabId === 'Texts'")
+  

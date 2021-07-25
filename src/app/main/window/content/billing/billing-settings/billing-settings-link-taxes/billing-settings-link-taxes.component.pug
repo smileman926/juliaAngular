@@ -1,0 +1,115 @@
+.container.mt-3(*ngIf="taxPeriodsList.length > 0")
+  .row
+    .col-7.offset-5.form-group 
+      select([(ngModel)]="selectedPeriodId", (change)="changeTaxPeriodId()")
+        option(*ngFor="let item of taxPeriodsList", [value]="item.tp_id", translate) {{getTaxPeriodName(item)}}
+  .row 
+    .col-4.form-group 
+      label.taxLabel(translate) ebc.invoiceSettings.entity.text
+      select.taxSelect([(ngModel)]="selectedRoomPriceId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('Entity', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+  .row 
+    .col-4.form-group
+      label.taxLabel(translate) ebc.invoiceSettings.catering.text
+      select.taxSelect([(ngModel)]="selectedCateringId", [disabled]="isCombineCatering || isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('Catering', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+    .col-8
+      .row(*ngIf="isCombineCatering") 
+        .col-3.form-group
+          label(translate) ebc.invoiceSettings.food.text
+          select.taxSelect([(ngModel)]="selectedFoodId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('Food', $event.target.value)")
+            option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+        .col-4.form-group
+          label(translate) ebc.invoiceSettings.beverage.text
+          select.taxSelect([(ngModel)]="selectedBeverageId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('Beverage', $event.target.value)")
+            option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+        .col-5.form-group
+          input(type="checkbox", value="!isCombineCatering", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeSplitCheckbox(false)")
+          label.my-0(translate) ebc.invoiceSettings.combineCatering.text 
+      .row(*ngIf="!isCombineCatering")
+        .col-12.form-group 
+          input(type="checkbox", value="isCombineCatering", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeSplitCheckbox(true)")
+          label.my-0(translate) ebc.invoiceSettings.splitCatering.text 
+  .row 
+    .col-4.form-group
+      label.taxLabel(translate) ebc.invoiceSettings.visitorsTax.text
+      select.taxSelect([(ngModel)]="selectedVisitorTaxId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('VisitorsTax', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+  .row 
+    .col-4.form-group 
+      label.taxLabel(translate) ebc.invoiceSettings.petCharge.text
+      select.taxSelect([(ngModel)]="selectedPetChargeId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('PetCharge', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+    .col-4.offset-4(*ngIf="isCombineCatering")
+      label(translate) ebc.invoiceSettings.splitCateringHeader.text
+      i.mdi.mdi-information(
+        [ngbTooltip] = "'ebc.invoiceSettings.cateringSplitInfo.text' | translate",
+        placement="bottom-right"
+      )
+  .row 
+    .col-4.form-group 
+      label.taxLabel(translate) ebc.invoiceSettings.cleanupCharge.text
+      select.taxSelect([(ngModel)]="selectedCleanupChargeId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('CleanupCharge', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+    .col-4.text-right(*ngIf="isCombineCatering")
+      label(translate) ebc.invoiceSettings.chooseCatering.text  
+    .col-3.form-group(*ngIf="isCombineCatering") 
+      select([(ngModel)]="selectedTaxCateringId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxCateringId()")
+        option(*ngFor="let item of taxCatering", [value]="item.stl_name", translate) {{item.stl_name}}
+  .row 
+    .col-4.form-group 
+      label.taxLabel(translate) ebc.invoiceSettings.discount.text
+      select.taxSelect([(ngModel)]="selectedDiscountId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('Discount', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+    .col-4.text-right(*ngIf="isCombineCatering")
+      label(translate) ebc.invoiceSettings.food.text  
+    .col-2.form-group(*ngIf="isCombineCatering") 
+      select.taxSelect([(ngModel)]="selectedTaxFoodId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeSplitCateringRate('food')")
+        option(*ngFor="let item of percentageList", [value]="item", translate) {{item}} %
+
+  .row 
+    .col-4.form-group 
+      label.taxLabel(translate) ebc.invoiceSettings.shortStayCharge.text
+      select.taxSelect([(ngModel)]="selectedShortStayChargeId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('ShortStayCharge', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+    .col-4.text-right(*ngIf="isCombineCatering")
+      label(translate) ebc.invoiceSettings.beverage.text  
+    .col-2.form-group(*ngIf="isCombineCatering") 
+      select.taxSelect([(ngModel)]="selectedTaxBeverageId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeSplitCateringRate('beverage')")
+        option(*ngFor="let item of percentageList", [value]="item", translate) {{item}} %
+
+  .row 
+    .col-4.form-group
+      label.taxLabel(translate) ebc.invoiceSettings.cotCharge.text
+      select.taxSelect([(ngModel)]="selectedCotChargeId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('CotCharge', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+  .row 
+    .col-4.form-group
+      label.taxLabel(translate) ebc.invoiceSettings.garage.text
+      select.taxSelect([(ngModel)]="selectedGarageChargeId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('GarageCharge', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+  .row 
+    .col-4.form-group
+      label.taxLabel(translate) ebc.invoiceSettings.otherCharges.text
+      select.taxSelect([(ngModel)]="selectedChargingSchemeChargeId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('ChargingSchemeCharge', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+  .row 
+    .col-4.form-group
+      label.taxLabel(translate) ebc.invoiceSettings.wishRoom.text
+      select.taxSelect([(ngModel)]="selectedWishRoomId", [disabled]="isTaxTableDisabled || showDisabledTooltip", (change)="changeTaxIdOfTaxTable('WishRoom', $event.target.value)")
+        option(*ngFor="let item of taxList", [value]="item.t_id", translate) {{item.t_name}}
+
+  .row
+    .col-5.offset-7
+      div.text-right([ngbTooltip]="getDisableToolTip() | translate", placement="left-bottom")
+        button.btn.btn-primary.mr-2(
+          (click)="goToSettings()",        
+          translate,
+          [disabled]="showDisabledTooltip"
+        ) ebc.tabs.settings.text
+        button.btn.btn-secondary.mr-2(
+          (click)="save()",
+          translate,
+          [disabled]="showDisabledTooltip"
+        ) ebc.buttons.save.text
+

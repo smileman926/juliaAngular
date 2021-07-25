@@ -1,0 +1,30 @@
+.container.mt-4(*ngIf="taxList.length > 0")
+  .row 
+    .col-4 
+      app-list-view.ht300(
+        [items]="taxList",
+        [selected]="selectedType.id",
+        (select)="selectItem($event)"
+      )
+        ng-template(let-item) {{item.t_name}}
+    .col-6.offset-1.vCenter
+      .taxInfo
+        .row
+          .col-6.text-right 
+            label(translate) ebc.invoiceSettings.taxName.text 
+          .col-6
+            label.taxInput.taxName {{taxName | number : '1.2-2'}} {{' %'}}
+          .col-6.text-right 
+            label(translate) ebc.invoiceSettings.taxValue.text
+          .col-6.form-group 
+            input.taxInput(type="text", appNumberInput, decimals="2", [(ngModel)]="taxName", (change)="setTaxName()")
+          .col-6.offset-6.form-check 
+            input(type="checkbox", [(ngModel)]="isNonStandard", (change)="setIsNonStandard()")
+            label(translate) ebc.invoiceSettings.isNonStandardTax.text
+
+  .row
+    .col-4.wrapper
+      button.btn.btn-secondary.my-3((click)="addTax()", translate) ebc.buttons.new.text
+      button.btn.btn-secondary.my-3((click)="delTax()", translate) ebc.buttons.delete.text
+    .col-8.text-right
+      button.btn.btn-primary.my-3((click)="save()", translate) ebc.buttons.save.text

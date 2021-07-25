@@ -1,0 +1,11 @@
+.container 
+  app-loading.loading-bar(*ngIf="isLoading | async") 
+  .row 
+    .col-md-4.form-group.text-right
+      label(translate) ebc.invoiceSettings.taxValue.text
+    .col-md-6.form-group
+      input(type="text", appNumberInput, decimals="2", [(ngModel)]="taxValue", [placeholder]="0 | formatNumber")
+    .col-md-6.offset-4
+      .form-check 
+        input.mr-2(type="checkbox", [(ngModel)]="isNonStandard")
+        label(translate) ebc.invoiceSettings.isNonStandardTax.text 

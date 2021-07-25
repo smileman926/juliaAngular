@@ -1,0 +1,15 @@
+.d-flex.flex-row
+    .left-box
+        img(src="assets/images/meldewesen_icon.png", (click)="openContact()")
+        .button-container
+            button.btn.btn-warning((click)="openContact()", translate) BackEnd_WikiLanguage.adScreens_button_orderNow
+    .right-box
+        video(*ngIf="showVideo", (ended)="showVideo = false", controls="" poster='assets/images/Zimmerauswahl_Modul_Ad.png' width='90%')
+          source(src="https://www.easybooking.academy/videos/eb_ads/Zimmerauswahl_Modul_Ad.mp4" type="video/mp4")
+        .textbox(*ngIf="showVideo === false")
+            h1(translate) BackEnd_WikiLanguage.adScreens_wrmna_headline
+            p(translate) BackEnd_WikiLanguage.adScreens_wrmna_text1
+            p(translate) BackEnd_WikiLanguage.adScreens_wrmna_text2
+            .d-flex.flex-row.justify-content-between
+                button.btn.btn-warning((click)="openContact()", translate) BackEnd_WikiLanguage.adScreens_button_moreInformations
+                button.btn.btn-warning((click)="openAcademy()", translate) BackEnd_WikiLanguage.adScreens_button_videoTutorial

@@ -1,0 +1,82 @@
+form(*ngIf="form", [formGroup]="form")
+  .row
+    .col-md-6
+      .form-group
+        label(translate) ebc.forms.salutation.text
+        select(formControlName="eo_salutation_id")
+      .form-group
+        label(translate) ebc.forms.title.text
+        input(formControlName="eo_title")
+      .form-group
+        label(translate) ebc.forms.firstName.text
+        input(formControlName="eo_firstName")
+      .form-group
+        label(translate) ebc.forms.lastName.text
+        input(formControlName="eo_lastName")
+      .form-group
+        label(translate) ebc.forms.email.text
+        input(type="email", formControlName="eo_eMailAddress")
+      .form-group
+        label(translate) ebc.forms.company.text
+        input(formControlName="eo_companyName")
+      .form-group
+        label(translate) ebc.forms.uidNumber.text
+        input(formControlName="eo_uidNumber")
+      .form-group
+        label(translate) ebc.forms.companyRegisterNumber.text
+        input(formControlName="eo_companyRegisterNumber")
+      .form-group 
+        label(translate) ebc.forms.iban.text
+        input(formControlName="eo_iban")
+    .col-md-6 
+      .form-group
+        label(translate) ebc.forms.address.text
+        input(formControlName="eo_addressLine1")
+      .form-group
+        label(translate) ebc.forms.postCode.text
+        input(formControlName="eo_postCode")
+      .form-group
+        label(translate) ebc.forms.city.text
+        input(formControlName="eo_city")
+      .form-group
+        label(translate) ebc.forms.country.text
+        select(formControlName="eo_country_id")
+          option(*ngFor="let item of countriesList", [value]="item.c_id") {{item.c_name}}
+      .form-group
+        label(translate) ebc.forms.phone.text
+        input(formControlName="eo_phoneNo")
+      .form-group
+        label(translate) ebc.forms.website.text
+        input(formControlName="eo_website")
+      .form-group
+        label(translate) ebc.forms.companySeat.text
+        input(formControlName="eo_companySeat")
+      .form-group
+        label(translate) ebc.forms.companyRegisterCourt.text
+        input(formControlName="eo_companyRegisterCourt")
+      .form-group
+        label(translate) ebc.forms.bic.text
+        input(formControlName="eo_bic")
+  .row.my-4 
+    .col-md-6
+      .form-group
+        label(translate) ebc.roomOwner.provision.text
+        input(
+          type="text",
+          appNumberInput,
+          [decimals]="2",
+          [min]="0",
+          [max]="100",
+          formControlName="eo_provision"
+        )
+        span.calSpan %
+      .form-group
+        label(translate) ebc.roomOwner.pincode.text
+        input(formControlName="eo_pinCode")
+  .row.mt-4
+    .col-md-6 
+      button.btn.btn-secondary((click)="deleteUser()", translate) ebc.roomOwner.deleteUser.text
+    .col-md-6.text-right
+      button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid", translate) ebc.buttons.save.text
+      a.btn.btn-primary([href]="openStatisticsURL", target="_blank", rel="noopener noreferrer", translate) ebc.roomOwner.openStatistics.text
+

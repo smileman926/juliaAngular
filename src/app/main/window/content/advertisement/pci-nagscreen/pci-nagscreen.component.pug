@@ -1,0 +1,12 @@
+.d-flex.flex-row
+    .sidebar
+        img.pci-logo((click)="openContact()" src='assets/images/pci-logo.jpg')
+        .d-flex.flex-column.mt-3.mr-3
+            button.btn-warning((click)="openContact()", translate) BackEnd_WikiLanguage.adScreens_button_orderNow
+            .form-check
+                input(type="checkbox", [(ngModel)]='dontshow', (change)="setCheckbox()")
+                label(translate) BackEnd_WikiLanguage.adScreens_pcina_checkboxDoNotShowAgain
+    .content.my-4
+        h1(translate) BackEnd_WikiLanguage.adScreens_pcina_headline
+        h4(translate) BackEnd_WikiLanguage.adScreens_pcina_text
+        img.pci-details(src='assets/images/pciCreditCardDetailsLogin.png')

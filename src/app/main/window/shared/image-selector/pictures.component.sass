@@ -1,0 +1,60 @@
+\:host
+  height: 100%
+  display: block
+  padding: 0.5em
+  position: relative
+
+.pictures
+  flex: 1 1 auto
+  position: relative
+  .stub
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    width: 50%
+    margin: auto
+  .carousel
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+
+.controls
+  position: relative
+  text-align: center
+  width: 60%
+  margin: 2em auto 5em
+  & > *
+    margin: 0.5em
+  .form-control
+    display: inline-block
+    width: auto
+
+.additional-controls
+  position: absolute
+  display: flex
+  bottom: 25px
+  button
+    margin-right: 0.5em
+    &.new-picture
+      display: flex
+      .mdi
+        font-size: 13px
+        line-height: 13px
+        height: auto
+
+content
+  display: flex
+  flex-direction: column
+  height: 100%
+  overflow: hidden
+  .no-image-wrapper
+    width: 100%
+    height: 90%
+    display: flex
+    justify-content: center
+    align-items: center
+    img
+      width: 250px
+      height: auto

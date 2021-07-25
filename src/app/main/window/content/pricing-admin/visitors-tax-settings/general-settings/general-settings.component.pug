@@ -1,0 +1,23 @@
+content
+  .taxnames
+    .locale.form-group 
+      label
+        | {{'BackEnd_WikiLanguage.VT_Name' | translate}}
+      input([ngModel]="taxName", (keyup)="nameChange($event.target.value)")
+    .form-group
+      select([formControl]="lang", (change)="localChange($event.target.value)")
+        option(*ngFor="let option of languages; let i = index", [value]="i", translate) {{option.name}}
+  .checkboxes
+    .form-check 
+      input(type="checkbox", id="active", [formControl]="taxEnabled", (click)="checkActive()")
+      label(for="active") 
+        | {{'BackEnd_WikiLanguage.generic_Active' | translate}}
+    .groupcheck
+      .form-check 
+        input(type="radio", id="inclusive", value="inclusive", [formControl]="inclusiveCheck", (click)="checkRadio(true)")
+        label(for="inclusive") 
+          | {{'BackEnd_WikiLanguage.generic_Inclusive' | translate}} 
+      .form-check 
+        input(type="radio", id="exclusive", value="exclusive", [formControl]="inclusiveCheck", (click)="checkRadio(false)")
+        label(for="exclusive") 
+          | {{'BackEnd_WikiLanguage.VT_Exclusive' | translate}}

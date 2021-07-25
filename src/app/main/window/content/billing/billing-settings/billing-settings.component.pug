@@ -1,0 +1,14 @@
+app-tabs(
+  *ngIf="tabSettings.buttons.length",
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+.content 
+  app-loading.loading-bar(*ngIf="isLoading | async")
+  app-billing-settings-general(*ngIf="activeTabId === 'General'")
+  app-billing-settings-layout(*ngIf="activeTabId === 'Layout'")
+  app-billing-settings-invoice-item(*ngIf="activeTabId === 'ItemOnInvoice'") 
+  app-billing-settings-taxes(*ngIf="activeTabId === 'Taxes'")
+  app-billing-settings-link-taxes(*ngIf="activeTabId === 'LinkTaxes'") 
+  app-billing-settings-invoice-address(*ngIf="activeTabId === 'InvoiceAddress'")
+  app-billing-settings-cash-register(*ngIf="activeTabId === 'CashRegister'")

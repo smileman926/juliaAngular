@@ -1,0 +1,70 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+section.roomplan-settings(*ngIf="calendarSettings && !(isLoading | async)")
+  .colors.row
+    .col-sm-5.flexbox
+      .color
+        label.form-check-label {{ 'BackEnd_WikiLanguage.CCA_Enquiry' | translate}}
+        .pick-color.border([(colorPicker)]="calendarSettings.colors.enquiry", [cpPosition]="'bottom-right'", [style.background]="calendarSettings.colors.enquiry")
+      .color
+        label.form-check-label {{ 'BackEnd_WikiLanguage.CCA_Reservation' | translate}}
+        .pick-color.border([(colorPicker)]="calendarSettings.colors.reservation", [cpPosition]="'bottom-right'", [style.background]="calendarSettings.colors.reservation")
+      .color
+        label.form-check-label {{ 'BackEnd_WikiLanguage.CCA_Booking' | translate}}
+        .pick-color.border([(colorPicker)]="calendarSettings.colors.booking", [cpPosition]="'bottom-right'", [style.background]="calendarSettings.colors.booking")
+      .color
+        label.form-check-label {{ 'BackEnd_WikiLanguage.CCA_Block' | translate}}
+        .pick-color.border([(colorPicker)]="calendarSettings.colors.block", [cpPosition]="'bottom-right'", [style.background]="calendarSettings.colors.block")
+      .color
+        label.form-check-label {{ 'BackEnd_WikiLanguage.CCA_Contingent' | translate}}
+        .pick-color.border([(colorPicker)]="calendarSettings.colors.contingent", [cpPosition]="'bottom-right'", [style.background]="calendarSettings.colors.contingent")
+      .color
+        .form-check-label {{ 'BackEnd_WikiLanguage.CCA_InvoiceCreatedIndicatorColor' | translate}}
+        .pick-color.border([(colorPicker)]="calendarSettings.colors.invoiceCreatedIndicator", [cpPosition]="'bottom-right'", [style.background]="calendarSettings.colors.invoiceCreatedIndicator")
+    .col-sm-7.flexbox
+      .color
+        label.form-check-label {{ dayNames[1] }}
+        .pick-color.border([(colorPicker)]="calendarSettings.weeksColor.monday", [cpPosition]="'bottom-left'", [style.background]="calendarSettings.weeksColor.monday")
+      .color
+        label.form-check-label {{ dayNames[2] }}
+        .pick-color.border([(colorPicker)]="calendarSettings.weeksColor.tuesday", [cpPosition]="'bottom-left'", [style.background]="calendarSettings.weeksColor.tuesday")
+      .color
+        label.form-check-label {{ dayNames[3] }}
+        .pick-color.border([(colorPicker)]="calendarSettings.weeksColor.wednesday", [cpPosition]="'bottom-left'", [style.background]="calendarSettings.weeksColor.wednesday")
+      .color
+        label.form-check-label {{ dayNames[4] }}
+        .pick-color.border([(colorPicker)]="calendarSettings.weeksColor.thursday", [cpPosition]="'bottom-left'", [style.background]="calendarSettings.weeksColor.thursday")
+      .color
+        label.form-check-label {{ dayNames[5] }}
+        .pick-color.border([(colorPicker)]="calendarSettings.weeksColor.friday", [cpPosition]="'bottom-left'", [style.background]="calendarSettings.weeksColor.friday")
+      .color
+        label.form-check-label {{ dayNames[6] }}
+        .pick-color.border([(colorPicker)]="calendarSettings.weeksColor.saturday", [cpPosition]="'bottom-left'", [style.background]="calendarSettings.weeksColor.saturday")
+      .color
+        label.form-check-label {{ dayNames[0] }}
+        .pick-color.border([(colorPicker)]="calendarSettings.weeksColor.sunday", [cpPosition]="'bottom-left'", [style.background]="calendarSettings.weeksColor.sunday")
+
+  .periods.small-table
+    .card
+      .card-header.bg-white
+        h3 {{ 'BackEnd_WikiLanguage.calendarColorsEnabling' | translate }}
+        ui-switch(color="#32AC41", switchColor="#C7C8CA", size="small", id="useSpecialColoring", [(ngModel)]="calendarSettings.useSpecialColoring")
+      .card-body
+        h5.mb-3 {{ 'calendarSettings.events.text' | translate }}
+        .period(*ngFor="let period of calendarSettings.periodsColor")
+          .period-color([attr.data-id]="period.id")
+            .pick-color.border([attr.data-id]="period.id", [(colorPicker)]="period.color", [style.background]="period.color")
+          .period-name
+            .form-control-label {{ 'BackEnd_WikiLanguage.CalendarColorPeriod' | translate }}
+            .input-group
+              input.w-100.form-control([(ngModel)]="period.name", [attr.data-id]="period.id")
+          .period-dates
+            .td-small.form-control-label {{ 'roomplan.bookingEditBlockDateRangeLabel.text' | translate }}
+            .input-group
+              app-datepicker-input.w-100([placement]="'top'", [(date)]="period.fromDate", [(range)]="period.untilDate", [inputId]="'periodsColor' + (period.id ? period.id : period._tempId)")
+          .period-actions([attr.data-id]="period.id", (click)="deleteItem(period)")
+            button.btn.btn-secondary.btn-small([attr.data-id]="period.id")
+              i.mdi.mdi-minus
+        button.btn.btn-primary.add-period((click)="addNewItem()") {{ 'BackEnd_WikiLanguage.addPeriodColor' | translate }}
+        button.btn.btn-secondary((click)="onICSImport()") {{ 'calendarSettings.icsImportation.text' | translate }}
+  .buttons-container
+      button.btn.btn-primary((click)="save()") {{ 'BackEnd_WikiLanguage.generic_Save' | translate }}

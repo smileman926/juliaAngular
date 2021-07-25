@@ -1,0 +1,66 @@
+.container
+  form(*ngIf="form", [formGroup]="form")
+    ng-template(#inputWithControls, let-formControlName="formControlName", let-min="min", let-max="max", let-decimals="decimals")
+      app-number-input-controls
+        input(
+          type="text",
+          appNumberInput,
+          appSelectOnFocus,
+          [autoFixErrors]="true",
+          [decimals]="decimals",
+          [min]="min",
+          [max]="max",
+          [formControlName]="formControlName",
+          autocomplete="off"
+        )
+    .row
+      .col-md-6
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_showRoomsInFrontend")
+          label(translate) ebc.bookingTools.settings_showRoomsInFrontend.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_feShowRoomNumbers")
+          label(translate) ebc.bookingTools.settings_feShowRoomNumbers.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_feNewsletterEnabled")
+          label(translate) ebc.bookingTools.settings_feNewsletterEnabled.text
+        .form-group
+          ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'c_timeGapTilArrival', min: 0, max: 90, decimals: 0}")
+          label.ml-2(translate) ebc.bookingTools.settings_timeGapTilArrival.text
+        .form-group
+          ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'c_feMaxNoOfRooms', min: 0, max: 90, decimals: 0}")
+          label.ml-2(translate) ebc.bookingTools.settings_feNoOfRoomsPerCategory.text
+        .form-group
+          ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'c_notifyAtXNoOfRooms', min: 0, max: 90, decimals: 0}")
+          label.ml-2(translate) ebc.bookingTools.settings_notifyAtXNoOfRooms.text
+      .col-md-6.mt-3
+        .form-group
+          label(translate) ebc.bookingTools.settings_analyticsTrackingCode.text
+          input.right(type="text", formControlName="c_analyticsTrackingCode")
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_isShowCodeQuery")
+          label(translate) ebc.bookingTools.b_actionCode.text
+        .wrapper
+          .form-group.mr-0(*ngIf="localeInfoList.length > 0")
+            input.mx-2(type='text', formControlName="c_currentCodeQuery")
+            select(formControlName="c_currentLocale", (change)="search()")
+              option(*ngFor="let item of localeInfoList", [value]="item.l_id", translate) BackEnd_WikiLanguage.{{item.l_desc}}
+          i.mdi.mdi-information(
+            [ngbTooltip] = "'ebc.bookingTools.b_actionCode_tooltip.text' | translate",
+            placement="left"
+          )
+        .title.mt-4
+          span(translate) ebc.bookingTools.settings_headlineWebWidgets.text
+        .wrapper
+          .form-group.mr-0(*ngIf="localeInfoList.length > 0")
+            input.right.mx-1(type='text', formControlName="c_prevLink", readonly)
+            a.btn.btn-secondary([href]="prevLink", target="_blank", rel="noopener noreferrer", translate) ebc.general.open.text
+          i.mdi.mdi-information(
+            [ngbTooltip] = "'ebc.bookingTools.settings_previewLinkInfoText.text' | translate",
+            placement="left"
+          )
+    .row.my-4
+      .col-12
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+        a.btn.btn-primary([href]="goToOnlineLink", target="_blank", rel="noopener noreferrer", translate) ebc.bookingTools.settings_btnOpenFrontend.text
+

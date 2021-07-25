@@ -1,0 +1,54 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+form(*ngIf="form", [formGroup]="form")
+  .row
+    .col-md-6
+      .form-group
+        label(translate) ebc.forms.salutation.text
+        select(formControlName="eo_salutation_id")
+      .form-group
+        label(translate) ebc.forms.title.text
+        input(formControlName="eo_title")
+      .form-group
+        label(translate) ebc.forms.firstName.text
+        input(formControlName="eo_firstName")
+      .form-group
+        label(translate) ebc.forms.lastName.text
+        input(formControlName="eo_lastName")
+      .form-group
+        label(translate) ebc.forms.email.text
+        input(type="email", formControlName="eo_eMailAddress")
+
+    .col-md-6 
+      .form-group
+        label(translate) ebc.forms.address.text
+        input(formControlName="eo_addressLine1")
+      .form-group
+        label(translate) ebc.forms.postCode.text
+        input(formControlName="eo_postCode")
+      .form-group
+        label(translate) ebc.forms.city.text
+        input(formControlName="eo_city")
+      .form-group
+        label(translate) ebc.forms.country.text
+        select(formControlName="eo_country_id")
+          option(*ngFor="let item of countriesList", [value]="item.c_id") {{item.c_name}}
+      .form-group
+        label(translate) ebc.forms.phone.text
+        input(formControlName="eo_phoneNo")
+  
+  .row.my-4 
+    .col-md-6
+      .form-group
+        label(translate) ebc.roomOwner.provision.text
+        input(
+          type="text",
+          appNumberInput,
+          [decimals]="2",
+          [min]="0",
+          [max]="100",
+          formControlName="eo_provision"
+        )
+        span.ml-1 %
+      .form-group
+        label(translate) ebc.roomOwner.pincode.text
+        input(formControlName="eo_pinCode")

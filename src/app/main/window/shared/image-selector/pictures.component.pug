@@ -1,0 +1,40 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+content
+  .pictures(*ngIf="enabledSlider; else noImage")
+    app-image-slider(
+      [images]="pictures",
+      [removeSlide]="removeSlide",
+      [deletable]="deletable",
+      [sortable]="sortable",
+      [showTagField]="showTagField",
+      [slideTo]="slideTo",
+      [rebuildSlider]="updateSlider",
+      [newImageAdded]="newImageAdded",
+      (deleteImage)="deleteImage($event).catch()",
+      (saveImage)="saveImage($event).catch()",
+    )
+  ng-template(#noImage)
+    .no-image-wrapper
+      img.no-image(src="https://media.easy-booking.at/wo/Services/images/0000000000_NoImage.jpg")
+
+  .additional-controls
+    button.btn.btn-secondary.new-picture(
+      #newPictureTooltip="ngbTooltip",
+      triggers="manual",
+      (mouseenter)="newPictureTooltip.open()",
+      (mouseleave)="newPictureTooltip.close()",
+      [ngbTooltip]="'BackEnd_WikiLanguage.maxSizeWarningLabel' | translate",
+      placement="top-left",
+      (click)="toggleSelectFiles()"
+    )
+      span {{ 'BackEnd_WikiLanguage.generic_New' | translate }}
+      i.mdi.mdi-information
+    input(
+      #fileInput,
+      type="file",
+      hidden,
+      multiple,
+      accept="image/x-png,image/gif,image/jpeg",
+      (change)="selectFiles($event)"
+    )
+    ng-content(select=".extra-actions")

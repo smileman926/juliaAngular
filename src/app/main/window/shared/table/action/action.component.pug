@@ -1,0 +1,13 @@
+div.table-action-wrapper(
+  [class.active]="active || fixedPlace"
+)
+  button.btn.btn-link.btn-primary(
+    *ngIf="active",
+    [disabled]="disabled",
+    (click)="clicked.emit($event)",
+    [ngbTooltip]="tooltip | translate",
+    [placement]="rightTooltip?'right-top':'left-top'",
+    container="body"
+  )
+    i.main-icon.mdi([ngClass]="'mdi-' + icon")
+    i.sub-icon.mdi(*ngIf="subIcon", [ngClass]="'mdi-' + subIcon")

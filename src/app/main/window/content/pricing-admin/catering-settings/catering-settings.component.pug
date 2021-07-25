@@ -1,0 +1,111 @@
+app-loading.loading(*ngIf="isLoading | async")
+form(*ngIf="form", [formGroup]="form")
+  section.config.row
+    .col-md-6
+      h5 {{ 'ebc.cateringSettings.methodDefaultCatering.text' | translate }}
+      .config-options
+        .form-group.mr-5
+          input(
+            formControlName="methodDefaultCatering",
+            type="radio",
+            value='fixed',
+            id="method-default-catering-fixed"
+            )
+          label(translate, for="method-default-catering-fixed") ebc.cateringSettings.methodDefaultCatering_fixed.text
+        .form-group
+          input(
+            formControlName="methodDefaultCatering",
+            type="radio",
+            value='quota',
+            id="method-default-catering-quota"
+          )
+          label(translate, for="method-default-catering-quota") ebc.cateringSettings.methodDefaultCatering_quota.text
+    .col-md-6
+      h5 {{ 'ebc.cateringSettings.methodOtherCatering.text' | translate }}
+      .config-options
+        .form-group.mr-5
+          input(
+            formControlName="methodOtherCatering",
+            type="radio",
+            value='absolute',
+            id="method-other-catering-absolute"
+          )
+          label(translate, for="method-other-catering-absolute") ebc.cateringSettings.methodOtherCatering_absolute.text
+        .form-group
+          input(
+            formControlName="methodOtherCatering",
+            type="radio",
+            value='relative',
+            id="method-other-catering-relative"
+          )
+          label(translate, for="method-other-catering-relative") ebc.cateringSettings.methodOtherCatering_relative.text
+  section.details
+    .sidebar
+      app-list-view.list-view(
+        [items]="caterings",
+        [selected]="selectedCatering && selectedCatering.id",
+        (select)="selectCatering($event)"
+      )
+        ng-template(let-item)
+          span {{ item.localName }}
+          span(*ngIf="item.active") &nbsp;&nbsp;( {{ 'ebc.bookingTools.locale_active.text' | translate }} )
+    content
+      app-loading.loading(*ngIf="isContentLoading | async")
+      .content-container.scrollable
+        ng-container(*ngIf="cateringDetails")
+          .form-group
+            input(
+              formControlName="active",
+              type="checkbox",
+              id="catering-details-active"
+            )
+            label(translate, for="catering-details-active") ebc.bookingTools.locale_active.text
+          .catering-name-wrapper.mb-3.mt-3
+            .catering-name
+              .form-group
+                label(for="catering-details-name") {{ 'ebc.cateringSettings.cateringName.text' | translate }}&nbsp;*
+                input(formControlName="name", id="catering-details-name")
+              .form-group
+                select(formControlName="language")
+                  option(*ngFor="let option of languages; let i = index", [value]="option.l_id", translate) ebc.general.locale_{{option.l_name}}.text
+            small.invalid-text(*ngIf="form.get('name').invalid")
+              i.mdi.mdi-18.mdi-alert-circle
+              span {{ 'BackEnd_WikiLanguage.FillInAllLanguages' | translate }}
+          h5.mt-3 {{ 'ebc.cateringSettings.included.text' | translate }}
+          .form-group.ml-3
+            input(
+              formControlName="breakfast",
+              type="checkbox",
+              id="catering-details-breakfast"
+            )
+            label(translate, for="catering-details-breakfast") ebc.cateringSettings.breakfast.text
+          .form-group.ml-3
+            input(
+              formControlName="lunch",
+              type="checkbox",
+              id="catering-details-lunch"
+            )
+            label(translate, for="catering-details-lunch") ebc.cateringSettings.lunch.text
+          .form-group.ml-3
+            input(
+              formControlName="afternoon",
+              type="checkbox",
+              id="catering-details-afternoon"
+            )
+            label(translate, for="catering-details-afternoon") ebc.cateringSettings.afternoon.text
+          .form-group.ml-3
+            input(
+              formControlName="dinner",
+              type="checkbox",
+              id="catering-details-dinner"
+            )
+            label(translate, for="catering-details-dinner") ebc.cateringSettings.dinner.text
+          .form-group.ml-3
+            input(
+              formControlName="allIncl",
+              type="checkbox",
+              id="catering-details-allIncl"
+            )
+            label(translate, for="catering-details-allIncl") ebc.cateringSettings.allincl.text
+      .button-controls
+        button.btn.btn-secondary([disabled]="!form?.valid", (click)="save().catch()", translate) BackEnd_WikiLanguage.generic_Save

@@ -1,0 +1,61 @@
+h5 {{ 'BackEnd_WikiLanguage.generic_AgeGroups' | translate }}
+form(*ngIf="form", [formGroup]="form")
+  app-table(
+    [clickable]="true",
+    formArrayName="groups",
+    [items]="ageGroups",
+    [(selected)]="selectedGroup"
+  )
+    ng-template(#column, [label]="'BackEnd_WikiLanguage.generic_AgeGroups'", let-group, let-index="rowIndex")
+      input.editable-cell(
+        type="text",
+        appNumberInput,
+        appSelectOnFocus,
+        appFocusOnEnter,
+        [foeMap]="focusOnEnterMaps.from",
+        [foeIndex]="index",
+        [decimals]="0",
+        [min]="0",
+        [max]="17",
+        [autoFixErrors]="true",
+        [formControl]="formGroupMap | getControl : group : 'from'",
+        (blur)="onFieldBlur()"
+      )
+      span -
+      input.editable-cell(
+        type="text",
+        appNumberInput,
+        appSelectOnFocus,
+        appFocusOnEnter,
+        [foeMap]="focusOnEnterMaps.to",
+        [foeIndex]="index",
+        [decimals]="0",
+        [min]="0",
+        [max]="17",
+        [autoFixErrors]="true",
+        [formControl]="formGroupMap | getControl : group : 'to'",
+        (blur)="onFieldBlur()"
+      )
+    ng-template(#column, [label]="'BackEnd_WikiLanguage.LM_PercDiscount'", let-group, let-index="rowIndex")
+      input.editable-cell(
+        type="text",
+        appNumberInput,
+        appSelectOnFocus,
+        appFocusOnEnter,
+        [foeMap]="focusOnEnterMaps.discount",
+        [foeIndex]="index",
+        [decimals]="0",
+        [min]="0",
+        [max]="100",
+        [autoFixErrors]="true",
+        [formControl]="formGroupMap | getControl : group : 'discount'",
+        (blur)="onFieldBlur()"
+      )
+      span %
+.buttons
+  button.btn.btn-secondary((click)="addNewGroup()") +
+  button.btn.btn-secondary(*ngIf="canReset",
+    (click)="resetGroups.emit()",
+    [ngbTooltip]="'BackEnd_WikiLanguage.generic_MessageResetPricingAgeGroups' | translate"
+  ) |
+  button.btn.btn-secondary([disabled]="!selectedGroup", (click)="deleteSelectedGroup()") -

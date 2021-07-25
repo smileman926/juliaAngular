@@ -1,0 +1,13 @@
+<ng-content></ng-content>
+<button
+  type="button"
+  class="number-input-control up"
+  (click)="input?.increment()"
+  [disabled]="input?.ngControl?.control?.value | numberInputAtLimit : input?.max"
+><i class="mdi mdi-chevron-up"></i></button>
+<button
+  type="button"
+  class="number-input-control down"
+  (click)="input?.decrement()"
+  [disabled]="input?.ngControl?.control?.value | numberInputAtLimit : input?.min"
+><i class="mdi mdi-chevron-down"></i></button>

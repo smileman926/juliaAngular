@@ -1,0 +1,39 @@
+@import "app-globals"
+
+\:host
+  display: flex
+  height: 100%
+  flex-direction: column
+
+.main
+  padding: $grid-gutter-width/2
+
+h4
+  margin: 0
+
+.registration-form-type
+  border-bottom: solid 1px $secondary
+  margin-bottom: .8rem
+  padding-bottom: .8rem
+  display: flex
+
+.registration-form-filters
+  padding: 1rem 0
+  margin: 0
+  background-color: $gray-200
+  label
+    text-align: left
+
+.guests
+  flex: 1
+
+.grid-area .form-group
+  grid-template-columns: 1fr 2fr
+
+  label
+    margin: 0
+
+.checkbox-group
+  display: flex
+  flex-direction: column
+  justify-content: space-evenly

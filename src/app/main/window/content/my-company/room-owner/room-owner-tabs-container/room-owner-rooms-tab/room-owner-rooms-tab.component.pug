@@ -1,0 +1,35 @@
+.container.py-3
+  .row 
+    .col-12
+      button.btn.btn-secondary((click)="addRooms()", translate) ebc.roomOwner.addRooms.text
+      .roomSelectWrapper.my-4
+        .row 
+          .col-4.text-right
+            label(translate) ebc.roomOwner.commissions.text
+          .col-8
+            label(translate) ebc.roomOwner.limitingPeriod.text
+        .row(*ngFor="let item of entityOwnerRoomList; index as i")
+          .col-4.form-group.between
+            img.delEntity(src="assets/images/entity_delete.png", alt="delete", (click)="deleteEntity(item.eoe_id)")
+            label.left {{item.eoe_entity_id | getRoomNo:entityList}} 
+            input.commission(
+              [(ngModel)]="item.eoe_provision",
+              (ngModelChange)="commissionChange($event, item)"
+              type="text",
+              appNumberInput,
+              [decimals]="2",
+              [min]="0"
+            )
+            label.right %
+          .col-8.form-group
+            input.mr-2(type="checkbox", [checked]="item.eoe_fromDate && item.eoe_fromDate !== ''", (change)="isHasPeriod($event.target.checked, item)")
+            .form-group.mr-2(*ngIf="item.eoe_fromDate && item.eoe_fromDate !== ''")
+              label(translate) ebc.forms.from.text
+              app-datepicker-input.w110([date]="item.eoe_fromDate", (dateChange)="fromDateChange($event, item)")
+            .form-group(*ngIf="item.eoe_fromDate && item.eoe_fromDate !== ''")
+              label(translate) ebc.forms.to.text              
+              app-datepicker-input.w110([date]="item.eoe_untilDate", [minDate]="item.eoe_fromDate", (dateChange)="untilDateChange($event, item)")
+
+  .row
+    .col-12.text-right
+      button.btn.btn-secondary((click)="save()", translate) ebc.buttons.save.text

@@ -1,0 +1,43 @@
+.container(*ngIf="customPayTypes.length > 0")
+  .alignCenter.mt-4
+    label.title(translate) ebc.payment.customPaymentTypes.text
+    i.mdi.mdi-information(
+      [ngbTooltip] = "'ebc.payment.customPaymentTypes_tooltip.text' | translate",
+      placement="right"
+    )
+  .row 
+    .col-md-4 
+      app-list-view.ht300(
+        [items]="customPayTypes",
+        [selected]="selectedType.id",
+        (select)="selectItem($event)"
+      )
+        ng-template(let-item) {{item.display_name}} 
+          span(*ngIf="getListItemNameSuffix(item)") ({{ 'ebc.bookingTools.locale_active.text' | translate }})
+    .col-md-8.py-3
+      .form-check.my-2
+        input(type="checkbox", [(ngModel)]="isActive", (change)="setIsActive()")
+        label(translate) ebc.bookingTools.locale_active.text
+      .form-check.my-2.alignCenter
+        input(type="checkbox", [(ngModel)]="isCashPayment", (change)="setIsCashPayment()")
+        label(translate) ebc.payment.cashPayment.text
+        i.mdi.mdi-information(
+          [ngbTooltip] = "'ebc.payment.cashPaymentInfo.text' | translate",
+          placement="right"
+        )
+      .row.my-4 
+        .col-md-3.form-group 
+          label(translate) ebc.payment.customPaymentTypeName.text 
+        .col-md-4.form-group 
+          input(type="text", [(ngModel)]="paymentTypeName", (change)="setPaymentTypeName()")
+        .col-md-3.form-group 
+          select([(ngModel)]="selectedLocale", (change)="setSelectedLocale()")
+            option(*ngFor="let item of localeInfoList", [value]="item.l_id", translate) BackEnd_WikiLanguage.{{item.l_desc}}                     
+
+          
+  .row 
+    .col-md-4.wrapper 
+      button.btn.btn-secondary.my-3((click)="addType()", translate) ebc.buttons.add.text
+      button.btn.btn-secondary.my-3((click)="delType()", translate) ebc.buttons.delete.text
+    .col-md-8.text-right
+      button.btn.btn-primary.my-3((click)="save()", translate) ebc.buttons.save.text

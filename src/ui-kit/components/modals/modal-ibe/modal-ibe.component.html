@@ -1,0 +1,13 @@
+<div class="ibeModal d-flex flex-row">
+  <div class="left-box">
+    <h1 class="header">{{ 'modal.ibeModalHeader.text' | translate }}</h1>
+    <p class="paragraph" [innerHtml]="'modal.ibeModalParagraph.text' | translate : {link: 'https://www.demohotel.easybooking.at/online-buchen/'}"></p>
+    <button class="btn-green" (click)="activate()">{{ 'modal.ibeModalButton.text' | translate }}</button>
+    <div class="spanButtonContainer">
+      <p (click)="activeModal.close(true)">{{ 'modal.directConnectModalRemindLater.text' | translate }}</p>
+    </div>
+  </div>
+  <div>
+    <img src="assets/img/modal/IBE.png">
+  </div>
+</div>

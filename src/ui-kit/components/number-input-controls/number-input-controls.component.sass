@@ -1,0 +1,33 @@
+@import "variables"
+
+\:host
+  display: grid
+  grid-template-columns: auto 1fr
+  grid-template-rows: 1fr 1fr
+  grid-template-areas: "input button-up" "input button-down"
+
+  \::ng-deep input[type=text][appNumberInput]
+    grid-area: input
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
+
+
+.number-input-control
+  border: none
+  padding: 0
+  outline: none
+
+  &, i
+    height: $input-height/2
+    line-height: $input-height/2
+
+  &.up
+    grid-area: button-up
+    border-top-right-radius: $input-border-radius
+
+  &.down
+    grid-area: button-down
+    border-bottom-right-radius: $input-border-radius
+
+  &:focus
+    color: $primary

@@ -1,0 +1,16 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+.container.my-2(*ngIf="entityOwnerList.length > 0")
+  .row 
+    .col-md-3.mt-3 
+      label(translate) ebc.forms.owner.text
+      app-list-view.h422(
+        [items]="entityOwnerList",
+        [selected]="selectedEntity.id",
+        (select)="selectItem($event)"
+      )
+        ng-template(let-item) {{item.eo_lastName + ' ,' + item.eo_firstName}} 
+      .row 
+        .col-12.text-right 
+          button.btn.btn-secondary.mt-2((click)="addType()", translate) ebc.roomOwner.addRoomOwner.text
+    .col-md-9.pl-0
+      app-room-owner-tabs-container(*ngIf="selectedEntity", [entity]="selectedEntity", [countriesList]="countriesList", (initWidget)="init()")

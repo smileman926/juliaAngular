@@ -1,0 +1,40 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-12
+        .form-check.my-1
+          input(type="checkbox", formControlName="ss_showAtThankyouPage")
+          label(translate) ebc.bookingTools.sara_showOnThankYouPage.text
+        .form-check.my-1
+          input(type="checkbox", formControlName="ss_showAtOnlineCheckin")
+          label(translate) ebc.bookingTools.sara_showOnOCI.text
+        .form-check.my-1
+          input(type="checkbox", formControlName="ss_newDesignReservation")
+          label(translate) ebc.bookingTools.sara_useNewEmailDesign.text
+        .form-check.my-1
+          input(type="checkbox", formControlName="ss_useCustomEmailVariable")
+          label(translate) ebc.bookingTools.sara_adjustEmailText.text
+      .col-md-5.mx-3
+        .form-group
+          textarea(formControlName="c_currentTemplate", rows="6")     
+      .col-md-3.mx-4
+        .form-group(*ngIf="localeInfoList.length > 1")          
+          select(formControlName="c_currentLocale", (change)="search()")
+            option(*ngFor="let item of localeInfoList", [value]="item.l_id", translate) BackEnd_WikiLanguage.{{item.l_desc}}   
+          i.mdi.mdi-information(
+            [ngbTooltip] = "'ebc.bookingTools.sara_infoIcon.text' | translate",
+            placement="left"
+          )
+      .col-md-12
+        .title.my-4(translate) ebc.bookingTools.sara_credentialsHeader.text                       
+        .form-group.my-2
+          input.right(type='email', formControlName="ss_firebaseEmail")
+        .form-group.my-2
+          button.btn.btn-secondary.mr-2((click)="generatePassword()", [disabled]="isCheckGenPeriod || isDisablePassGen", translate) ebc.bookingTools.sara_generatePasswordBtn.text
+          label.passGen(translate, [ngStyle]="{'color': isPassChangeSuccess ? 'green' : 'red' }") {{isPassChangeSuccess ? 'ebc.bookingTools.sara_checkInbox.text' : 'ebc.bookingTools.sara_generatePassword.text'}}      
+           
+    .row.my-4 
+      .col-12
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+
+

@@ -1,0 +1,49 @@
+form([formGroup]="form")
+  ng-template(#input, let-formControlName="formControlName", let-min="min", let-max="max", let-decimals="decimals")
+    input(
+      type="text",
+      appNumberInput,
+      appSelectOnFocus,
+      [autoFixErrors]="true",
+      [decimals]="decimals",
+      [min]="min",
+      [max]="max",
+      [formControlName]="formControlName",
+      autocomplete="off",
+      (change)="updateValues()"
+    )
+  ng-template(#inputWithControls, let-formControlName="formControlName", let-min="min", let-max="max", let-decimals="decimals")
+    app-number-input-controls
+      input(
+        type="text",
+        appNumberInput,
+        appSelectOnFocus,
+        [autoFixErrors]="true",
+        [decimals]="decimals",
+        [min]="min",
+        [max]="max",
+        [formControlName]="formControlName",
+        autocomplete="off",
+        (change)="updateValues()"
+      )
+
+  .grid-area
+    .form-group(*ngIf="showCleanupCharge")
+      label(translate) BackEnd_WikiLanguage.CTD_CleanupCharge
+      ng-container(*ngTemplateOutlet="input; context: {formControlName: 'cleanUpPrice', min: 0, decimals: 2}")
+    .form-group
+      label(translate) BackEnd_WikiLanguage.EP_MinPersons
+      ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'minPersons', min: 1, max: 90, decimals: 0}")
+    .form-group
+      label(translate) BackEnd_WikiLanguage.EP_MaxPersons
+      ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'maxPersons', min: 1, max: 90, decimals: 0}")
+    .form-group(*ngIf="pricingScheme !== PricingSchemeType.RoomLevel")
+      label(translate) BackEnd_WikiLanguage.EP_StdPricePosition
+      ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'stdPricePosition', min: 1, max: 90, decimals: 0}")
+    .form-group(*ngIf="pricingScheme !== PricingSchemeType.RoomLevel")
+      label(translate) BackEnd_WikiLanguage.EP_fullPayer
+      ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'childDiscountStartPosition', min: 0, decimals: 0}")
+    .form-group(*ngIf="pricingScheme === PricingSchemeType.RoomLevel")
+      label(translate) BackEnd_WikiLanguage.EP_childUnderXForfree
+      ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'childUnderXForFree', min: 0, max: 17, decimals: 0}")
+

@@ -1,0 +1,31 @@
+.container 
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-10
+        .title 
+          span(translate) ebc.hotelManagement.stornoAGB_stornoTextHeadLine.text
+      .col-md-2.text-right 
+        i.mdi.mdi-help-circle-outline(
+          (click)="openReference()",
+          [ngbTooltip]="'BackEnd_WikiLanguage.AcademyLinkToolTip' | translate",
+          placement="left"
+        )
+    .form-check.mt-2.mb-4.mx-2
+      input(type="checkbox", formControlName="c_cancellationEnabled")
+      label(translate) ebc.hotelManagement.stornoAGB_cancellationEnabled.text
+    label.mx-2.cancelationText((click)="changeTranslate()") {{cancelationText}}
+    i.mdi.mdi-earth((click)="changeTranslate()")
+    br 
+    .title.mt-4.mb-2 
+      span(translate) ebc.hotelManagement.stornoAGB_agbTextHeadLine.text
+    .row.my-2(*ngFor="let item of localeInfoList; let i = index")
+      .col-md-10
+        .form-group
+          label(translate) {{'BackEnd_WikiLanguage.' + item.l_desc}}       
+          input.short(type="text", [formControl]="form.get('localeLinks').controls[i]")          
+    .row.my-2.mx-4 
+      .col-12.text-right 
+        button.btn.btn-secondary((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+
+      
+    

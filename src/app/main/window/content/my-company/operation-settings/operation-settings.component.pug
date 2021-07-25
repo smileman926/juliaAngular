@@ -1,0 +1,11 @@
+app-tabs(
+  *ngIf="tabSettings.buttons.length",
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+.content 
+  app-loading.loading-bar(*ngIf="isLoading | async")
+  app-operation-general(*ngIf="activeTabId === 'General'")
+  app-operation-email-admin(*ngIf="activeTabId === 'Email_Admin'")
+  app-operation-cancellation-terms-condition(*ngIf="activeTabId === 'Cancellation_Terms_Conditions'") 
+  app-operation-settings-detail(*ngIf="activeTabId === 'Settings'")

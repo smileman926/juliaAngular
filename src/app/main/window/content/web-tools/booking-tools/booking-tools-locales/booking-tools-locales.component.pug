@@ -1,0 +1,26 @@
+.container
+  form(*ngIf="localeInfoList.length > 0")
+    .row
+      .col-md-4
+        .row
+          .col-md-4
+          .col-md-4(translate) ebc.bookingTools.locale_active.text
+          .col-md-4(translate) ebc.bookingTools.locale_default.text
+        .row(*ngFor="let item of localeInfoList; let i=index")
+          .col-md-4.text-right
+            label(translate) BackEnd_WikiLanguage.{{item.l_desc}}
+          .col-md-4
+            input(type="checkbox", [disabled]="item.l_id === localeID", [checked]="item.l_active === 'on'", (change)="changeStatus($e, item)")
+          .col-md-4
+            input(type="radio", [disabled]="item.l_active === 'off'", [checked]="item.l_id === localeID", (change)="changeDefault($e, item)")
+
+      .col-md-8
+        .row
+          .col-md-1
+            i.mdi.mdi-information((mouseenter) ="showToolTipContent(true)", (mouseleave) ="showToolTipContent(false)")
+          .col-md-11
+            label.toolTip(*ngIf="isShowToolTipContent", [innerHtml]="'ebc.bookingTools.locale_InfoText.text' | translate")
+    .row.my-4
+      .col-12
+        button.btn.btn-secondary.mr-2((click)="save().catch()", translate) ebc.buttons.save.text
+

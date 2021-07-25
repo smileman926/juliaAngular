@@ -1,0 +1,81 @@
+form(*ngIf="form", [formGroup]="form").my-2.mx-2
+  app-table.mb-3.h150([items]="receiptItems")
+    ng-template(#column, sortable="rci_unitCount", label="ebc.guestPayment.unitCount.text", let-item) {{item.rci_unitCount}}
+    ng-template(#column, sortable="rci_description", label="BackEnd_WikiLanguage.BW_PaymentDesc", let-item) {{item.rci_description}}
+    ng-template(#column, sortable="rci_unitPriceGross", label="BackEnd_WikiLanguage.RCPT_journalUnitPrice", let-item)
+      span(appFormatNumber, [innerText]="item.rci_unitPriceGross")
+    ng-template(#column, sortable="rci_totalGross", label="BackEnd_WikiLanguage.BW_Gross", let-item)
+      span(appFormatNumber, [innerText]="item.rci_totalGross")
+    ng-template(#column, sortable="rci_totalTax", label="ebc.reports.tax.text", let-item) 
+      span(appFormatNumber, [innerText]="item.rci_totalTax")
+    ng-template(#column, label="BackEnd_WikiLanguage.EQP_actions", let-item)
+      app-table-action(
+        tooltip="BackEnd_WikiLanguage.BW_EditProducts",
+        icon="table-edit",
+        (click)="openProductModal(item)"
+      )
+      app-table-action(
+        tooltip="BackEnd_WikiLanguage.BW_DeleteBill",
+        icon="delete",
+        (click)="deleteProduct(item)"
+      )
+    ng-template(#extra)
+      tr.bold(*ngIf="receiptItems.length > 0")
+        td([colSpan]="3")
+        td.px-1.py-1(appFormatNumber, [innerText]="totalGross")
+        td.px-1.py-1(appFormatNumber, [innerText]="totalTax")  
+      tr(*ngIf="receiptItems.length < 1", [ngStyle]="{'background-color' : 'white'}")
+        td.px-1.py-1(translate) ebc.guestPayment.noProductsHere.text
+  .row 
+    .col-6
+      button.mb-2.btn.btn-secondary((click)="openProductModal()", translate) ebc.buttons.addProduct.text
+  .row 
+    .col-6 
+      .form-group.mb-2
+        label(translate) ebc.reports.paymentMethod.text
+        select.pr-0(*ngIf="billVersionPaymentTypes.length > 0", formControlName="GPCR_billVersionPaymentType")
+          option(value="choose", translate) ebc.forms.pleaseChoose.text
+          option(*ngFor="let item of billVersionPaymentTypes", [value]="item.bvpt_id") {{item.bvptl_name}}
+      .form-group.mb-2
+        label(translate) general.amount.text
+        input.textLeft(formControlName="GPCR_value", type="text", appNumberInput, decimals="2", (keyup)="adjustPMValues(1)")
+    .col-6(*ngIf="secondPMActive")
+      .form-group.mb-2
+        label(translate) ebc.reports.paymentMethod.text
+        select.pr-0(*ngIf="billVersionPaymentTypes.length > 0", formControlName="GPCR_2ndBillVersionPaymentType")
+          option(value="choose", translate) ebc.forms.pleaseChoose.text
+          option(*ngFor="let item of billVersionPaymentTypes", [value]="item.bvpt_id") {{item.bvptl_name}}
+      .form-group.mb-2
+        label(translate) general.amount.text
+        input.textLeft(formControlName="GPCR_2ndValue", type="text", appNumberInput, decimals="2", (keyup)="adjustPMValues(2)")
+  .row 
+    .col-6
+      button.btn.btn-secondary.my-2(*ngIf="!secondPMActive", (click)="show2ndPM()", translate) ebc.buttons.addPaymentMethod.text
+    .col-6.text-right 
+      button.btn.btn-primary.my-2((click)="saveReceipt()", translate, [disabled]="isInvalidCreateReceipt") ebc.buttons.saveReceipt.text
+  hr.my-2
+  .row
+    .col-6 
+      .form-group.my-1
+        label(translate) ebc.forms.receiptNo.text
+        span(*ngIf="receiptId") {{receiptId}}
+      .form-group.my-1
+        label(translate) ebc.forms.creationDate.text
+        span(*ngIf="creationDate") {{creationDate}}
+      .form-group.my-1
+        label(translate) ebc.forms.paymentMethod.text
+        span(*ngIf="billVersionPaymentType") {{billVersionPaymentType}}
+      .form-group.my-1
+        label(translate) ebc.forms.paymentMethod.text
+        span(*ngIf="billVersionPaymentType2") {{billVersionPaymentType2}}
+    .col-6.verticalCenter(*ngIf="lastSavedReceipt.rc_id > 0")
+      .row 
+        .col-12         
+      .row
+        .col-12.text-right.px-0 
+          label.bold(translate) {{receiptCreatedMessage}} 
+        .col-12.mt-2.text-right.px-0         
+          button.btn.btn-secondary.mr-2((click)="sendReceipt()", translate) ebc.buttons.sendReceipt.text
+          button.btn.btn-secondary((click)="printReceipt()", translate) ebc.buttons.printReceipt.text
+
+

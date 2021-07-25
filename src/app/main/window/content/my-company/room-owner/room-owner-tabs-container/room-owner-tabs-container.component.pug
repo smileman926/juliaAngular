@@ -1,0 +1,9 @@
+app-tabs(
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+app-loading.loading-bar(*ngIf="isLoading | async")
+.content
+  app-room-owner-details-tab(*ngIf="activeTabId === 'details'", [entity]="entity", [countriesList]="countriesList", (initWidget)="init()")
+  app-room-owner-rooms-tab(*ngIf="activeTabId === 'rooms'", [entity]="entity")
+

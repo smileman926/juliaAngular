@@ -1,0 +1,41 @@
+@import '_variables';
+
+.invoice-notice {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  padding: 0.2em 0.3em;
+  background: $mdi-window-header-color;
+  border: solid 1px $mdi-window-border-color;
+  color: #121621;
+  font-size: 1.2em;
+  font-weight: 600;
+  &.danger {
+    background: $danger;
+    border-color: $danger;
+    color: #FFFFFF;
+  }
+}
+.mdi-alert-circle {
+  color: $warning;
+  font-size: 90px;
+  &.danger {
+    color: $danger;
+  }
+}
+.border-left {
+  color: #000;
+}
+.btn-secondary {
+  margin: auto 1em 1em auto;
+}
+.notice-text {
+  font-size: 1.1rem;
+}
+
+::ng-deep #openMyEB, ::ng-deep #openSugarInvoices {
+  cursor: pointer;
+}

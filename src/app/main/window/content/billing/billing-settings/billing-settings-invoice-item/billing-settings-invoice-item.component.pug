@@ -1,0 +1,55 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-12
+        .wrapper
+          label
+            b(translate) ebc.invoiceSettings.itemOnTheInvoiceText.text
+          i.mdi.mdi-help-circle-outline.help.poRight(
+            (click)="openReference()",
+            [ngbTooltip]="'BackEnd_WikiLanguage.AcademyLinkToolTip' | translate",
+            placement="left" )
+      .col-12 
+        .row 
+          .col-6          
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_visitorsTax")
+              label(translate) ebc.invoiceSettings.visitorsTax.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_cleanupCharge")
+              label(translate) ebc.invoiceSettings.cleanupCharge.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_petCharge")
+              label(translate) ebc.invoiceSettings.petCharge.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_cotCharge")
+              label(translate) ebc.invoiceSettings.cotCharge.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_catering")
+              label(translate) ebc.invoiceSettings.catering.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_garage")
+              label(translate) ebc.invoiceSettings.garage.text
+          .col-6
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_earlyBirdDiscount")
+              label(translate) ebc.invoiceSettings.earlyBirdDiscount.text     
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_longStayDiscount")
+              label(translate) ebc.invoiceSettings.longStayDiscount.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_otherCharges")
+              label(translate) ebc.invoiceSettings.otherCharges.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_shortStayCharge")
+              label(translate) ebc.invoiceSettings.shortStayCharge.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_lastMinuteDiscount")
+              label(translate) ebc.invoiceSettings.lastMinuteDiscount.text
+            .form-check.my-2
+              input(type="checkbox", formControlName="b_wishroomCharge")
+              label(translate) ebc.invoiceSettings.wishRoom.text
+    .row.my-4 
+      .col-12.text-right
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+

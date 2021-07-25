@@ -1,0 +1,69 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+form(*ngIf="form", [formGroup]="form").mt-2.mx-4
+  .form-group.my-2
+    label(translate) ebc.guestPayment.productGroupFilter.text
+    select.pr-0(formControlName="GPCR_productGroup")
+      option(value="all", translate) ebc.general.all.text
+      option(*ngFor="let item of addingProductGroupList", [value]="item.pg_id") {{item | getAddingProductGroupLabel}}
+  .form-group.my-2
+    label(translate) ebc.guestPayment.chooseProduct.text
+    select.pr-0(formControlName="GPCR_product", [ngClass]="{invalid: isInvalid.GPCR_product}")
+      option(value="choose", translate) ebc.forms.pleaseChoose.text
+      option(value="new", translate) ebc.guestPayment.createNewProduct.text
+      option([disabled]="true") ------------------------ 
+      option(*ngFor="let item of addingProudctList", [value]="item.p_id") {{item.pl_name}}
+  br.my-4
+  h5(translate) ebc.forms.product.text
+  .form-group.my-2
+    label(translate) ebc.forms.name.text
+    input(type="text", formControlName='GPCR_p_name', [ngClass]="{invalid: isInvalid.GPCR_p_name}")
+  .form-group.my-2
+    label(translate) ebc.reports.group.text
+    select.pr-0(formControlName="GPCR_p_group", [ngClass]="{invalid: isInvalid.GPCR_p_group}")
+      option(value="choose", translate) ebc.forms.pleaseChoose.text
+      option(*ngFor="let item of addingProductGroupList", [value]="item.pg_id") {{item | getAddingProductGroupLabel}}
+  .row 
+    .col-9.offset-3 
+      .row
+        .col-5.form-group
+          label(translate) ebc.guestPayment.unitCount.text
+          input(type="text", appNumberInput, min="1", decimals="0", formControlName="GPCR_p_amount")
+        .col-7.form-group
+          label(translate) ebc.guestPayment.unitPriceGross.text
+          input(type="text", appNumberInput, decimals="2", formControlName="GPCR_p_gross")
+  .form-group.my-2
+    label(translate) ebc.guestPayment.taxGroup.text
+    select.pr-0(formControlName="GPCR_p_tax", [ngClass]="{invalid: isInvalid.GPCR_p_tax}")
+      option(value="choose", translate) ebc.forms.pleaseChoose.text
+      option(*ngFor="let item of taxGroupList", [value]="item.t_id") {{item.t_name}}
+      option(value="multipleTax", translate) ebc.prodMgmnt.multipleTax.text 
+  .row(*ngIf="form.get('GPCR_p_tax').value === 'multipleTax'") 
+    .col-9.offset-3 
+      .row
+        .col-5.form-group
+          label(translate)
+          input(type="text", appNumberInput, min="0", max="100", decimals="2", formControlName="pmdp_taxPart1")
+          span.ml-1 %
+        .col-7.form-group
+          label(translate) ebc.guestPayment.taxGroup.text
+          select(formControlName="pmdp_taxId1", [ngClass]="{invalid: isInvalid.pmdp_taxId1}")
+            option(value="choose", translate) ebc.forms.pleaseChoose.text
+            option(*ngFor="let item of taxGroupList", [value]="item.t_id") {{item.t_name}}
+  .row(*ngIf="form.get('GPCR_p_tax').value === 'multipleTax'") 
+    .col-9.offset-3 
+      .row
+        .col-5.form-group
+          label(translate)
+          input(type="text", appNumberInput, min="0", max="100", decimals="2", formControlName="pmdp_taxPart2")
+          span.ml-1 %
+        .col-7.form-group
+          label(translate) ebc.guestPayment.taxGroup.text
+          select(formControlName="pmdp_taxId2", [ngClass]="{invalid: isInvalid.pmdp_taxId2}")
+            option(value="choose", translate) ebc.forms.pleaseChoose.text
+            option(*ngFor="let item of taxGroupList", [value]="item.t_id") {{item.t_name}}
+  .row 
+    .col-9.offset-3 
+      .row 
+        .col-7.offset-5.form-group
+          label(translate) ebc.guestPayment.totalGross.text
+          input(type="text", appNumberInput, decimals="2", formControlName="GPCR_p_totalGross", readonly)

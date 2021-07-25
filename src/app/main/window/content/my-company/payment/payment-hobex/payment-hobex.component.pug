@@ -1,0 +1,25 @@
+.container
+  .row
+    .col-8
+      p.title.my-4(translate) ebc.payment.paymentHobexTitle
+      p.my-4
+        span.mr-1(translate) ebc.payment.paymentHobexConnectionText.text
+        span.active(translate) ebc.payment.paymentHobexIsActiveText.text
+      br
+      p.my-2
+        b
+          span(translate) ebc.payment.paymentHobexCredential
+          span :
+      .my-2
+        label.mr-2 EntityID:
+        input.credential([(ngModel)] = "entityID", readonly)
+      .my-2
+        label.mr-2 Access Token:
+        input.credential([(ngModel)] = "accessToken", readonly)
+    .col-4.my-4
+      p.title(translate) ebc.payment.activeCountryTitle.text
+      .activedCountryList
+        p.my-2(*ngIf="paymentCountryList.length === 0", translate) ebc.payment.noActivedCountry.text
+        p.my-2(*ngFor="let item of paymentCountryList") {{getCountryName(item.pmc_country_id)}}
+
+      button.btn.btn-secondary.my-4((click)="setCountries()", translate) ebc.payment.activeCountrySetCountry.text

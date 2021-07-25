@@ -1,0 +1,91 @@
+<app-loading class="loading-bar" *ngIf="isLoading | async"></app-loading>
+<app-upselling-modal-success *ngIf="(view$ | async) === 'thankYou'" [labels]="labels"></app-upselling-modal-success>
+<ng-container *ngIf="(view$ | async) === 'upselling' && form">
+  <form [formGroup]="form">
+    <section>
+      <div class="content-intro-info">
+        <div class="intro-text-price-details">
+          <h4>{{ labels?.intro?.title | translate }} {{ labels?.intro?.titleIcon }}</h4>
+          <p>{{ labels?.intro?.text | translate }}</p>
+          <a class="btn btn-primary more-info-button width-100" href="{{ labels?.intro?.button?.link }}" target="_blank">{{ labels?.intro?.button?.label | translate }}</a>
+          <div class="price-details">
+            <div class="price-detail-box">
+              <label>{{ 'BackEnd_WikiLanguage.uabUpsellingAdditionalCostUntil' | translate }} {{ modalData._licenseUntilDate }}</label>
+              <div class="price-detail">{{ modalData._totalUpsellingCosts }} {{ 'BackEnd_WikiLanguage.CCAB_BookingDetailEntityTotalNet' | translate }}</div>
+            </div>
+            <div class="price-detail-box">
+              <label>{{ 'BackEnd_WikiLanguage.uabUpsellingCostFrom' | translate }} {{ modalData._licenseUntilDate }}</label>
+              <div class="price-detail">{{ modalData._perMonth }} {{ 'BackEnd_WikiLanguage.generalPerMonth' | translate }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="info-box-wrapper">
+          <div class="info-box">
+            <div class="info-box-header">
+              <div class="info-box-price">
+                <div><span>{{ modalData._perMonth }}</span>&nbsp;&nbsp;/&nbsp;&nbsp;{{ 'BackEnd_WikiLanguage.ER_MonthLabel' | translate }}</div>
+                <img src="{{ logo }}"/>
+              </div>
+            </div>
+            <ul>
+              <li *ngFor="let benefit of labels?.benefits"><span class="bullet-point"><i class="mdi mdi-check"></i></span><span>{{ benefit | translate }}</span></li>
+            </ul>
+          </div>
+          <p>+&nbsp;{{ labels?.activation | translate }} {{ modalData._oneTimeActivationFee }}</p>
+        </div>
+      </div>
+    </section>
+    <section class="mt-4">
+      <h4>{{ 'FrontEnd_WikiLanguage.CD_PrepaymentMethod' | translate }}</h4>
+      <div class="payment-methods">
+        <div class="card">
+          <div class="card-row" *ngIf="!modalData._disabledSepa">
+            <input formControlName="selectedPaymentMethod" [value]="UabPaymentMethodType.SEPA" type="radio" id="payment-method-existing-sepa">
+            <label for="payment-method-existing-sepa">{{ 'BackEnd_WikiLanguage.uabUpsellingExistingSepa' | translate }}</label>
+            <div class="card-content">{{ 'BackEnd_WikiLanguage.uabUpsellingExistingSepaText' | translate : {iban: modalData.iban, sepaDate: modalData._sepaDate} }}</div>
+          </div>
+          <div class="card-row" *ngIf="!modalData._disabledSepaNew">
+            <input formControlName="selectedPaymentMethod" [value]="UabPaymentMethodType.SEPANew" type="radio" id="payment-type-new-sepa">
+            <label for="payment-type-new-sepa">{{ 'BackEnd_WikiLanguage.uabUpsellingNewSepa' | translate }}</label>
+            <div class="card-content" *ngIf="modalData._selectedPaymentMethod === UabPaymentMethodType.SEPANew">
+              <p [innerHtml]="'BackEnd_WikiLanguage.uabUpsellingPaymentRecipient' | translate"> </p>
+              <div class="row">
+                <div class="col">
+                  <label for="uab-sepa-account-owner">{{ 'BackEnd_WikiLanguage.uabUpsellingAccountHolderName' | translate }}</label>
+                  <input formControlName="accountOwner" type="text" id='uab-sepa-account-owner' class="form-control">
+                </div>
+                <div class="col">
+                  <label for="uab-sepa-iban">IBAN*</label>
+                  <input formControlName="iban" type="text" id='uab-sepa-iban' class="form-control">
+                  <div class="error-msg" *ngIf="form.controls['iban'].hasError('incorrect')">{{ 'BackEnd_WikiLanguage.CRF_SEPAInvalidIBAN' | translate }}</div>
+                </div>
+              </div>
+              <div class="sepa-legal-info">
+                <input formControlName="sepaLegalInfo" type="checkbox" id="sepa-uab-legal-info">
+                <label for="sepa-uab-legal-info">{{ 'BackEnd_WikiLanguage.uabUpsellingSepaInfo' | translate }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="card-row" *ngIf="!modalData._disabledBankTransfer">
+            <input formControlName="selectedPaymentMethod" [value]="UabPaymentMethodType.BankTransfer" type="radio" id="payment-type-banktransfer">
+            <label for="payment-type-banktransfer">{{ 'general.paymentMethod.bankTransfer' | translate }}</label>
+            <div class="card-content"><p>{{ 'BackEnd_WikiLanguage.uabUpsellingBanktransferInfo' | translate }}</p></div>
+          </div>
+        </div>
+      </div>
+      <p class="purchase-info">
+        {{ labels?.purchaseInfo | translate : {totalUpsellingCosts: modalData._totalUpsellingCosts, licenseUntilDate: modalData._licenseUntilDate, perMonth: modalData._perMonth} }}
+      </p>
+      <section>
+        <div class="accept-terms">
+          <label class="radio-label">
+            <input
+              formControlName="termsAccepted"
+              type="checkbox">
+            <span [innerHtml]="'BackEnd_WikiLanguage.generalGTC' | translate"></span>
+          </label>
+        </div>
+      </section>
+    </section>
+  </form>
+</ng-container>

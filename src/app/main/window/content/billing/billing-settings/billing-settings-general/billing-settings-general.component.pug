@@ -1,0 +1,27 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-12
+        label(translate) ebc.invoiceSettings.defaultInvoiceText.text
+        .textVal
+          label.hasBorder((click)="changeTranslate()") {{defaultText}}
+          i.mdi.mdi-earth.ml-2((click)="changeTranslate()")
+        .form-group.my-3
+          label.mr-2(translate) ebc.invoiceSettings.invoiceNumberFormatText.text
+          input(type="text", formControlName="b_billNoFormat")          
+        .form-check.my-2
+          input(type="checkbox", formControlName="b_initBillnoAtBeginningOfYear")
+          label(translate) ebc.invoiceSettings.initBillnoAtBeginningOfYearText.text
+        .form-check.my-2
+          input(type="checkbox", formControlName="b_showRoomNo")
+          label(translate) ebc.invoiceSettings.showRoomNoText.text
+        .form-check.my-2
+          input(type="checkbox", formControlName="b_showTaxTable")
+          label(translate) ebc.invoiceSettings.showTaxTableText.text
+        .form-check.my-2
+          input(type="checkbox", formControlName="b_showSplitBillsByDefault")
+          label(translate) ebc.invoiceSettings.showSplitBillsByDefaultText.text
+    .row.my-4 
+      .col-12.text-right
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+

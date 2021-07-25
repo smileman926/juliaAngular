@@ -1,0 +1,104 @@
+\:host
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 0
+  right: 0
+
+swiper
+  height: 92%
+
+.swiper-wrapper
+  box-sizing: border-box
+  padding: 50px 0
+
+  &.no-of-slides-1
+    justify-content: center
+
+.swiper-slide
+  text-align: center
+  background: #fff
+  //width: 60%
+  width: auto
+  display: flex
+  justify-content: center
+  align-items: center
+
+img
+  object-fit: cover
+  //width: 100%
+  width: auto
+  height: 100%
+  cursor: grab
+
+.image-controls
+  position: absolute
+  height: 40px
+  line-height: 40px
+  left: 0
+  width: 100%
+  display: flex
+  flex-wrap: nowrap
+  justify-content: center
+  align-items: center
+  z-index: 100
+  &.image-controls-top
+    top: -40px
+  &.image-controls-bottom
+    bottom: -40px
+
+  .image-control
+    padding: 0 8px
+    margin: 0 8px
+    height: 40px
+
+  .left-border
+    position: relative
+
+    &::before
+      content: ""
+      position: absolute
+      background-color: #e9ecef
+      width: 2px
+      height: 20px
+      top: 10px
+      left: -10px
+
+  .mdi
+    opacity: 0.5
+    cursor: pointer
+    font-size: 20px
+
+    &:hover
+      opacity: 1
+
+  .form-group
+    display: flex
+    flex-wrap: nowrap
+
+    &.sort-order input
+      max-width: 30px
+
+    label
+      white-space: nowrap
+      margin: 0
+
+::ng-deep
+  .swiper-container
+    width: auto !important
+    margin: 0 50px
+
+  .swiper-button-prev, .swiper-button-next
+    transform: translateY(-50%)
+    color: #96c8fb
+
+    &:hover:not(.disabled)
+      color: #6fb6fe
+
+    &.disabled
+      color: #cccccc
+      opacity: 1
+      cursor: not-allowed
+
+    &.hidden
+      display: none

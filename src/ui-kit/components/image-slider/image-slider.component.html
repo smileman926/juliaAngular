@@ -1,0 +1,80 @@
+<swiper *ngIf="images" [config]="config" #usefulSwiper>
+  <div class="swiper-wrapper no-of-slides-{{ images.length }}">
+    <div
+      class="swiper-slide"
+      *ngFor="let image of images; let i = index"
+    >
+      <img [src]="image.path" [alt]="image.id" class="image-item">
+      <div class="image-controls image-controls-top">
+        <ng-container *ngIf="sortable">
+          <div class="form-group sort-order image-control">
+            <label [for]="'sort-order-'+i">{{ 'BackEnd_WikiLanguage.generic_SortOrder' | translate }}</label>
+            <app-number-input-controls>
+              <input
+                class="form-control"
+                [(ngModel)]="image.sortOrder"
+                [id]="'sort-order-'+i"
+                type="text"
+                appNumberInput
+                [min]="1"
+                [max]="images.length"
+                decimals="0"
+                required
+              >
+            </app-number-input-controls>
+            <span>{{ '&nbsp;&nbsp;/&nbsp;&nbsp;' + images.length }}</span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="showTagField">
+          <div
+            class="form-group tag-field image-control"
+            [class.left-border]="sortable"
+          >
+            <label [for]="'tag-'+i">{{ 'Tag' }}</label>
+            <input
+              class="form-control"
+              [(ngModel)]="image.tag"
+              [id]="'tag-'+i"
+              type="text"
+            >
+          </div>
+        </ng-container>
+        <ng-container *ngIf="sortable || showTagField">
+          <i
+            class="mdi mdi-content-save"
+            (click)="save(image, i)"
+            [ngbTooltip]="'BackEnd_WikiLanguage.generic_Save' | translate"
+            placement="bottom"
+          ></i>
+        </ng-container>
+      </div>
+      <div class="image-controls image-controls-bottom">
+        <ng-container *ngIf="deletable">
+          <div class="image-control">
+            <i
+              class="mdi mdi-delete"
+              (click)="deleteImage.next({image: image, index: i})"
+              [ngbTooltip]="'BackEnd_WikiLanguage.generic_Delete' | translate"
+              placement="top"
+            ></i>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <!-- Add Pagination -->
+  <div class="swiper-pagination"></div>
+  <!-- Add Arrows -->
+</swiper>
+<div
+  class="swiper-button-next"
+  [class.disabled]="nextButtonDisabled"
+  [class.hidden]="nextButtonHidden"
+  (click)="nextImage()"
+></div>
+<div
+  class="swiper-button-prev"
+  [class.disabled]="prevButtonDisabled"
+  [class.hidden]="prevButtonHidden"
+  (click)="prevImage()"
+></div>

@@ -1,0 +1,20 @@
+content(*ngIf="(mainService.company$ | async) !== null")
+  app-header.header
+  .windows-container(#bounds)
+    .resizing-overlay(
+      *ngIf="windowsService.resizingDraggingInProgress",
+      [style.z-index]="windowsService.windowsOrder | windowOrder : windowsService.activeWindow : true"
+    )
+    img.eblogo(src="assets/images/logo-eb.svg")
+    app-window(
+      *ngFor="let window of (windows | async)",
+      [@fade]="'in'",
+      [window]="window",
+      [bounds]="bounds",
+      (close)="windowsService.closeWindow(window)",
+      (selected)="windowsService.selectWindow(window)",
+      [top]="window === windowsService.activeWindow",
+      [style.z-index]="windowsService.windowsOrder | windowOrder : window",
+    )
+  app-embed
+app-live-chat

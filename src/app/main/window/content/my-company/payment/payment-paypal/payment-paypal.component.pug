@@ -1,0 +1,30 @@
+.container  
+  form.my-4(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-8        
+        p(translate) ebc.payment.translateFrontendText.text
+        .textVal      
+          quill-view.hasBorder((click)="changeTranslate(false, true)", [content]="defaultSecondTranslate", format="text")
+          i.mdi.mdi-earth.ml-2((click)="changeTranslate(false, true)")
+        
+        p.pt-3(translate) ebc.payment.translateEmailText.text
+        .textVal
+          quill-view.hasBorder((click)="changeTranslate(true)", [content]="defaultFirstTranslate", format="text")
+          i.mdi.mdi-earth.ml-2((click)="changeTranslate(true)")
+        
+        p.title.my-2(translate) ebc.payment.editFormPPTitle.text 
+        p.my-0(translate) ebc.payment.editFormPPAccountId.text 
+        .row 
+          .col-md-6             
+            .form-group.mb-2
+              input(type="email", formControlName="pm_accountId", [placeholder]="'ebc.payment.editFormPPAccountId.text' | translate")            
+        button.btn.btn-secondary.my-3((click)="save()", [disabled]="form.invalid", translate) ebc.buttons.save.text
+      
+      .col-md-4
+        p.title(translate) ebc.payment.activeCountryTitle.text
+        .activedCountryList
+          p.my-2(*ngIf="paymentCountryList.length === 0", translate) ebc.payment.noActivedCountry.text 
+          p.my-2(*ngFor="let item of paymentCountryList") {{getCountryName(item.pmc_country_id)}}
+        
+        button.btn.btn-secondary.my-4((click)="setCountries()", translate) ebc.payment.activeCountrySetCountry.text
+

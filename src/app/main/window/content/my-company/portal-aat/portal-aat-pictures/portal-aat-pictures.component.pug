@@ -1,0 +1,37 @@
+.container.py-4(*ngIf="portalAATData") 
+  .row
+    .col-4
+      p.my-0(translate) ebc.portalAAT.mainImageHint.text
+      app-list-view.list-view.my-2(
+        [items]="images",
+        [selected]="selectedImage.id",
+        (select)="selectImage($event)",
+        [enableDragSort]="true",
+        (itemsSorted)="imageItemsSorted().catch()",
+      )
+        ng-template(let-item)
+          p.mb-2            
+            i.mdi.mdi-star.mr-1(*ngIf="item.ci_isMain")
+            i.mdi.mdi-star-outline.mr-1(*ngIf="!item.ci_isMain") 
+            span {{item.ci_path | getImageName}}
+          p.my-1 {{item.ci_fileSize | getImageSizeInMB}}
+      .uploadbtns.mt-3
+        button.btn.btn-secondary((click)="uploadImg()", translate) ebc.buttons.upload.text
+        button.btn.btn-secondary((click)="deleteImg()", translate) ebc.buttons.delete.text
+
+      p.my-2.text-danger(*ngIf="isLessImageCount || isInvalidDelete", translate) ebc.portalAAT.missingPicturesHint.text
+
+    .col-8
+      p.my-0(translate) ebc.portalAAT.filesize_hint.text
+      p.my-0(translate) ebc.portalAAT.fileres_hint.text
+      .my-2 
+        img.portalImg([src]="'//www.easy-booking.at/phpThumb/phpThumb.php?src=' + selectedImage.ci_path", alt="portal-picture")
+
+  .row
+    .col-12
+      .buttons
+        i.mr-4.mdi.mdi-information(
+          [ngbTooltip] = "'ebc.portalAAT.info2.text' | translate",
+          placement = "left-bottom"
+        )
+        button.btn.btn-primary.mr-2((click)="save()", [disabled]="isLessImageCount", translate) ebc.buttons.save.text

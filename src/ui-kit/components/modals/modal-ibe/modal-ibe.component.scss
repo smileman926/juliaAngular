@@ -1,0 +1,39 @@
+.ibeModal {
+	background-color: #e9f5fb;
+}
+.left-box {
+	margin: 4.5em 2.5em 1em;
+	display: flex;
+	flex-direction: column;
+}
+.header {
+	font-size: 25px;
+	color: #2f3254;
+	margin-bottom: .5em;
+}
+.paragraph {
+	font-size: 16px;
+	line-height: 1.31;
+	color: #203257;
+	margin-bottom: 1.2em;
+}
+.btn-green {
+	background-color: #3ad269;
+	width: fit-content;
+	height: 45px;
+	padding-left:15px;
+	padding-right:15px;
+	border: none;
+	border-radius: 6px;
+	color: rgba(255,255,255,1.0);
+	font-size: 16.0px;
+	outline: none;
+}
+.spanButtonContainer{
+	display: flex;
+	margin-top: auto;
+	color: #41636e;
+	text-decoration: underline;
+	font-size: 10px;
+	cursor: pointer;
+}

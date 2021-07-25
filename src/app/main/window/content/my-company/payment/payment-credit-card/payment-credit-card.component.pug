@@ -1,0 +1,45 @@
+.container
+  form.my-4(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-8
+        p(translate) ebc.payment.translateEmailText.text
+        .textVal
+          quill-view.hasBorder((click)="changeTranslate(true)", [content]="defaultFirstTranslate", format="text")
+          i.mdi.mdi-earth.ml-2((click)="changeTranslate(true)")
+        p(translate) ebc.payment.translateEmail2Text.text
+        .textVal
+          quill-view.hasBorder((click)="changeTranslate(false)", [content]="defaultSecondTranslate", format="text")
+          i.mdi.mdi-earth.ml-2((click)="changeTranslate(false)")
+        p.title.my-1(translate) ebc.payment.CreditCard.text
+
+        .row
+          .col-md-6(*ngFor="let item of creditCardTypeList; let i=index")
+            .form-group.my-1
+              label.left(translate) {{item.cct_name}}
+              ui-switch(
+                color="#5cb85c",
+                switchColor="#ffffff",
+                size="small",
+                [formControl]="form.get('c_ccTypes').controls[i]",
+                (change)="onChange($event, i)"
+              )
+        p.my-1
+          b(translate) ebc.payment.creditCardSecurityCheckHeadline.text
+        .row
+          .col-md-6
+            .form-group
+              input(id="forPayment", type="checkbox", formControlName="c_forPayment", (ngModelChange)="setCheckBox($event, 'creditCardSecurityCheck')")
+              label(for="forPayment", translate) ebc.payment.creditCardSecurityCheck.text
+          .col-md-6
+            .form-group
+              input(id="isDeposit", type="checkbox", formControlName="c_isDeposit", (ngModelChange)="setCheckBox($event, 'CreditCardSecurityCheckIgnorePrePayment')")
+              label(for="isDeposit", translate) ebc.payment.CreditCardSecurityCheckIgnorePrePayment.text
+
+      .col-md-4
+        p.title(translate) ebc.payment.activeCountryTitle.text
+        .activedCountryList
+          p.my-2(*ngIf="paymentCountryList.length === 0", translate) ebc.payment.noActivedCountry.text
+          p.my-2(*ngFor="let item of paymentCountryList") {{getCountryName(item.pmc_country_id)}}
+
+        button.btn.btn-secondary.my-4((click)="setCountries()", translate) ebc.payment.activeCountrySetCountry.text
+

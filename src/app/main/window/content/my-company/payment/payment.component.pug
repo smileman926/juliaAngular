@@ -1,0 +1,14 @@
+app-tabs(
+  *ngIf="tabSettings.buttons.length",
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+.content
+  app-loading.loading-bar(*ngIf="isLoading | async")
+  app-payment-general(*ngIf="activeTabId === 'general'")
+  app-payment-bank-transfer(*ngIf="activeTabId === 'bank'")
+  app-payment-credit-card(*ngIf="activeTabId === 'creditCard'")
+  app-payment-paypal(*ngIf="activeTabId === 'paypal'")
+  app-payment-sofort(*ngIf="activeTabId === 'sofort'")
+  app-payment-additional-types(*ngIf="activeTabId === 'additional'")
+  app-payment-hobex(*ngIf="activeTabId === 'hobex'")

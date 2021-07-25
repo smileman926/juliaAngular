@@ -1,0 +1,50 @@
+.container.my-4
+  form(*ngIf="form", [formGroup]="form")
+    .row.my-4 
+      .col-md-12 
+        .form-group
+          input.mr-1(type="checkbox", formControlName="c_gapFillEnabled")
+          label(translate) ebc.bookingTools.settings_gabFillEnabled.text
+    .row.mx-4 
+      .col-md-4
+        .form-group.my-2
+          input.mr-1(type="checkbox", formControlName="c_gapFillIgnoreArrival")
+          label(translate) ebc.bookingTools.gapFillerIgnoreArrival.text
+        .form-group
+          input.mr-1(type="checkbox", formControlName="c_gapFillIgnoreDeparture")
+          label(translate) ebc.bookingTools.gapFillerIgnoreDeparture.text
+      .col-md-4 
+        label.my-1(translate) ebc.bookingTools.gapFillerForSeason.text
+        .seasonWrapper.py-2
+          .form-group.my-1(*ngFor="let item of seasonList; let i=index")
+            input.mr-1(type="checkbox", [formControl]="form.get('seasons').controls[i]")
+            label(
+              [ngbTooltip] = "getPeriodFunc(item)",
+              placement="top"
+              translate
+            ) {{item.sp_name}}   
+      .col-md-4
+        label.my-1(translate) ebc.bookingTools.gapFillerMinStayOfCategory.text
+        .entityWrapper.py-2.pr-2
+          .form-group.my-1.row(*ngFor="let item of entityGroupList; let i=index")            
+            .col-md-7 
+              label(translate) {{item.eg_name}}
+            .col-md-5
+              .form-group
+                app-number-input-controls
+                  input.short(
+                    type="text",
+                    appNumberInput,
+                    appSelectOnFocus,
+                    [autoFixErrors]="true", 
+                    [decimals]="0",
+                    [min]="0", 
+                    [formControl]="form.get('entities').controls[i]",
+                    autocomplete="off",
+                  )
+
+    .row.my-4
+      .col-md-12
+        button.btn.btn-secondary((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+              
+        

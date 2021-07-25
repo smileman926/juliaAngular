@@ -1,0 +1,52 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    ng-template(#inputWithControls, let-formControlName="formControlName", let-min="min", let-max="max", let-decimals="decimals")
+      app-number-input-controls
+        input(
+          type="text",
+          appNumberInput,
+          appSelectOnFocus,
+          [autoFixErrors]="true",
+          [decimals]="decimals",
+          [min]="min",
+          [max]="max",
+          [formControlName]="formControlName",
+          autocomplete="off"
+        )
+    .row  
+      .col-12
+        label
+          span.bigTitle.mr-4(translate) ebc.enquiryPoolSettings.dayTolerance.text 
+          span.smallTitle(translate) ebc.enquiryPoolSettings.toleranceInfoText.text
+      .col-12 
+        .row
+          .col-7
+            label(translate) ebc.enquiryPoolSettings.enquiryForm.text
+          .col-5
+            .form-group
+              ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'c_epSettingFormDayTolerance', min: 0, max: 90, decimals: 0}")        
+              label.ml-4(translate) ebc.enquiryPoolSettings.days.text
+        .row
+          .col-7
+            label(translate) ebc.enquiryPoolSettings.forManuallyAssignment.text
+          .col-5
+            .form-group
+              ng-container(*ngTemplateOutlet="inputWithControls; context: {formControlName: 'c_epSettingManualAssignDayTolerance', min: 0, max: 90, decimals: 0}")        
+              label.ml-4(translate) ebc.enquiryPoolSettings.days.text
+      .col-12 
+        .form-check.my-2
+          input(type="checkbox", formControlName="c_epSettingSplitToMultipleRooms")
+          label(translate) ebc.enquiryPoolSettings.splitToMultipleRooms.text
+        .form-check.my-2
+          input(type="checkbox", formControlName="c_epSettingAutoAnswerComment")
+          label(translate) ebc.enquiryPoolSettings.autoAnswerComment.text
+        .form-check.my-2
+          input(type="checkbox", formControlName="c_epSettingAutoAnswerDeskline")
+          label(translate) ebc.enquiryPoolSettings.autoAnswerDeskline.text
+        .form-check.my-2
+          input(type="checkbox", formControlName="c_epSettingAutoAnswerEnquiryForm")
+          label(translate) ebc.enquiryPoolSettings.autoAnswerEnquiryForm.text
+      
+    .row.my-4 
+      .col-12.text-right
+        button.btn.btn-secondary.mr-1((click)="save()", [disabled]="form.invalid", translate) ebc.buttons.save.text

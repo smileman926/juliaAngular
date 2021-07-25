@@ -1,0 +1,3 @@
+iframe(#iframe, *ngIf="iframeSrc", [src]="iframeSrc", (load)="onLoaded()")
+.loading-bar(*ngIf="isLoading | async")
+  app-loading

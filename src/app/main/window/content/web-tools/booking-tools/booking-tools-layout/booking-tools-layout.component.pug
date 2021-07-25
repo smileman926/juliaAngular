@@ -1,0 +1,28 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-5
+        .row.mx-2 
+          .col-md-12.my-3
+            .picker              
+              .pick-color([(colorPicker)]="corIdentityList.ci_mainColor", [cpPosition]="'bottom-right'", [style.background]="corIdentityList.ci_mainColor")
+              label.ml-2.shadowlb([style.color]="corIdentityList.ci_mainColor", translate) ebc.bookingTools.layout_mainColor.text
+          .col-md-12.my-3.px-3.py-3([style.background]="corIdentityList.ci_mainColor")
+            .picker              
+              .pick-color([(colorPicker)]="corIdentityList.ci_fontColor", [cpPosition]="'bottom-right'", [style.background]="corIdentityList.ci_fontColor")
+              label.ml-2.shadowlb([style.color]="corIdentityList.ci_fontColor", translate) ebc.bookingTools.layout_fontColor.text
+          
+          .col-md-12.my-3 
+            .picker              
+              .pick-color([(colorPicker)]="corIdentityList.ci_otherColor", [cpPosition]="'bottom-right'", [style.background]="corIdentityList.ci_otherColor")
+              label.ml-2.shadowlb([style.color]="corIdentityList.ci_otherColor", translate) ebc.bookingTools.layout_otherColor.text    
+      .col-md-7
+        .row 
+          .col-md-12            
+            .form-group
+              label(translate) ebc.bookingTools.layout_juliaName.text
+              input.mx-1(type="text", formControlName="ci_juliaName")
+    .row.my-4 
+      .col-12
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid", translate) ebc.buttons.save.text
+

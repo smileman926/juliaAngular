@@ -1,0 +1,103 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-md-6
+        .title
+          span(translate) ebc.hotelManagement.settings_configurePDFHeadLine.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_isShowInfo")
+          label(translate) ebc.hotelManagement.settings_showHotelInfoOnPDF.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayCategoryForSpecialOffer")
+          label(translate) ebc.hotelManagement.settings_CategoryForSpecialOffer.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_noSplittingOutForSpecialOffers")
+          label(translate) ebc.hotelManagement.settings_noSplittingOutForSpecialOffers.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_hideCatering")
+          label(translate) ebc.hotelManagement.settings_hideCatering.text
+      .col-md-6        
+        .betweenWrapper
+          .title 
+            span(translate) ebc.hotelManagement.settings_moreSettingsHeadLine.text
+          i.mdi.mdi-help-circle-outline(
+            (click)="openReference()",
+            [ngbTooltip]="'BackEnd_WikiLanguage.AcademyLinkToolTip' | translate",
+            placement="left"
+          )
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_useRoundingHack")
+          label(translate) ebc.hotelManagement.settings_useRoundingHack.text
+        .form-check.my-1
+          input(type="checkbox", formControlName="c_ervAlwaysIncluded")
+          label(translate) ebc.hotelManagement.settings_ervAlwaysIncluded.text    
+        .wrapper 
+          .form-check
+            input(type="checkbox", formControlName="c_notObligedToCashRegisterLaw")
+            label(translate) ebc.hotelManagement.settings_notObligedToCashRegisterLaw.text                  
+          i.mdi.mdi-information(
+            [ngbTooltip] = "'ebc.hotelManagement.settings_notObligedToCashRegisterLaw_tooltip.text' | translate",
+            placement = "left"
+          )
+        .wrapper          
+          .form-check
+            input(type="checkbox", formControlName="c_channelManagerAutoCalc")
+            label(translate) ebc.hotelManagement.settings_channelManagerAutoCalc.text                  
+          i.mdi.mdi-information(
+            [ngbTooltip] = "'ebc.hotelManagement.settings_channelManagerAutoCalc_tooltip.text' | translate",
+            placement = "left"
+          )
+        .form-group.mr-0(*ngIf="countryDetailList.length > 1")
+          label(translate) ebc.hotelManagement.settings_defaultcountry.text
+          select(formControlName="c_currentCountryID")
+            option(*ngFor="let item of countryDetailList", [value]="item.c_id") {{item.c_name}}  
+        .form-group.mr-0(*ngIf="countryDetailList.length > 1")
+          label(translate) ebc.hotelManagement.settings_dateformat.text
+          select(formControlName="c_dateFormatID")
+            option(*ngFor="let item of dateFormatList", [value]="item.df_id") {{item.df_display}}              
+    .row 
+      .col-md-12 
+        .title 
+          span(translate) ebc.hotelManagement.settings_optionDisplayHeadLine.text      
+      .col-md-4 
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayVisitorsTax")
+          label(translate) ebc.hotelManagement.settings_optionDisplayVisitorsTax.text 
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayCleanupCharge")
+          label(translate) ebc.hotelManagement.settings_optionDisplayCleanupCharge.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayPetCharge")
+          label(translate) ebc.hotelManagement.settings_optionDisplayPetCharge.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayCotCharge")
+          label(translate) ebc.hotelManagement.settings_optionDisplayCotCharge.text
+      .col-md-4 
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayCatering")
+          label(translate) ebc.hotelManagement.settings_optionDisplayCatering.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayGarage")
+          label(translate) ebc.hotelManagement.settings_optionDisplayGarage.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayEarlyBirdDiscount")
+          label(translate) ebc.hotelManagement.settings_optionDisplayEarlyBirdDiscount.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayLongStayDiscount")
+          label(translate) ebc.hotelManagement.settings_optionDisplayLongStayDiscount.text
+      .col-md-4  
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayOtherCharges")
+          label(translate) ebc.hotelManagement.settings_optionDisplayOtherCharges.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayShortStayCharge")
+          label(translate) ebc.hotelManagement.settings_optionDisplayShortStayCharge.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayLastMinuteDiscount")
+          label(translate) ebc.hotelManagement.settings_optionDisplayLastMinuteDiscount.text
+        .form-check.my-3
+          input(type="checkbox", formControlName="c_displayWishroomCharge")
+          label(translate) ebc.WRM.defaultWishRoomLabel.text  
+    .row.my-4.mx-4 
+      .col-12.text-right 
+        button.btn.btn-secondary((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text

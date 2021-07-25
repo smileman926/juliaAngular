@@ -1,0 +1,6 @@
+.container 
+  form(*ngIf="form", [formGroup]="form").mt-4
+    label(translate) {{ type === 'message' ? 'ebc.dialog.depositReceivedBody.text' : 'ebc.dialog.sendReceiptBody.text' }}
+    .form-group.mt-2 
+      label.mr-2(translate) ebc.forms.email.text 
+      input(type="email", formControlName="email")

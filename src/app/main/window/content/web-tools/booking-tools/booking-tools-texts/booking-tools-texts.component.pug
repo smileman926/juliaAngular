@@ -1,0 +1,6 @@
+.container(*ngIf="textTypes.length > 0").mt-4
+  .row(*ngFor="let item of textTypes")
+    .col-md-12.my-2 
+      label.left(translate) {{item.type}}
+      label.right.ml-4.mr-2((click)="changeTranslate(item.pureType)") {{item.value}}
+      i.mdi.mdi-earth((click)="changeTranslate(item.pureType)")

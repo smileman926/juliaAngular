@@ -1,0 +1,95 @@
+.container  
+  form(*ngIf="form", [formGroup]="form").mt-3
+    .row
+      .col-6
+        .row
+          .col-5.mx-0.text-right        
+            span.mr-2(translate) ebc.forms.bookingInvoice.text
+          .col-7.form-group.mx-0
+            input.mr-1(formControlName="searchStr", (keyup)="onSearchKeyUp()")
+            i.mdi.mdi-information(
+              [ngbTooltip]="'ebc.guestPayment.bonSearchToolTip.text' | translate",
+              placement="bottom"
+            )            
+        .row(*ngIf="searchBookingForGuestPaymentResults.length > 0 && !selectedBookingInvoice")
+          .col-7.offset-5
+            app-list-view.ht130(
+              [items]="searchBookingForGuestPaymentResults",              
+              (select)="selectBookingInvoice($event)"
+            )
+              ng-template(let-item) {{item | getBookInvoiceLabel}}
+      .col-6
+        .form-group.mb-2
+          label(translate) ebc.reports.paymentDate.text
+          app-datepicker-input.w100(
+            [date]="form.get('paymentDate')?.value",
+            (dateChange)="form.get('paymentDate')?.setValue($event);",
+            [maxDate]="today"
+          )
+        .form-group.mb-2
+          label(translate) ebc.reports.paymentMethod.text
+          select.pr-0(*ngIf="billVersionPaymentTypes.length > 0", formControlName="paymentMethod")
+            option(*ngFor="let item of billVersionPaymentTypes", [value]="item.bvpt_id") {{item.bvptl_name}}
+        .form-group.mb-2
+          label(translate) ebc.supportForm.description.text
+          input(formControlName="description", type="text")
+        .form-group.mb-2
+          label(translate) general.amount.text
+          input.textLeft(formControlName="amount", type="text", appNumberInput, decimals="2")
+        .row.mt-3
+          .col-7.mx-0
+            .form-check(*ngIf="form.get('isSpotPayment').value")           
+              input.mr-1(type="checkbox", formControlName="isSpotPayment")
+              label.mr-2(translate) ebc.guestPayment.isLocalPayment.text
+              i.mdi.mdi-information(
+                [ngbTooltip]="'ebc.guestPayment.isLocalPayment_tooltip.text' | translate",
+                placement="bottom"
+              )     
+          .col-5.text-right
+              button.btn.btn-secondary((click)="checkPayment()", [disabled]="form.invalid || !selectedBookingInvoice", translate) ebc.buttons.save.text
+    hr.my-3
+    .row 
+      .col-6 
+        .form-group.my-2
+          label(translate) ebc.forms.salutation.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.sl_salutation}} 
+        .form-group.my-2
+          label(translate) ebc.forms.firstName.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_firstName}} 
+        .form-group.my-2
+          label(translate) ebc.forms.lastName.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_lastName}} 
+        .form-group.my-2
+          label(translate) ebc.forms.company.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_company}} 
+        .form-group.my-2
+          label(translate) ebc.forms.email.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_eMailAddress}} 
+        .form-group.my-2
+          label(translate) ebc.forms.address.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_addressLine1}} 
+        .form-group.my-2
+          label(translate) ebc.forms.postCodeAndCity.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_postCodeAndCity}} 
+        .form-group.my-2
+          label(translate) ebc.forms.country.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_country}} 
+      .col-6
+        .form-group.my-2
+          label(translate) ebc.forms.invoiceNo.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.b_billNo}} 
+        .form-group.my-2
+          label(translate) ebc.forms.customerNo.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.c_id}} 
+        .form-group.my-2
+          label(translate) ebc.forms.date.text
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.b_invoiceDate}} 
+        .form-group.my-2
+          label(translate) BackEnd_WikiLanguage.ER_BookingNo
+          label.left(*ngIf="selectedBookingInvoice") {{selectedBookingInvoice.b_bookingNo}}
+        .text-right.my-4(*ngIf="isSavedBookInvoice")
+          label.title.mb-2(translate) {{isSavedBookInvoiceStr}}
+          br
+          button.btn.btn-secondary.mr-2(*ngIf="!isHidePrintReceipt", (click)="printReceipt()", [disabled]="isDisablePrintReceipt", translate) ebc.buttons.printReceipt.text
+          button.btn.btn-secondary((click)="openInvoice()", [disabled]="false", translate) ebc.buttons.openInvoice.text
+

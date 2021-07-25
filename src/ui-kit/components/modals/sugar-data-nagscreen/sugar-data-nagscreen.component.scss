@@ -1,0 +1,116 @@
+@import '_variables';
+
+.header {
+  display: flex;
+  padding: 0.2em 0.3em;
+  background: $mdi-window-header-color;
+  border: solid 1px $mdi-window-border-color;
+  color: #121621;
+  font-size: 1.2em;
+  font-weight: 600;
+  justify-content: space-between;
+  align-items: center;
+
+  h4 {
+    margin: .5rem;
+  }
+
+  .close i {
+    font-size: 1.25rem;
+  }
+}
+.grid-area .form-group {
+  grid-template-columns: 1fr 2fr;
+}
+.btn-grey {
+  background-color: #999999;
+  color: #fff;
+  padding: .5rem 3rem;
+  border-radius: 0px;
+  &:hover {
+    background-color: #e97c00;
+  }
+}
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+
+.page-3 {
+  padding: 4rem 1.5rem;
+  background-color: $gray-300;
+
+  .bubble-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .bubble {
+      position: relative;
+      width: 70%;
+      padding: 2rem;
+      background: #FFFFFF;
+      border-radius: 8px;
+
+      &:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 26px 26px 0;
+        border-color: #FFFFFF transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        bottom: -26px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      h1 {
+        text-align: center;
+        font-weight: 300;
+        font-size: 2rem;
+      }
+
+      p {
+        padding: 1rem;
+        border-radius: 8px;
+        background-color: $gray-200;
+      }
+    }
+  }
+
+  .moods-wrapper {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h2 {
+      color: #5D6C84;
+    }
+
+    .moods {
+      padding: 1rem;
+      background-color: #FFFFFF;
+      border-radius: 37.5px;
+
+      img.mood {
+        width: 50px;
+        cursor: pointer;
+        margin-left: 1rem;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
+

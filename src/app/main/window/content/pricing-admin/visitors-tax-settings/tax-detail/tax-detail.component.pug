@@ -1,0 +1,141 @@
+app-loading.loading-bar(*ngIf="isLoading | async")
+form(*ngIf="form", [formGroup]="form")
+  .row
+    .col-md-7
+      .form-group
+        label
+          | {{'BackEnd_WikiLanguage.VT_Name' | translate}}
+        input(formControlName="description", [readonly]="disableStatus")
+      .form-group.datepicker-wrapper
+        label
+          | {{'BackEnd_WikiLanguage.generic_From' | translate}}
+        app-datepicker-input(
+          [date]="form.get('fromDate').value",
+          (dateChange)="form.get('fromDate').setValue($event)",
+          [inputId]="'from-date'",
+          [mandatory]="true",
+          [disabled]="disableStatus"
+        )
+    .col-md-5
+      .form-group
+        label
+          | {{'BackEnd_WikiLanguage.VT_TaxType' | translate}}
+        select.dateselect(formControlName="taxChargeType", (change)="changeTaxChargeType($event.target.value)")
+          ng-container(*ngIf="list")
+            option(value="1", translate)
+              | {{'BackEnd_WikiLanguage.generic_PricePerPersonPerNight' | translate}}
+            option(value="2", translate)
+              | {{'BackEnd_WikiLanguage.generic_PercOnLogis' | translate}}
+
+      .form-group.datepicker-wrapper
+        label
+          | {{'BackEnd_WikiLanguage.generic_To' | translate}}
+        app-datepicker-input(
+          [date]="form.get('untilDate').value",
+          (dateChange)="form.get('untilDate').setValue($event)",
+          [inputId]="'until-date'",
+          [mandatory]="true",
+          [disabled]="disableStatus"
+        )
+  .form-list.row(*ngFor="let groupitem of [].constructor(showItems); let i = index")
+    .col-md-7
+      .form-group.row
+        .col-md-8.agetype
+          .form-group-item.agetype-interval(*ngIf="i !== 0", [hidden]="ageType")
+            label
+            app-number-input-controls
+              input(
+                type="text",
+                appNumberInput,
+                [min]="0",
+                [max]="18",
+                [decimals]="0",
+                [autoFixErrors]="true",
+                (change)="checkValidation()",
+                (keyup)="checkValidation()",
+                [placeholder]="inputPlaceholder",
+                [formControl]="form.get('startAgeGroup').controls[i]",
+                [readonly]="disableStatus"
+              )
+          .form-group-item(*ngIf="i === 0")
+            label(translate) BackEnd_WikiLanguage.VT_calculationRuleLabel
+            select(
+              formControlName="groupSelection",
+              (change)="changeAgeType($event.target.value)"
+            )
+              ng-container(*ngIf="list")
+                option(value="1", translate)
+                  | {{'BackEnd_WikiLanguage.VT_FromAge' | translate}}
+                option(value="2", translate)
+                  | {{'BackEnd_WikiLanguage.EQP_ages' | translate}}
+        .col-md-4.untilgroup
+          .form-group-item(*ngIf="i === 0")
+            app-number-input-controls(*ngIf="!ageType")
+              input(
+                type="text",
+                appNumberInput,
+                [min]="0",
+                [max]="18",
+                [decimals]="0",
+                [autoFixErrors]="true",
+                [formControl]="form.get('startAgeGroup').controls[i]",
+                [placeholder]="inputPlaceholder",
+                [readonly]="disableStatus",
+                (change)="checkValidation()",
+                (keyup)="checkValidation()",
+              )
+            app-number-input-controls(*ngIf="ageType")
+              input(
+                type="text",
+                appNumberInput,
+                [decimals]="0",
+                [min]="yearCalcMin",
+                [max]="yearCalcMax",
+                [autoFixErrors]="true",
+                [formControl]="form.get('yearFrom').controls[i]",
+                [placeholder]="yearCalcMax",
+                (change)="checkValidation()",
+                (keyup)="checkValidation()",
+              )
+          .form-group-item(*ngIf="i !== 0")
+            app-number-input-controls(*ngIf="!ageType")
+              input(
+                type="text",
+                appNumberInput,
+                [min]="0",
+                [max]="18",
+                [decimals]="0",
+                [autoFixErrors]="true",
+                [formControl]="form.get('untilAgeGroup').controls[i]",
+                [placeholder]="inputPlaceholder",
+                [readonly]="disableStatus",
+                (change)="checkValidation()",
+                (keyup)="checkValidation()",
+              )
+            app-number-input-controls(*ngIf="ageType")
+              input(
+                type="text",
+                appNumberInput,
+                [min]="yearCalcMin",
+                [max]="yearCalcMax",
+                [decimals]="0",
+                [autoFixErrors]="true",
+                [formControl]="form.get('yearFrom').controls[i]",
+                [placeholder]="yearCalcMax",
+                (change)="checkValidation()",
+                (keyup)="checkValidation()",
+              )
+    .col-md-5
+      .form-group.row
+        .col-md-8.amount
+          label
+            | {{'BackEnd_WikiLanguage.INV_amount' | translate}}
+          input(type="text", appNumberInput, decimals="4", [formControl]="form.get('amountGroup').controls[i]", [ngClass]="{percentadd: taxChargeTypeValue === true}", [readonly]="disableStatus")
+          label.percent(*ngIf="taxChargeTypeValue === true") %
+        .col-md-4
+          .buttons(*ngIf="i === 0")
+            button.btn.btn-sm((click)="addNewRow()", [disabled]="showItems >= 3") +
+            button.btn.btn-sm((click)="removeRow()", [disabled]="showItems <= 1") -
+  button.btn.btn-secondary.ml-3.save(*ngIf="list", (click)="saveData()", [disabled]="saveValidation", translate) BackEnd_WikiLanguage.generic_Save
+
+

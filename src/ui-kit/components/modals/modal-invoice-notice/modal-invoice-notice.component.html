@@ -1,0 +1,12 @@
+<app-loading class="loading-bar" *ngIf="isLoading | async"></app-loading>
+<app-modal-invoice-notice-status
+  *ngIf="noticeText"
+  [attentionText]="attentionText"
+  [salutationText]="salutationText"
+  [noticeText]="noticeText"
+  [invoiceStatus]="invoiceStatus"
+  [disableClose]="disableClose"
+  [hideCloseButton]="hideCloseButton"
+  [closeAfterXSeconds]="closeAfterXSeconds"
+  (cancel)="cancel.emit()"
+></app-modal-invoice-notice-status>

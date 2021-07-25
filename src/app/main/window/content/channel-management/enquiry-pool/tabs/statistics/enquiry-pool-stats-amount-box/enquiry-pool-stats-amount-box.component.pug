@@ -1,0 +1,16 @@
+div([ngClass]="{'box': true, 'grey': isGrey}")
+  .row
+    .col-md-7
+      label.uppercase(translate) {{titleName}} 
+        span.uppercase(*ngIf="titleName === 'ebc.epStats.sales.text'") {{sourceStr}}
+    .col-md-5.text-right 
+      label.symbol(*ngIf="symbolStr", [innerHtml]="symbolStr")
+      img(*ngIf="!symbolStr", [src]="imgSource", width="20px", height="20px", alt="imgAlt")
+  .row.mt-4 
+    .col-md-6
+      label.amountGrey {{countOfAnsweredEnquiries | number : '1.2-2'}}
+        span.ml-1(*ngIf="!isPill && isPercentage") % 
+        span.ml-1(*ngIf="!isPill && !isPercentage", [innerHtml]="symbolStr")
+    .col-md-6.centerWrapper
+      label.pill(*ngIf="isPill") {{pillAmount | number : '1.2-2'}} %   
+      ngb-progressbar.progressBar(*ngIf="isPercentage", type="primary", [value]="countOfAnsweredEnquiries")

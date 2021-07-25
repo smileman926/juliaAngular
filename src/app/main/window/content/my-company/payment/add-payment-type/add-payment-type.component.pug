@@ -1,0 +1,11 @@
+.container 
+  app-loading.loading-bar(*ngIf="isLoading | async") 
+  .row 
+    .col-md-4.form-group
+      label(translate) ebc.payment.customPaymentTypeName.text  
+    .col-md-6.form-group
+      input(type="text", [(ngModel)]="paymentTypeName") 
+    .col-md-12
+      .form-check 
+        input.mr-2(type="checkbox", [(ngModel)]="isActive")
+        label(translate) ebc.bookingTools.locale_active.text 

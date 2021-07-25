@@ -1,0 +1,11 @@
+app-tabs(
+  *ngIf="tabSettings.buttons.length",
+  [settings]="tabSettings",
+  [(selected)]="activeTabId"
+)
+.container
+  app-loading.loading-bar(*ngIf="isLoading | async") 
+  form(*ngIf="form", [formGroup]="form") 
+    .row.my-2(*ngIf="bookingLangs.length > 0")
+      .col-md-11.form-group(*ngFor="let lang of bookingLangs; let i = index")
+        quill-editor.editor(*ngIf=" activeTabId === lang.language ", [formControl]="form.get('langs').controls[i]", [modules]="editorConfig")

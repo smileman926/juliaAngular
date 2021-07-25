@@ -1,0 +1,15 @@
+form.row([formGroup]="form")
+  .col
+    .form-group
+      label(for="pricing-scheme", translate) BackEnd_WikiLanguage.EP_PricingScheme
+      select#pricing-scheme.form-control.custom-select(formControlName="pricingSchemeId")
+        option(*ngFor="let scheme of pricingSchemes", [value]="scheme.value") {{ scheme.name }}
+  .col(*ngIf="showCateringDropdown")
+    .form-group
+      label(for="display-catering", translate) BackEnd_WikiLanguage.CATER_Header
+      select#display-catering.form-control.custom-select(
+        [ngModel]="cateringId.toString()",
+        (ngModelChange)="onDisplayCateringChange($event)",
+        [ngModelOptions]="{standalone: true}"
+      )
+        option(*ngFor="let catering of caterings", [value]="catering.typeId") {{ catering | cateringName }}

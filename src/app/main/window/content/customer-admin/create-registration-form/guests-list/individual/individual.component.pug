@@ -1,0 +1,41 @@
+.sidebar
+  h4(translate) BackEnd_WikiLanguage.MW_GuestData
+  app-list-view.list-view(
+    [items]="guests | orderGuests : mainGuest",
+    [selected]="selectedItem?.id",
+    (select)="selectItem($event)"
+  )
+    ng-template(let-item)
+      span {{ item.displayField }} {{ mainGuest === item ? '*' : '' }}
+  button.btn.btn-secondary.mt-2(
+    (click)="newGuest()",
+    [disabled]="!canCreateNewGuest || registrationForm?.arrived",
+    translate
+  ) BackEnd_WikiLanguage.MW_NewGuest
+.content
+  ng-container(*ngIf="selectedItem")
+    div
+      app-edit-guest(
+        [guest]="selectedItem",
+        (guestChange)="changeGuest($event)",
+        [canEdit]="!registrationForm?.arrived",
+        [arrived]="arrived",
+        [mainGuestId]="mainGuest?.id",
+        [isGroupGuest]="forGroup",
+        [editGuestInformation]="onEditGuestInformation",
+        (changeGuestType)="changeGuestType($event)"
+      )
+      div
+        button.btn.btn-secondary.mr-3(
+          (click)="onEditGuestInformation.emit()",
+          [disabled]="!(!registrationForm?.arrived)",
+          translate
+        ) BackEnd_WikiLanguage.MW_EditData
+        button.btn.btn-secondary(
+          down-field,
+          (click)="delete.emit(selectedItem)",
+          [disabled]="registrationForm?.arrived",
+          translate
+        ) BackEnd_WikiLanguage.MW_DeleteGuestFromRegForm
+.button-controls
+  button.btn.btn-secondary((click)="onSave()", [disabled]="!guests.length || registrationForm?.departed", translate) BackEnd_WikiLanguage.generic_Save

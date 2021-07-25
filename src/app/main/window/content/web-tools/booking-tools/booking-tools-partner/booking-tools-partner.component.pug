@@ -1,0 +1,36 @@
+.container 
+  form(*ngIf="form", [formGroup]="form")
+    .row.mx-2 
+      .col-md-12
+        p(translate) ebc.bookingTools.thankYouPagePartner_Headline.text
+      .col-md-4.imgWrapper.whiteBack
+        i.mdi.mdi-check
+        img(src="assets/img/erv_austria.png", alt="Europaische")  
+      .col-md-4.imgWrapper.whiteBack
+        i.mdi.mdi-check
+        img(src="assets/img/HappyCar_logo_de.png", alt="HAPPYCAR.de")
+      .col-md-12.alpinWrapper.whiteBack
+        .row 
+          .col-md-4.imgWrapper.alpin((click)="checkAlpin()")
+            i.mdi.mdi-checkbox-marked-outline(*ngIf="isAlpinChecked")
+            i.mdi.mdi-checkbox-blank-outline(*ngIf="!isAlpinChecked")
+            img(src="assets/img/alpinresort.png", alt="ALPINRESORTS.com")
+          .col-md-4.imgWrapper
+            label(translate) ebc.bookingTools.thankYouPagePartner_holidayRange.text
+              span :
+            .periodWrapper(*ngIf="monthList.length > 1") 
+              .form-group
+                label(translate) ebc.forms.from.text          
+                select(formControlName="holidayFrom")
+                  option(*ngFor="let item of monthList; let i=index", [value]="i", translate) {{item}}
+              .form-group
+                label(translate) ebc.forms.to.text         
+                select(formControlName="holidayTo")
+                  option(*ngFor="let item of monthList; let i=index", [value]="i", translate) {{item}}
+            i.mdi.mdi-information((mouseenter) ="showToolTipContent(true)", (mouseleave) ="showToolTipContent(false)")
+          .col-md-4
+            label.toolTip(*ngIf="isShowToolTipContent", [innerHtml]="'ebc.bookingTools.thankYouPagePartner_alpinresortInfoText.text' | translate")
+    .row.my-4 
+        .col-12
+          button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+

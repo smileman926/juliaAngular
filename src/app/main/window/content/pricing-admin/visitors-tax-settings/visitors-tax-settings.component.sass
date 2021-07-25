@@ -1,0 +1,40 @@
+@import '_variables'
+@import "../../../shared/window-content/with-sidebar.sass"
+@import "../../../shared/window-content/with-tabs.sass"
+
+\:host
+    display: flex
+    flex-direction: column
+    height: 95%
+    margin: 0.5em
+    border: solid 2px #e4e4e4
+
+content
+    position: relative
+    overflow-y: auto
+    border-top: 0
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    .sidebar
+        width: 220px
+        overflow-y: auto
+        .button-controls
+            margin: 0.5em 0
+            &.right-align
+                text-align: right
+        .list-view
+            flex: 1
+            height: 100%
+    .content
+        width: 100%
+        max-width: 660px
+        padding: 0
+        margin: 0
+        .tab-container
+            margin: unset
+    .button-controls
+        width: 100%
+        margin-left: 5px
+        .save
+            float: right

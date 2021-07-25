@@ -1,0 +1,48 @@
+form(*ngIf="currentPrices", [formGroup]="form")
+  app-table([items]="currentPrices.prices")
+    ng-template(#column, let-personPricing)
+      span(
+        [class.highlighted]="personPricing.personsNo | isPersonHighlighted : stdPricePosition : pricingScheme"
+      ) {{ 'BackEnd_WikiLanguage.generic_Person' | translate }}: {{ personPricing.personsNo }}
+    ng-template(#column,
+      [label]="pricingScheme === PricingSchemeType.RoomLevel ? 'BackEnd_WikiLanguage.generic_RoomPrice' : 'BackEnd_WikiLanguage.generic_AdultPrice'",
+      let-personPricing,
+      let-personsIndex="rowIndex"
+    )
+      ng-container(*ngIf="(form | getPersonFormControl : currentPrices.index : personsIndex) as formControl")
+        input.editable-cell(
+          AutoSizeInput,
+          [setParentWidth]="true",
+          [includePadding]="false",
+          type="text",
+          appNumberInput,
+          appSelectOnFocus,
+          appFocusOnEnter,
+          [foeMap]="focusOnEnterMaps | getFocusOnEnterMap : undefined",
+          [foeIndex]="personsIndex",
+          [formControl]="formControl"
+        )
+    ng-container(*ngIf="pricingScheme !== PricingSchemeType.RoomLevel")
+      ng-template(
+        #column,
+        *ngFor="let ageGroup of ageGroups; let ageIndex = index",
+        [label]="ageGroup.discount | ageGroupFormat : ageGroup.from : ageGroup.to : pricingScheme",
+        let-personPricing,
+        let-personsIndex="rowIndex"
+      )
+        ng-container(*ngIf="personPricing.personsNo > fullPayers; else noDiscounts")
+          ng-container(*ngIf="(form | getPersonFormControl : currentPrices.index : personsIndex : ageIndex) as formControl")
+            input.editable-cell(
+              AutoSizeInput,
+              [setParentWidth]="true",
+              [includePadding]="false",
+              type="text",
+              appNumberInput,
+              appSelectOnFocus,
+              appFocusOnEnter,
+              [foeMap]="focusOnEnterMaps | getFocusOnEnterMap : ageGroup.id",
+              [foeIndex]="personsIndex",
+              [formControl]="formControl"
+            )
+        ng-template(#noDiscounts)
+          input.editable-cell.text-right(type="text", [attr.disabled]="''", value="-")

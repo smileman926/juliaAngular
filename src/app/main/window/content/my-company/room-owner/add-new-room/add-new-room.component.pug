@@ -1,0 +1,8 @@
+.container(*ngIf="entityOwnerRoomInfoList.length > 0")
+  label(translate) ebc.roomOwner.chooseAddRooms.text
+  app-list-view.entityList(
+    [items]="entityOwnerRoomInfoList",
+    [selected]="selectedEntity.id",
+    (select)="selectItem($event)"
+  )
+    ng-template(let-item) {{item.e_uniqueNo}} 

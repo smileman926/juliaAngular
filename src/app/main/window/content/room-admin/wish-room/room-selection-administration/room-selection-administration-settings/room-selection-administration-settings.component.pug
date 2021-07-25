@@ -1,0 +1,72 @@
+form.my-2.mx-4(*ngIf="form", [formGroup]="form")
+  .row 
+    .col-12
+      input(type="checkbox", formControlName="wc_active")
+      label(translate) ebc.bookingTools.locale_active.text
+  .row.my-1 
+    .col-2
+      label(translate) ebc.forms.name.text
+    .col-4.form-group
+      input(type="text", formControlName="WRM_name") 
+    .col-2.form-group
+      select(formControlName="WRM_select_name", (change)="localeChange('name')")
+        option(*ngFor="let item of locales", value="item.l_id") general.locale_{{item.l_name}}
+  .row.my-1
+    .col-2 
+      label(translate) ebc.supportForm.description.text
+    .col-4.form-group 
+      input(type="text", formControlName="WRM_description") 
+    .col-2.form-group
+      select(formControlName="WRM_select_description", (change)="localeChange('desc')")
+        option(*ngFor="let item of locales", value="item.l_id") general.locale_{{item.l_name}}
+  .row.mt-2
+    .col-2 
+      label(translate) ebc.forms.hintText.text
+    .col-4.form-group 
+      input(type="text", formControlName="WRM_hint") 
+    .col-2.form-group
+      select(formControlName="WRM_select_hint", (change)="localeChange('hint')")
+        option(*ngFor="let item of locales", value="item.l_id") general.locale_{{item.l_name}}
+  .row.my-1 
+    .col-4 
+      label(translate) ebc.forms.hintText.text
+    .col-2 
+       input(type="radio", formControlName="wc_showHint", value="on")
+       label(translate) ebc.buttons.yes.text
+       input.ml-2(type="radio", formControlName="wc_showHint", value="off")
+       label(translate) ebc.buttons.no.text
+  .row.my-1 
+    .col-4 
+      label(translate) ebc.WRM.crossCategorySelectionText.text
+    .col-2 
+       input(type="radio", formControlName="wc_crossCategorySelectionActive", value="on")
+       label(translate) ebc.buttons.yes.text
+       input.ml-2(type="radio", formControlName="wc_crossCategorySelectionActive", value="off")
+       label(translate) ebc.buttons.no.text 
+  .row.my-1
+    .col-4 
+      label(translate) ebc.WRM.crossCategorySelectionText.text
+    .col-2 
+       input(type="radio", formControlName="wc_crossCategorySelectionActive", value="on")
+       label(translate) ebc.buttons.yes.text
+       input.ml-2(type="radio", formControlName="wc_crossCategorySelectionActive", value="off")
+       label(translate) ebc.buttons.no.text 
+    .col-2.form-group
+       select(formControlName="WRM_select_hint", (change)="localeChange('floor')")
+        option(*ngFor="let item of locales", value="item.l_id") general.locale_{{item.l_name}}
+  .row
+    .col-7.offset-2
+      .floorWrapper.row
+        .col-3.form-group.px-2 
+          input(type="text", value="First Floor") 
+        .col-3.form-group.px-2
+          input(type="text", value="First Floor")
+        .col-3.form-group.px-2 
+          input(type="text", value="First Floor")
+        .col-3.form-group.px-2 
+          input(type="text", value="First Floor")
+        .col-3.form-group.px-2 
+          input(type="text", value="First Floor")
+  .row 
+    .col-12.text-right
+      button.btn.btn-secondary((click)="save()", translate) ebc.buttons.save.text

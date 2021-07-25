@@ -1,0 +1,25 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-6.mt-2
+        .form-group
+          input(type="radio", value="manual", formControlName="b_receiptFormat")
+          label(translate) ebc.invoiceSettings.checkReceiptFormatManually.text
+        .form-group
+          input(type="radio", value="noManual", formControlName="b_receiptFormat")
+          label(translate) ebc.invoiceSettings.setReceiptFormatAutomatically.text
+          select(formControlName="b_receiptFormatType")
+            option(*ngFor="let item of ReceiptTypes", [value]="item") {{item}}  
+
+        label.mt-4(translate) ebc.invoiceSettings.receiptAddressTypeHeader.text
+        .form-group
+          input(type="radio", value="invoice", formControlName="b_receiptAddressType")
+          label(translate) ebc.invoiceSettings.receiptAddressTypeLabelInvoice.text
+        .form-group
+          input(type="radio", value="company", formControlName="b_receiptAddressType")
+          label(translate) ebc.invoiceSettings.receiptAddressTypeLabelCompany.text
+         
+    .row.my-4 
+      .col-12.text-right
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+

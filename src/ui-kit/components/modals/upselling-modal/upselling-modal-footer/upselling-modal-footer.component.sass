@@ -1,0 +1,43 @@
+@import "app-globals"
+
+\:host
+  width: 100%
+  text-align: left
+
+.thankYou
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-bottom: 2rem
+
+.order
+  padding: 0 2rem 1rem 2rem
+  button
+    width: 100%
+    line-height: 1.75rem
+
+.modal-footer
+  padding: 1rem 2rem
+  display: flex
+  justify-content: space-between
+  align-items: center
+  align-content: center
+
+  .btn
+    padding: 0
+
+  .shortcut-link
+    margin: 0
+    font-weight: $font-weight-base
+    display: flex
+    align-items: center
+    align-content: center
+    white-space: nowrap
+    flex-wrap: nowrap
+    line-height: 1.75rem
+
+    button.primary
+      text-decoration: underline
+
+    * + *
+      margin-left: 0.5rem

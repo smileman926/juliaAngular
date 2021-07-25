@@ -1,0 +1,43 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-6               
+        .form-check.my-2
+          input(type="checkbox", formControlName="b_showFooterText")
+          label(translate) ebc.invoiceSettings.showFooterTextText.text
+        .form-check.my-2
+          input(type="checkbox", formControlName="b_showHotelAddress")
+          label(translate) ebc.invoiceSettings.showHotelAddressText.text            
+      .col-4
+        label
+          b(translate) ebc.invoiceSettings.footerFreeText.text
+        .form-group.my-2          
+          label(translate) ebc.invoiceSettings.footerFreeText1.text
+          input(formControlName="b_freeText1")
+        .form-group.my-2          
+          label(translate) ebc.invoiceSettings.footerFreeText2.text
+          input(formControlName="b_freeText2")
+        .form-group.my-2          
+          label(translate) ebc.invoiceSettings.footerFreeText3.text
+          input(formControlName="b_freeText3")
+        .form-group.my-2          
+          label(translate) ebc.invoiceSettings.footerFreeText4.text
+          input(formControlName="b_freeText4")
+      .col-12 
+        label
+          b(translate) ebc.invoiceSettings.headImageText.text
+        .row 
+          .col-8 
+            .preview 
+              img([src]="headImg", [alt]="'ebc.invoiceSettings.headImageText.text' | translate")
+            label(translate) ebc.invoiceSettings.optimalFormat_675x130px.text
+          .col-4.buttons
+            .mb-2
+              button.imgBtn.btn.btn-primary.mr-2((click)="addImg()",translate) ebc.buttons.add.text
+            .mb-2
+              button.imgBtn.btn.btn-primary.mr-2((click)="delImg()",translate) ebc.buttons.delete.text
+
+    .row.mb-4
+      .col-12.text-right
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+

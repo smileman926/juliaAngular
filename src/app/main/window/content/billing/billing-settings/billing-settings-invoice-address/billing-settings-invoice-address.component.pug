@@ -1,0 +1,33 @@
+.container  
+  form(*ngIf="form", [formGroup]="form")
+    .row
+      .col-12        
+        label
+          b(translate) ebc.invoiceSettings.invoiceAddressText.text 
+      .col-6                 
+        .form-group.my-2              
+          label(translate) ebc.invoiceSettings.companyName.text
+          input(type="text", formControlName="b_companyName")
+        .form-group.my-2              
+          label(translate) ebc.invoiceSettings.companyName2.text
+          input(type="text", formControlName="b_companyName_2")
+        .form-group.my-2              
+          label(translate) ebc.invoiceSettings.addressLine1.text
+          input(type="text", formControlName="b_addressLine1")
+        .form-group.my-2              
+          label(translate) ebc.invoiceSettings.addressLine1_2.text
+          input(type="text", formControlName="b_addressLine1_2")
+        .form-group.my-2              
+          label(translate) ebc.invoiceSettings.postCode.text
+          input(type="text", formControlName="b_postCode")
+        .form-group.my-2              
+          label(translate) ebc.invoiceSettings.city.text
+          input(type="text", formControlName="b_city")
+        .form-group.my-2
+          label(translate) ebc.invoiceSettings.country_id.text
+          select(formControlName="b_country_id")
+            option(*ngFor="let item of locales", [value]="item.c_id", translate) {{item.cl_name}}
+    .row.my-4 
+      .col-12.text-right
+        button.btn.btn-secondary.mr-2((click)="save()", [disabled]="form.invalid" translate) ebc.buttons.save.text
+
